@@ -3,9 +3,14 @@ Maddux is an experiment with Reinforcement Learning
 on Robot Arms, teaching them to throw.
 
 Written from scratch because we're masochists.
+
+This may make more sense as a library than a CLI. 
+Rethink this when we get a bit further along
 """
 
 import argparse
+from simulate import Simulate
+
 
 def main():
     parser = argparse.ArgumentParser(

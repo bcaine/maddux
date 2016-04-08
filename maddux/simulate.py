@@ -34,3 +34,13 @@ class Simulate(object):
         :param verbose: Verbosity of output (Default: False)
         """
         pass
+
+
+    def load(self):
+        """Load data from our path"""
+        pass
+
+
+    def save(self):
+        """Save data to a file at our specified path"""
+        pass
