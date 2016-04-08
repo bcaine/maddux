@@ -2,14 +2,14 @@
 A base throwable object class that encodes traits like gravity,
 velocity, etc.
 """
+import numpy as np
 
 GRAVITY=-9.81
 
 class ThrowableObject(object):
 
-    def __init__(self, weight, position):
+    def __init__(self, position):
         """Throwable Object Init"""
-        self.weight = weight
         self.position = position
 
 
