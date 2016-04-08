@@ -6,7 +6,7 @@ import numpy as np
 
 GRAVITY=-9.81
 
-class ThrowableObject(object):
+class ThrowableObject:
 
     def __init__(self, position):
         """Throwable Object Init"""

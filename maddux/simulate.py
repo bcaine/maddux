@@ -3,7 +3,7 @@ Simulate wraps the training and evaluation
 of a given robot and environment.
 """
 
-class Simulate(object):
+class Simulate:
 
     def __init__(self, path, environment, objects, robot):
         """
