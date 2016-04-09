@@ -3,20 +3,18 @@ A stationary object that something may collide with.
 """
 import numpy as np
 
+HIT_ERROR = 0.01
 
 class Target:
 
-    def __init__(self, position, radius, angles=None, scores=None):
-        """Target Init. Angles currently not used. The target is a sphere.
-
+    def __init__(self, position, radius)
+        """Target Init
         :param position: 1x3 numpy array of position of center
         :param radius: radius of target
-        :param angles: (Unused) - Angles of target with respect to x, y, and z axis.
         """
         self.position = position
         self.radius = radius
-        # Currently not used
-        self.angles = angles if angles else np.array([0, 90, 0])
+        self.angles = np.array([0, 90, 0])
         self.name = "target"
         
 
@@ -25,3 +23,11 @@ class Target:
         distance = np.linalg.norm(position - self.position)
         score = 0.75 ** distance
         return score if distance > self.radius else 10 * score
+
+
+    def is_hit(self, ball):
+        """Check if the target is hit.
+        :param ball: A ball object
+        """
+        diff = np.absolute(ball.leading_point() - self.position)
+        return diff[0] < self.radius and diff[1] < HIT_ERROR and diff[2] < self.radius
