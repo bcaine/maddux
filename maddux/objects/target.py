@@ -7,7 +7,7 @@ HIT_ERROR = 0.01
 
 class Target:
 
-    def __init__(self, position, radius)
+    def __init__(self, position, radius):
         """Target Init
         :param position: 1x3 numpy array of position of center
         :param radius: radius of target
