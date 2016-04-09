@@ -20,6 +20,7 @@ class ThrowableObject:
         """
         self.velocity = velocity
 
+
     def step(self, time_ms):
         """Step through time
         
