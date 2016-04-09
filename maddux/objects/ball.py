@@ -9,6 +9,6 @@ class Ball(ThrowableObject):
 
     def __init__(self, position, radius):
         self.radius = radius
-        super(Ball, self).__init__(position)
+        ThrowableObject.__init__(self, position)
 
     
