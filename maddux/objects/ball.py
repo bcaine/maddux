@@ -13,3 +13,9 @@ class Ball(ThrowableObject):
         ThrowableObject.__init__(self, position)
 
     
+
+    def leading_point(self):
+        """Return the outermost point on the y axis
+           that will hit the target.
+        """
+        return self.position + np.array([0, self.radius, 0])
