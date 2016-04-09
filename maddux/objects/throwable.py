@@ -34,6 +34,7 @@ class ThrowableObject:
     
     def attach(self):
         self.attached = True
+        self.velocity = np.array([0, 0, 0])
         
 
     def __str__(self):
