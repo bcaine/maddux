@@ -27,6 +27,8 @@ class Environment:
         """Run for a certain duration
         
         :param duration: duration to run environment in ms
+
+        :return score: The value showing how close the ball is to the target
         """
         assert "ball" in self.objects
         assert "target" in self.objects
@@ -36,21 +38,28 @@ class Environment:
 
         for _ in xrange(duration):
             ball.step()
-            self._check_collisions(ball, target)
+            if self._is_collision(ball, target):
+                break
+        return target.get_score(ball.leading_point())
 
-    def _check_collisions(self, ball, target=None):
+    
+    def _is_collision(self, ball, target):
         """Check if the object collides with the walls
         
         :param ball: Our ball object
-        :param target: Optional, our target object
+        :param target: Our target object
         """
+        if target.is_hit(ball):
+            ball.attach()
+            return True
 
         for i, obj_dim in obj.position:
             # If in a negative dimension, or it hit a wall
             if obj_dim <= 0 or obj_dim >= self.dimensions[i]:
                 # Attach it to that surface
                 obj.attach()
-                return
+                return True
 
-        if target:
-            pass
+        return False
+            
+                    
