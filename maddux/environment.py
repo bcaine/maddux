@@ -66,13 +66,16 @@ class Environment:
         u = np.linspace(0, 2 * np.pi, 100)
         v = np.linspace(0, np.pi, 100)
 
-        x = 2 * self.ball.radius * np.outer(np.cos(u), np.sin(v)) + self.ball.position[0]
-        y = 2 * self.ball.radius * np.outer(np.sin(u), np.sin(v)) + self.ball.position[1]
-        z = 2 * self.ball.radius * np.outer(np.ones(np.size(u)), np.cos(v)) + self.ball.position[2]
-        ax.plot_surface(x, y, z, rstride=4, cstride=4, color='g')
+        xb = 2 * self.ball.radius * np.outer(np.cos(u), np.sin(v)) + self.ball.position[0]
+        yb = 2 * self.ball.radius * np.outer(np.sin(u), np.sin(v)) + self.ball.position[1]
+        zb = 2 * self.ball.radius * np.outer(np.ones(np.size(u)), np.cos(v)) + self.ball.position[2]
+        ax.plot_surface(xb, yb, zb, rstride=4, cstride=4, color='g')
 
         # Plot the target
-
+        xt = 2 * self.target.radius * np.outer(np.cos(u), np.sin(v)) + self.target.position[0]
+        yt = self.target.position[1]
+        zt = 2 * self.target.radius * np.outer(np.ones(np.size(u)), np.cos(v)) + self.target.position[2]
+        ax.plot_surface(xt, yt, zt, color='b', linewidth=0, alpha=0.25)
         
         # Set the limits to be environment ranges
         ax.set_xlim([0, self.dimensions[0]])
