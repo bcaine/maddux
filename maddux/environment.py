@@ -15,7 +15,7 @@ class Environment:
         self.ball = ball
         self.target = target
         self.robot = robot
-        
+
 
     def run(self, duration):
         """Run for a certain duration
@@ -26,26 +26,25 @@ class Environment:
 
         for _ in xrange(duration):
             self.ball.step()
-            if self._is_collision(ball, target):
+            if self._is_collision():
                 break
-        return target.get_score(ball.leading_point())
+        return self.target.get_score(self.ball.leading_point())
 
     
-    def _is_collision(self, ball, target):
+    def _is_collision(self):
         """Check if the object collides with the walls
-        
-        :param ball: Our ball object
-        :param target: Our target object
-        
         :return: Boolean, whether there was a collision
         """
-        if target.is_hit(ball):
-            ball.attach()
+        if self.ball.attached:
+            return False
+        
+        if self.target.is_hit(self.ball):
+            self.ball.attach()
             return True
 
-        for i, obj_dim in obj.position:
-            if obj_dim <= 0 or obj_dim >= self.dimensions[i]:
-                obj.attach()
+        for i in range(len(self.ball.position)):
+            if self.ball.position[i] <= 0 or self.ball.position[i] >= self.dimensions[i]:
+                self.ball.attach()
                 return True
 
         return False

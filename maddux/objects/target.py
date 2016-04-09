@@ -12,9 +12,8 @@ class Target:
         :param position: 1x3 numpy array of position of center
         :param radius: radius of target
         """
-        self.position = position
+        self.position = np.array(position)
         self.radius = radius
-        self.angles = np.array([0, 90, 0])
         self.name = "target"
         
 
@@ -31,3 +30,8 @@ class Target:
         """
         diff = np.absolute(ball.leading_point() - self.position)
         return diff[0] < self.radius and diff[1] < HIT_ERROR and diff[2] < self.radius
+
+
+    def display(self):
+        print "Position: {}".format(self.position)
+        print "Radius: {}".format(self.radius)

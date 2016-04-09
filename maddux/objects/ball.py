@@ -11,7 +11,6 @@ class Ball(ThrowableObject):
         self.radius = radius
         self.name = "ball"
         ThrowableObject.__init__(self, position)
-
     
 
     def leading_point(self):

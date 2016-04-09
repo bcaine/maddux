@@ -11,9 +11,10 @@ class ThrowableObject:
 
     def __init__(self, position):
         """Throwable Object Init"""
-        self.position = position
+        self.position = np.array(position)
         self.attached = True
         self.velocity = np.array([0, 0, 0])
+        self.positions = []
 
 
     def throw(self, velocity):
@@ -22,7 +23,7 @@ class ThrowableObject:
         :param velocity: 1x3 numpy array of object velocities
         """
         self.attached = False
-        self.velocity = velocity
+        self.velocity = np.array(velocity)
 
     
     def step(self):
@@ -30,6 +31,7 @@ class ThrowableObject:
         if not self.attached:
             self.velocity[2] += TIME * GRAVITY
             self.position += TIME * self.velocity
+            self.positions.append(self.position.copy())
 
     
     def attach(self):
@@ -37,10 +39,8 @@ class ThrowableObject:
         self.velocity = np.array([0, 0, 0])
         
 
-    def __str__(self):
-        return """
-        Position: {}
-        Velocity: {}
-        Attached: {}
-        """.format(self.position, self.velocity, self.attached)
+    def display(self):
+        print "Positon: {}".format(self.position)
+        print "Velocity: {}".format(self.velocity)
+        print "Attached: {}".format(self.attached)
         
