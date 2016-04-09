@@ -9,6 +9,7 @@ class Ball(ThrowableObject):
 
     def __init__(self, position, radius):
         self.radius = radius
+        self.name = "ball"
         ThrowableObject.__init__(self, position)
 
     

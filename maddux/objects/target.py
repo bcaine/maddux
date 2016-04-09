@@ -17,6 +17,7 @@ class Target:
         self.radius = radius
         # Currently not used
         self.angles = angles if angles else np.array([0, 90, 0])
+        self.name = "target"
         
 
     def get_score(self, position):
