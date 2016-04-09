@@ -5,12 +5,14 @@ velocity, etc.
 import numpy as np
 
 GRAVITY=-9.81
+TIME = 0.001
 
 class ThrowableObject:
 
     def __init__(self, position):
         """Throwable Object Init"""
         self.position = position
+        self.attached = True
 
 
     def throw(self, velocity):
@@ -18,17 +20,17 @@ class ThrowableObject:
         
         :param velocity: 1x3 numpy array of object velocities
         """
+        self.attached = False
         self.velocity = velocity
 
+    
+    def step(self):
+        """Update one timestep (one ms)"""
+        if not self.attached:
+            self.velocity[2] += TIME * GRAVITY
+            self.position += TIME * self.velocity
 
-    def step(self, time_ms):
-        """Step through time
-        
-        :param time_ms: Float - Time in Milliseconds
-        """
-
-        # TODO: Add check for intersecting environment?
-        # Or maybe we want to do that outside of this fn
-        for _ in xrange(time_ms):
-            self.position += 0.001 * self.velocity
+    
+    def attach(self):
+        self.attached = True
         
