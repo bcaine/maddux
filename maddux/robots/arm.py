@@ -20,27 +20,30 @@ class Arm:
         self.base = np.identity(4)
         self.tool = np.identity(4)
 
-    """
-    Updates the given link's angle with the given angle
-    :param link: The link you want to update, given as a integer
-    :param new_angle: The link's new angle
-    """
+    
     def update_link_angle(self, link, new_angle):
+        """
+        Updates the given link's angle with the given angle
+        :param link: The link you want to update, given as a integer
+        :param new_angle: The link's new angle
+        """
         self.links[link].theta = new_angle
 
-    """
-    Resets the arm back to its resting state, i.e. q0
-    """
+        
     def reset(self):
-      for link, q in zip(self.links, self.q0):
-        link.set_theta(q)
+        """
+        Resets the arm back to its resting state, i.e. q0
+        """
+        for link, q in zip(self.links, self.q0):
+            link.set_theta(q)
 
-    """
-    Computes the forward kinematics of the arm using the current joint
-    configuration or a given joint configuration
-    :param q: Optional joint configuration to compute the FK on (1xN numpy vector)
-    """
+            
     def fkine(self, q=None):
+        """
+        Computes the forward kinematics of the arm using the current joint
+        configuration or a given joint configuration
+        :param q: Optional joint configuration to compute the FK on (1xN numpy vector)
+        """
         t = self.base
         for i, link in enumerate(self.links):
             if q:

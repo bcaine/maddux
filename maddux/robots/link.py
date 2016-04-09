@@ -19,15 +19,17 @@ class Link:
         self.q_lim = q_lim
         self.set_theta(theta)
 
+        
     def set_theta(self, theta):
         self.theta = theta
         self.transform_matrix = self.compute_transformation_matrix(theta)
 
-    """
-    Transformation matrix from the current theta to the new theta
-    :param q: the new theta
-    """
+        
     def compute_transformation_matrix(self, q):
+        """
+        Transformation matrix from the current theta to the new theta
+        :param q: the new theta
+        """
         sa = np.sin(self.twist)
         ca = np.cos(self.twist)
         st = np.sin(q)
@@ -38,10 +40,11 @@ class Link:
                        [0,  0,      0,      1             ]])
         return T
 
-    """
-    Display the link's properties nicely
-    """
+    
     def display(self):
+        """
+        Display the link's properties nicely
+        """
         print 'Link angle: {}'.format(self.theta)
         print 'Link offset: {}'.format(self.offset)
         print 'Link length: {}'.format(self.length)
