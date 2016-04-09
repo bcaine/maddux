@@ -13,6 +13,7 @@ class ThrowableObject:
         """Throwable Object Init"""
         self.position = position
         self.attached = True
+        self.velocity = np.array([0, 0, 0])
 
 
     def throw(self, velocity):
@@ -33,4 +34,12 @@ class ThrowableObject:
     
     def attach(self):
         self.attached = True
+        
+
+    def __str__(self):
+        return """
+        Position: {}
+        Velocity: {}
+        Attached: {}
+        """.format(self.position, self.velocity, self.attached)
         
