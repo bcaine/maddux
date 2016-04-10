@@ -10,7 +10,8 @@ class Arm:
     def __init__(self, links, q0, name):
         """
         :param links: Vector of Link objects (1xN numpy vector)
-        :param q0: The default (resting state) joint configuration (1xN numpy vector)
+        :param q0: The default (resting state) joint configuration 
+                   (1xN numpy vector)
         :param name: Name of the arm
         """
         self.num_links = links.size
@@ -45,7 +46,8 @@ class Arm:
         """
         Computes the forward kinematics of the arm using the current joint
         configuration or a given joint configuration
-        :param q: Optional joint configuration to compute the FK on (1xN numpy vector)
+        :param q: Optional joint configuration to compute the FK on 
+                  (1xN numpy vector)
         """
         t = self.base
         for i, link in enumerate(self.links):
@@ -58,9 +60,10 @@ class Arm:
 
     def jacob0(self, q=None):
         """
-        Calculates the jacobian in the world frame by finding it in the tool frame
-        and then converting to the world frame
-        :param q: Optional joint configuration to compute the jacobian on (1xN numpy vector)
+        Calculates the jacobian in the world frame by finding it in 
+        the tool frame and then converting to the world frame
+        :param q: Optional joint configuration to compute the jacobian on 
+                  (1xN numpy vector)
         """
         J = self.jacobn(q)
         eet = self.fkine(q)
@@ -74,7 +77,8 @@ class Arm:
     def jacobn(self, q=None):
         """
         Calculates the jacobian in the tool frame
-        :param q: Optional joint configuration to compute the jacobian on (1xN numpy vector)
+        :param q: Optional joint configuration to compute the jacobian on 
+                  (1xN numpy vector)
         """
         J = np.zeros((6, self.num_links))
         U = self.tool
