@@ -19,12 +19,12 @@ class Link:
         self.q_lim = q_lim
         self.set_theta(theta)
 
-        
+
     def set_theta(self, theta):
         self.theta = theta
         self.transform_matrix = self.compute_transformation_matrix(theta)
 
-        
+
     def compute_transformation_matrix(self, q):
         """
         Transformation matrix from the current theta to the new theta
@@ -40,7 +40,7 @@ class Link:
                        [0,  0,      0,      1             ]])
         return T
 
-    
+
     def display(self):
         """
         Display the link's properties nicely
