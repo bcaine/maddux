@@ -58,13 +58,13 @@ class Environment:
         return False
             
                     
-    def plot(self, ax=None, fig=None):
+    def plot(self, fig=None, ax=None, show=True):
         """Plot throw trajectory and ball
         :param ax: Current axis if a figure already exists
         """
-        if not fig:
-            fig = plt.figure(figsize=(12, 12))            
-        if not ax:
+        if fig is None:
+            fig = plt.figure(figsize=(12, 12))
+        if ax is None:
             ax = Axes3D(fig)
         
         # Set the limits to be environment ranges
@@ -81,7 +81,7 @@ class Environment:
         self.ball.plot(ax)
         self.target.plot(ax)
 
-        if not fig and not ax:
+        if show:
             plt.show()
 
         return (fig, ax)
@@ -96,7 +96,7 @@ class Environment:
         def update(i, ax):
             ax.clear()
             self.ball.step()
-            self.plot(ax=ax)
+            self.plot(ax=ax, show=False)
             self._collision()
 
         fig = plt.figure(figsize=(12, 12))
