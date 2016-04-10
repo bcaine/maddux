@@ -67,7 +67,7 @@ class Arm:
         """
         J = self.jacobn(q)
         eet = self.fkine(q)
-        rotation = utils.get_rotation_from_homogenous_transfrom(eet)
+        rotation = utils.get_rotation_from_homogenous_transform(eet)
         zeros = np.zeros((3,3))
         a1 = np.hstack((rotation,zeros))
         a2 = np.hstack((zeros, rotation))
