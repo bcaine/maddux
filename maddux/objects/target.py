@@ -28,9 +28,28 @@ class Target:
         :param ball: A ball object
         """
         diff = np.absolute(ball.leading_point() - self.position)
-        return diff[0] < self.radius and diff[1] < HIT_ERROR and diff[2] < self.radius
+        return (diff[0] < self.radius
+                and diff[1] < HIT_ERROR
+                and diff[2] < self.radius)
 
 
     def display(self):
         print "Position: {}".format(self.position)
         print "Radius: {}".format(self.radius)
+
+
+    def plot(self, ax):
+        """Plots the target at its location.
+
+        :param ax: Figure to plot on.
+        """
+
+        u = np.linspace(0, 2 * np.pi, 100)
+        v = np.linspace(0, np.pi, 100)
+        
+        x = (2 * self.radius * np.outer(np.cos(u), np.sin(v)) +
+             self.position[0])
+        y = self.position[1]
+        z = (2 * self.radius * np.outer(np.ones(np.size(u)), np.cos(v)) +
+             self.position[2])
+        ax.plot_surface(x, y, z, color='b', linewidth=0, alpha=0.25)

@@ -4,7 +4,7 @@ on Robot Arms, teaching them to throw.
 
 Written from scratch because we're masochists.
 
-This may make more sense as a library than a CLI. 
+This may make more sense as a library than a CLI.
 Rethink this when we get a bit further along
 """
 
@@ -18,7 +18,7 @@ def main():
     parser.add_argument('-t', '--train', action='store_true',
                         help='Train the robot')
     parser.add_argument('-e', '--evaluate', action='store_true',
-        help='Evaluate the arm by throwing once.')
+                        help='Evaluate the arm by throwing once.')
     parser.add_argument('-p', '--path', type=str, required=True,
                         help='Path to weight file')
 
@@ -44,7 +44,7 @@ def train(path):
 def evaluate(path):
     """
     Evaluate the robot arm throwing with RL
-    
+
     :param path: Path to save location of the training data
     """
     pass
