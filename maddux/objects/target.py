@@ -14,7 +14,6 @@ class Target:
         """
         self.position = np.array(position)
         self.radius = radius
-        self.name = "target"
         
 
     def get_score(self, position):
