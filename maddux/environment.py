@@ -4,6 +4,7 @@ Our experiment environment.
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib.animation as animation
 
 from objects import Ball, Target
 
@@ -14,10 +15,13 @@ class Environment:
         Our room goes from [0, 0, 0] to [x, y, z]
         :param dimensions: 1x3 array of the dimensions of the room.
         """
-        self.dimensions = dimensions if dimensions else np.array([10.0, 10.0, 100.0])
         self.ball = ball
         self.target = target
         self.robot = robot
+        if dimensions:
+            self.dimensions = dimensions
+        else:
+            self.dimensions = np.array([10.0, 10.0, 100.0])
 
 
     def run(self, duration):
@@ -46,31 +50,60 @@ class Environment:
             return True
 
         for i in range(len(self.ball.position)):
-            if self.ball.position[i] <= 0 or self.ball.position[i] >= self.dimensions[i]:
+            if (self.ball.position[i] <= 0
+                or self.ball.position[i] >= self.dimensions[i]):
                 self.ball.attach()
                 return True
 
         return False
             
                     
-    def plot(self):
-        """Plot throw trajectory and ball"""
-        positions = np.array(self.ball.positions)
-
-        fig = plt.figure(figsize=(12, 12))
-        ax = Axes3D(fig)
+    def plot(self, ax=None, fig=None):
+        """Plot throw trajectory and ball
+        :param ax: Current axis if a figure already exists
+        """
+        if not fig:
+            fig = plt.figure(figsize=(12, 12))            
+        if not ax:
+            ax = Axes3D(fig)
+        
         # Set the limits to be environment ranges
         ax.set_xlim([0, self.dimensions[0]])
         ax.set_ylim([0, self.dimensions[1]])
-        ax.set_zlim([0, max(10, positions[:, 2].max())])
+        ax.set_zlim([0, 10])
+        # ax.set_zlim([0, max(10, self.ball.positions[:, 2].max())])
 
         # Plot Trajectory
-        ax.plot(positions[:, 0], positions[:, 1], positions[:, 2],
-                label='Trajectory')
+        ax.plot(self.ball.positions[:, 0], self.ball.positions[:, 1],
+                self.ball.positions[:, 2], label='Trajectory')
 
         # Plot objects
         self.ball.plot(ax)
         self.target.plot(ax)
 
-        plt.show()
+        if not fig and not ax:
+            plt.show()
+
+        return (fig, ax)
+
+
+    def animate(self, duration):
+        """Animates the running of the program
         
+        :param duration: Duration of animation (at 30 fps)
+        """
+
+        def update(i, ax):
+            ax.clear()
+            self.ball.step()
+            self.plot(ax=ax)
+            self._collision()
+
+        fig = plt.figure(figsize=(12, 12))
+        ax = Axes3D(fig)
+        self.plot(ax=ax, fig=fig)
+        
+        animation.FuncAnimation(fig, update, frames=duration,
+                                fargs=(ax), interval=5,
+                                blit=True)
+        plt.show()

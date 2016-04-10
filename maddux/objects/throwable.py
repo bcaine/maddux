@@ -5,7 +5,8 @@ velocity, etc.
 import numpy as np
 
 GRAVITY=-9.81
-TIME = 0.001
+# TIME = 0.001
+TIME = 1.0 / 30
 
 class ThrowableObject:
 
@@ -14,7 +15,7 @@ class ThrowableObject:
         self.position = np.array(position)
         self.attached = True
         self.velocity = np.array([0, 0, 0])
-        self.positions = []
+        self.positions = np.array([self.position.copy()])
 
 
     def throw(self, velocity):
@@ -31,7 +32,7 @@ class ThrowableObject:
         if not self.attached:
             self.velocity[2] += TIME * GRAVITY
             self.position += TIME * self.velocity
-            self.positions.append(self.position.copy())
+            self.positions = np.vstack((self.positions, self.position.copy()))
 
     
     def attach(self):
