@@ -58,20 +58,20 @@ class Environment:
         return False
             
                     
-    def plot(self, fig=None, ax=None, show=True):
+    def plot(self, ax=None, show=True):
         """Plot throw trajectory and ball
+
         :param ax: Current axis if a figure already exists
+        :param show: (Default: True) Whether to show the figure
         """
-        if fig is None:
-            fig = plt.figure(figsize=(12, 12))
         if ax is None:
+            fig = plt.figure(figsize=(12, 12))
             ax = Axes3D(fig)
         
         # Set the limits to be environment ranges
         ax.set_xlim([0, self.dimensions[0]])
         ax.set_ylim([0, self.dimensions[1]])
-        ax.set_zlim([0, 10])
-        # ax.set_zlim([0, max(10, self.ball.positions[:, 2].max())])
+        ax.set_zlim([0, max(10, self.ball.positions[:, 2].max())])
 
         # Plot Trajectory
         ax.plot(self.ball.positions[:, 0], self.ball.positions[:, 1],
@@ -84,8 +84,6 @@ class Environment:
         if show:
             plt.show()
 
-        return (fig, ax)
-
 
     def animate(self, duration):
         """Animates the running of the program
@@ -93,17 +91,16 @@ class Environment:
         :param duration: Duration of animation (at 30 fps)
         """
 
-        def update(i, ax):
+        def update(i):
             ax.clear()
             self.ball.step()
             self.plot(ax=ax, show=False)
             self._collision()
 
-        fig = plt.figure(figsize=(12, 12))
+        fig = plt.figure(figsize=(8, 8))
         ax = Axes3D(fig)
-        self.plot(ax=ax, fig=fig)
+        self.plot(ax=ax, show=False)
         
-        animation.FuncAnimation(fig, update, frames=duration,
-                                fargs=(ax), interval=5,
-                                blit=True)
+        ani = animation.FuncAnimation(fig, update, frames=duration,
+                                      blit=False)
         plt.show()
