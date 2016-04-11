@@ -4,7 +4,7 @@
 Created to use in a project for [Robert Platt's Robotics Course](http://www.ccs.neu.edu/home/rplatt/cs5335_2016/index.html)
 
 #####  Features
-- Arbitrary Length Arm
+- Arbitrary Length Arms
 - Forward Kinematics
 - Simulation Environment (with objects like Balls and Targets)
 - 3D Environment Animations
@@ -48,7 +48,7 @@ print r.jacob0([0, 0, 0, np.pi/2, 0])
      [ 1.         -0.00020367  1.         -0.00020367  0.00000004]]
 
 
-### Animation Usage
+### Animation and Plotting Usage
 
 ```python
 from maddux.environment import Environment
