@@ -19,7 +19,7 @@ class Environment:
         self.target = target
         self.robot = robot
         if dimensions:
-            self.dimensions = dimensions
+            self.dimensions = np.array(dimensions)
         else:
             self.dimensions = np.array([10.0, 10.0, 100.0])
 
@@ -30,11 +30,12 @@ class Environment:
         :param duration: duration to run environment in seconds
         :return score: The value showing how close the ball is to the target
         """
-        duration_ms = int(seconds * 1000)
+        duration_ms = int(duration * 1000)
 
         for _ in xrange(duration_ms):
             self.ball.step()
             if self._collision():
+                self.ball.attach()
                 break
         return self.target.get_score(self.ball.leading_point())
 
@@ -46,14 +47,13 @@ class Environment:
         if self.ball.attached:
             return False
         
-        if self.target.is_hit(self.ball):
-            self.ball.attach()
+        if self.target.is_hit(self.ball.leading_point()):
             return True
 
         for i in range(len(self.ball.position)):
-            if (self.ball.position[i] <= 0
-                or self.ball.position[i] >= self.dimensions[i]):
-                self.ball.attach()
+            in_negative_space = self.ball.position[i] <= 0
+            past_boundary = self.ball.position[i] >= self.dimensions[i]
+            if in_negative_space or past_boundary:
                 return True
 
         return False
@@ -92,13 +92,16 @@ class Environment:
         :param duration: Duration of animation in seconds
         """
         # We want it at 30 fps
-        frames = int(duration * 30)
+        frames = int(30 * duration)
+        iter_per_frame = int(1000 / 30)
 
         def update(i):
             ax.clear()
-            self.ball.step()
+            for _ in xrange(iter_per_frame):
+                self.ball.step()
+                if self._collision():
+                    self.ball.attach()
             self.plot(ax=ax, show=False)
-            self._collision()
 
         fig = plt.figure(figsize=(8, 8))
         ax = Axes3D(fig)
