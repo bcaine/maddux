@@ -27,11 +27,12 @@ class Environment:
     def run(self, duration):
         """Run for a certain duration
         
-        :param duration: duration to run environment in ms
+        :param duration: duration to run environment in seconds
         :return score: The value showing how close the ball is to the target
         """
+        duration_ms = int(seconds * 1000)
 
-        for _ in xrange(duration):
+        for _ in xrange(duration_ms):
             self.ball.step()
             if self._collision():
                 break
@@ -88,8 +89,10 @@ class Environment:
     def animate(self, duration):
         """Animates the running of the program
         
-        :param duration: Duration of animation (at 30 fps)
+        :param duration: Duration of animation in seconds
         """
+        # We want it at 30 fps
+        frames = int(duration * 30)
 
         def update(i):
             ax.clear()
@@ -101,6 +104,6 @@ class Environment:
         ax = Axes3D(fig)
         self.plot(ax=ax, show=False)
         
-        ani = animation.FuncAnimation(fig, update, frames=duration,
+        ani = animation.FuncAnimation(fig, update, frames=frames,
                                       blit=False)
         plt.show()
