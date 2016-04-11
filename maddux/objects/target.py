@@ -20,17 +20,22 @@ class Target:
         """Given an object position hitting the target, return the score"""
         distance = np.linalg.norm(position - self.position)
         score = 0.75 ** distance
-        return score if distance > self.radius else 10 * score
+        if self.is_hit(position):
+            return 10 * score
+        else:
+            return score
 
 
-    def is_hit(self, ball):
+    def is_hit(self, position):
         """Check if the target is hit.
-        :param ball: A ball object
+        :param position: A ball object's position
         """
-        diff = np.absolute(ball.leading_point() - self.position)
-        return (diff[0] < self.radius
-                and diff[1] < HIT_ERROR
-                and diff[2] < self.radius)
+        diff = np.absolute(position - self.position)
+
+        x_hit = diff[0] <= self.radius
+        y_hit = diff[1] <= HIT_ERROR
+        z_hit = diff[2] <= self.radius
+        return x_hit and y_hit and z_hit
 
 
     def display(self):

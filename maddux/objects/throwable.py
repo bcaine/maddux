@@ -5,8 +5,7 @@ velocity, etc.
 import numpy as np
 
 GRAVITY=-9.81
-# TIME = 0.001
-TIME = 1.0 / 30
+TIME = 0.001
 
 class ThrowableObject:
 
