@@ -1,17 +1,9 @@
-from robots.link import Link
-from robots.arm import Arm
 import numpy as np
-
+import math
+import robots.predefined_robots as robots
 
 np.set_printoptions(suppress=True)
 
-L1 = Link(0, 0, 0, 1.571)
-L2 = Link(0, 0, 0, -1.571)
-L3 = Link(0, 0.4318, 0, -1.571)
-L4 = Link(0, 0, 0, 1.571)
-L5 = Link(0, 0.4318, 0, 1.571)
-links = np.array([L1, L2, L3, L4, L5])
-
-q0 = np.array([0, 0, 0, np.pi / 2, 0])
-r = Arm(links, q0, '1-link')
-print r.jacob0([0, 0, 0, np.pi / 2, 0])
+q0 = np.array([0, math.pi/4, 0, -math.pi/4, math.pi/2])
+r = robots.create_simple_human_arm(2, 1, q0)
+print r.ikine(np.array([1,1,1]), 10000, 0.01)

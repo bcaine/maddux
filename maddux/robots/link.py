@@ -33,10 +33,10 @@ class Link:
         ca = np.cos(self.twist)
         st = np.sin(q)
         ct = np.cos(q)
-        T = np.matrix([[ct, -st * ca, st * sa, self.length * ct],
-                       [st, ct * ca, -ct * sa, self.length * st],
-                       [0, sa, ca, self.offset],
-                       [0, 0, 0, 1]])
+        T = np.matrix([[ct, -st * ca, st * sa,  self.length * ct],
+                       [st, ct * ca,  -ct * sa, self.length * st],
+                       [0,  sa,       ca,       self.offset],
+                       [0,  0,        0,        1]])
         return T
 
     def display(self):

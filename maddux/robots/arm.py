@@ -34,6 +34,15 @@ class Arm:
         """
         self.links[link].theta = new_angle
 
+    def get_current_joint_config(self):
+        """
+        Gets the current joint configuration from the links
+        """
+        q = np.zeros(self.num_links)
+        for i, link in enumerate(self.links):
+            q[i] = link.theta
+        return q
+
     def reset(self):
         """
         Resets the arm back to its resting state, i.e. q0
@@ -50,12 +59,43 @@ class Arm:
         """
         t = self.base
         for i, link in enumerate(self.links):
-            if q:
+            if np.any(q):
                 t = t * link.compute_transformation_matrix(q[i])
             else:
                 t = t * link.transform_matrix
         t = t * self.tool
         return t
+
+    def ikine(self, p, num_iterations=1000, alpha=0.1):
+        """
+        Computes the inverse kinematics to find the correct joint configuration
+        to reach a given point
+        :param p: The point we want to solve the inverse kinematics for
+        :param num_iterations: The number of iterations to try before giving up
+        :param alpha: The stepsize for the ikine solver
+        """
+        q = self.get_current_joint_config()
+        goal = utils.create_homogeneous_transform_from_point(p)
+        for i in xrange(num_iterations):
+            # Calculate position error of the end effector
+            curr = self.fkine(q)
+            err = goal - curr
+
+            # Convert error from homogeneous to xyz space
+            err = utils.create_point_from_homogeneous_transform(err)
+
+            # Get the psudoinverse of the Jacobian
+            J = self.jacob0(q)
+            vel_J = J[0:3, :]
+
+            # Increment q a tiny bit
+            delta_q = np.linalg.pinv(vel_J) * err
+            delta_q = np.squeeze(np.asarray(delta_q))
+            q = q + (alpha * delta_q.flatten())
+
+            if abs(np.linalg.norm(err)) <= 1e-6:
+                return q
+        raise ValueError("Could not find solution in given number of iterations")
 
     def jacob0(self, q=None):
         """
@@ -66,7 +106,7 @@ class Arm:
         """
         J = self.jacobn(q)
         eet = self.fkine(q)
-        rotation = utils.get_rotation_from_homogenous_transform(eet)
+        rotation = utils.get_rotation_from_homogeneous_transform(eet)
         zeros = np.zeros((3, 3))
         a1 = np.hstack((rotation, zeros))
         a2 = np.hstack((zeros, rotation))
@@ -83,7 +123,7 @@ class Arm:
         U = self.tool
         I = range(self.num_links - 1, -1, -1)
         for i, link in zip(I, self.links[::-1]):
-            if q:
+            if np.any(q):
                 U = link.compute_transformation_matrix(q[i]) * U
             else:
                 U = link.transform_matrix * U
