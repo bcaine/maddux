@@ -102,5 +102,7 @@ class Environment:
         ax = Axes3D(fig)
         self.plot(ax=ax, show=False)
 
-        animation.FuncAnimation(fig, update, frames=frames, blit=False)
+        # If we don't assign its return to something, it doesn't run.
+        # Seems like really weird behavior..
+        _ = animation.FuncAnimation(fig, update, frames=frames, blit=False)
         plt.show()
