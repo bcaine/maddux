@@ -20,6 +20,10 @@ class Link:
         self.q_lim = q_lim
         self.set_theta(theta)
 
+        # This is updated once we add it to an arm
+        self.base_pos = None
+        self.end_pos = None
+
     def set_theta(self, theta):
         self.theta = theta
         self.transform_matrix = self.compute_transformation_matrix(theta)
@@ -46,4 +50,5 @@ class Link:
         print 'Link angle: {}'.format(self.theta)
         print 'Link offset: {}'.format(self.offset)
         print 'Link length: {}'.format(self.length)
-        print 'Link twist: {}'.format(self.twist)
+        print 'Link twist: {}'.format(self.twist)        
+        

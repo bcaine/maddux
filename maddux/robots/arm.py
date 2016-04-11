@@ -8,17 +8,23 @@ import utils
 
 class Arm:
 
-    def __init__(self, links, q0, name):
+    def __init__(self, links, q0, name, base_position=None):
         """
         :param links: Vector of Link objects (1xN numpy vector)
         :param q0: The default (resting state) joint configuration
                    (1xN numpy vector)
         :param name: Name of the arm
+        :param base_position: Base position of the arm
         """
         self.num_links = links.size
         self.links = links
         self.q0 = q0
         self.name = name
+        
+        if base_position is None:
+            self.base_position = np.array([0, 0, 0])
+        else:
+            self.base_position = base_position
 
         self.base = np.identity(4)
         self.tool = np.identity(4)
@@ -135,3 +141,31 @@ class Arm:
 
             J[:, i] = np.vstack((d, delta)).flatten()
         return J
+
+    def plot_link(self, ax, link):
+        """
+        Plot a given link on the robot
+        :param ax: axes of plot
+        :param link: number link.
+        """
+        if self.links[link].length == 0:
+            # Plot sphere
+            return ax
+
+
+    def update_link_positions(self):
+        """
+        Walk through all the links and update their positions.
+        """
+
+        for i, link in enumerate(self.links):
+            if i == 0:
+                link.base_pos = self.base_position
+            if link.length == 0:
+                link.end_pos = link.base_pos
+
+            
+                    
+                
+            
+        
