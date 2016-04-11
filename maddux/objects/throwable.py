@@ -4,8 +4,9 @@ velocity, etc.
 """
 import numpy as np
 
-GRAVITY=-9.81
+GRAVITY = -9.81
 TIME = 0.001
+
 
 class ThrowableObject:
 
@@ -16,16 +17,14 @@ class ThrowableObject:
         self.velocity = np.array([0, 0, 0])
         self.positions = np.array([self.position.copy()])
 
-
     def throw(self, velocity):
         """Throw an object.
-        
+
         :param velocity: 1x3 numpy array of object velocities
         """
         self.attached = False
         self.velocity = np.array(velocity)
 
-    
     def step(self):
         """Update one timestep (one ms)"""
         if not self.attached:
@@ -33,14 +32,11 @@ class ThrowableObject:
             self.position += TIME * self.velocity
             self.positions = np.vstack((self.positions, self.position.copy()))
 
-    
     def attach(self):
         self.attached = True
         self.velocity = np.array([0, 0, 0])
-        
 
     def display(self):
         print "Positon: {}".format(self.position)
         print "Velocity: {}".format(self.velocity)
         print "Attached: {}".format(self.attached)
-        

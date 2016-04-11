@@ -5,12 +5,13 @@ A robot arm
 import numpy as np
 import utils
 
+
 class Arm:
 
     def __init__(self, links, q0, name):
         """
         :param links: Vector of Link objects (1xN numpy vector)
-        :param q0: The default (resting state) joint configuration 
+        :param q0: The default (resting state) joint configuration
                    (1xN numpy vector)
         :param name: Name of the arm
         """
@@ -33,7 +34,6 @@ class Arm:
         """
         self.links[link].theta = new_angle
 
-
     def reset(self):
         """
         Resets the arm back to its resting state, i.e. q0
@@ -41,18 +41,17 @@ class Arm:
         for link, q in zip(self.links, self.q0):
             link.set_theta(q)
 
-
     def fkine(self, q=None):
         """
         Computes the forward kinematics of the arm using the current joint
         configuration or a given joint configuration
-        :param q: Optional joint configuration to compute the FK on 
+        :param q: Optional joint configuration to compute the FK on
                   (1xN numpy vector)
         """
         t = self.base
         for i, link in enumerate(self.links):
             if q:
-                t = t* link.compute_transformation_matrix(q[i])
+                t = t * link.compute_transformation_matrix(q[i])
             else:
                 t = t * link.transform_matrix
         t = t * self.tool
@@ -60,39 +59,39 @@ class Arm:
 
     def jacob0(self, q=None):
         """
-        Calculates the jacobian in the world frame by finding it in 
+        Calculates the jacobian in the world frame by finding it in
         the tool frame and then converting to the world frame
-        :param q: Optional joint configuration to compute the jacobian on 
+        :param q: Optional joint configuration to compute the jacobian on
                   (1xN numpy vector)
         """
         J = self.jacobn(q)
         eet = self.fkine(q)
         rotation = utils.get_rotation_from_homogenous_transform(eet)
-        zeros = np.zeros((3,3))
-        a1 = np.hstack((rotation,zeros))
+        zeros = np.zeros((3, 3))
+        a1 = np.hstack((rotation, zeros))
         a2 = np.hstack((zeros, rotation))
-        J = np.vstack((a1,a2)) * J
+        J = np.vstack((a1, a2)) * J
         return J
 
     def jacobn(self, q=None):
         """
         Calculates the jacobian in the tool frame
-        :param q: Optional joint configuration to compute the jacobian on 
+        :param q: Optional joint configuration to compute the jacobian on
                   (1xN numpy vector)
         """
         J = np.zeros((6, self.num_links))
         U = self.tool
-        I = range(self.num_links-1,-1,-1)
+        I = range(self.num_links - 1, -1, -1)
         for i, link in zip(I, self.links[::-1]):
             if q:
                 U = link.compute_transformation_matrix(q[i]) * U
             else:
                 U = link.transform_matrix * U
 
-            d = np.array([-U[0,0]*U[1,3]+U[1,0]*U[0,3],
-                          -U[0,1]*U[1,3]+U[1,1]*U[0,3],
-                          -U[0,2]*U[1,3]+U[1,2]*U[0,3]])
-            delta = U[2,0:3]
+            d = np.array([-U[0, 0] * U[1, 3] + U[1, 0] * U[0, 3],
+                          -U[0, 1] * U[1, 3] + U[1, 1] * U[0, 3],
+                          -U[0, 2] * U[1, 3] + U[1, 2] * U[0, 3]])
+            delta = U[2, 0:3]
 
-            J[:,i] = np.vstack((d, delta)).flatten()
+            J[:, i] = np.vstack((d, delta)).flatten()
         return J

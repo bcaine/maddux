@@ -3,6 +3,7 @@ Simulate wraps the training and evaluation
 of a given robot and environment.
 """
 
+
 class Simulate:
 
     def __init__(self, path, environment, objects, robot):
@@ -17,29 +18,25 @@ class Simulate:
         self.objects = objects
         self.robot = robot
 
-
     def train(self, n_iters, learner, verbose=False):
         """Train the robot using a specified learning method.
-        
+
         :param n_iters: Number of iterations
         :param learner: Learning algorithm.
         :param verbose: Verbosity of output (Default: False)
         """
         pass
 
-
     def evaluate(self, verbose=False):
         """Evaluate it at its given state
-        
+
         :param verbose: Verbosity of output (Default: False)
         """
         pass
 
-
     def load(self):
         """Load data from our path"""
         pass
-
 
     def save(self):
         """Save data to a file at our specified path"""

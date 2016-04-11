@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
-from objects import Ball, Target
 
 class Environment:
 
@@ -23,10 +22,9 @@ class Environment:
         else:
             self.dimensions = np.array([10.0, 10.0, 100.0])
 
-
     def run(self, duration):
         """Run for a certain duration
-        
+
         :param duration: duration to run environment in seconds
         :return score: The value showing how close the ball is to the target
         """
@@ -39,14 +37,13 @@ class Environment:
                 break
         return self.target.get_score(self.ball.leading_point())
 
-    
     def _collision(self):
         """Check if the object collides with the walls
         :return: Boolean, whether there was a collision
         """
         if self.ball.attached:
             return False
-        
+
         if self.target.is_hit(self.ball.leading_point()):
             return True
 
@@ -57,8 +54,7 @@ class Environment:
                 return True
 
         return False
-            
-                    
+
     def plot(self, ax=None, show=True):
         """Plot throw trajectory and ball
 
@@ -68,7 +64,7 @@ class Environment:
         if ax is None:
             fig = plt.figure(figsize=(12, 12))
             ax = Axes3D(fig)
-        
+
         # Set the limits to be environment ranges
         ax.set_xlim([0, self.dimensions[0]])
         ax.set_ylim([0, self.dimensions[1]])
@@ -85,10 +81,9 @@ class Environment:
         if show:
             plt.show()
 
-
     def animate(self, duration):
         """Animates the running of the program
-        
+
         :param duration: Duration of animation in seconds
         """
         # We want it at 30 fps
@@ -106,7 +101,6 @@ class Environment:
         fig = plt.figure(figsize=(8, 8))
         ax = Axes3D(fig)
         self.plot(ax=ax, show=False)
-        
-        ani = animation.FuncAnimation(fig, update, frames=frames,
-                                      blit=False)
+
+        animation.FuncAnimation(fig, update, frames=frames, blit=False)
         plt.show()

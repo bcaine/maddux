@@ -11,13 +11,11 @@ class Ball(ThrowableObject):
         self.radius = radius
         ThrowableObject.__init__(self, position)
 
-
     def leading_point(self):
         """Return the outermost point on the y axis
            that will hit the target.
         """
         return self.position + np.array([0, self.radius, 0])
-
 
     def plot_data(self):
         """Gets the plot data at the balls current location"""
@@ -25,13 +23,12 @@ class Ball(ThrowableObject):
         v = np.linspace(0, np.pi, 100)
 
         x = (2 * self.radius * np.outer(np.cos(u), np.sin(v)) +
-              self.position[0])
+             self.position[0])
         y = (2 * self.radius * np.outer(np.sin(u), np.sin(v)) +
-              self.position[1])
+             self.position[1])
         z = (2 * self.radius * np.outer(np.ones(np.size(u)), np.cos(v)) +
-              self.position[2])
+             self.position[2])
         return (x, y, z)
-
 
     def plot(self, ax):
         """Plots the ball at its current location.

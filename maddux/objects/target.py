@@ -5,6 +5,7 @@ import numpy as np
 
 HIT_ERROR = 0.01
 
+
 class Target:
 
     def __init__(self, position, radius):
@@ -15,7 +16,6 @@ class Target:
         self.position = np.array(position)
         self.radius = radius
 
-
     def get_score(self, position):
         """Given an object position hitting the target, return the score"""
         distance = np.linalg.norm(position - self.position)
@@ -24,7 +24,6 @@ class Target:
             return 10 * score
         else:
             return score
-
 
     def is_hit(self, position):
         """Check if the target is hit.
@@ -37,11 +36,9 @@ class Target:
         z_hit = diff[2] <= self.radius
         return x_hit and y_hit and z_hit
 
-
     def display(self):
         print "Position: {}".format(self.position)
         print "Radius: {}".format(self.radius)
-
 
     def plot_data(self):
         """Gets the plot data at the targets location"""
@@ -54,7 +51,6 @@ class Target:
         z = (2 * self.radius * np.outer(np.ones(np.size(u)), np.cos(v)) +
              self.position[2])
         return (x, y, z)
-
 
     def plot(self, ax):
         """Plots the target at its location.
