@@ -76,7 +76,7 @@ class Environment:
 
         # Plot Trajectory
         ax.plot(self.ball.positions[:, 0], self.ball.positions[:, 1],
-                self.ball.positions[:, 2], label='Trajectory')
+                self.ball.positions[:, 2], 'r--', label='Trajectory')
 
         # Plot objects
         self.ball.plot(ax)
