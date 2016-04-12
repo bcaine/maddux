@@ -172,12 +172,16 @@ class Arm:
             else:
                 link.base_pos = self.links[i - 1].end_pos
 
+            print link.length
             if link.length == 0:
                 link.end_pos = link.base_pos
             else:
                 # Compute FKine up to that link endpoint
-                # to get the location in config space
+                # to get the location in homogenous coords
                 t = self.fkine(q=q_new, links=range(i))
                 # Then convert that to world space
-                end_pos = utils.create_point_from_homogeneous_tranform(t)
-                link.end_pos = end_pos
+                end_pos = utils.create_point_from_homogeneous_transform(t).T
+                link.end_pos = end_pos.A1
+            print link.base_pos
+            print link.end_pos
+            print np.linalg.norm(link.end_pos)
