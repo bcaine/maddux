@@ -23,4 +23,4 @@ class Ball(ThrowableObject):
 
         :param ax: Figure to plot on.
         """
-        return plot_sphere(self.position, self,radius, ax)
+        return plot_sphere(self.position, self.radius, ax)

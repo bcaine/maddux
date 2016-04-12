@@ -1,6 +1,6 @@
 import numpy as np
 
-def plot_sphere_data(self, position, radius):
+def plot_sphere_data(position, radius):
     """Given a position and radius, get the data needed to plot.
     :param position: position of sphere
     :param radius: radius of sphere
@@ -17,7 +17,7 @@ def plot_sphere_data(self, position, radius):
 
     return (x, y, z)
 
-def plot_sphere(self, position, radius, ax, color='g'):
+def plot_sphere(position, radius, ax, color='g'):
     """Plot a sphere.
     :param position: position of sphere
     :param radius: radius of sphere
