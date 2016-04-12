@@ -1,9 +1,11 @@
 from arm_test import arm_test
 from animation_test import animation_test
+from plot_arm_test import plot_arm_test
 
 tests = {
     'arm': arm_test,
-    'animation': animation_test
+    'animation': animation_test,
+    'plot_arm': plot_arm_test,
 }
 
 def run_test(test):
