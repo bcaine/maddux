@@ -12,5 +12,7 @@ def plot_test():
     env = Environment(ball, target, robot=human_arm,
                       dimensions=[10.0, 20.0, 100.0])
 
-    print human_arm.ikine(ball.position, 10000, 0.01)
+    new_q = human_arm.ikine(ball.position, 10000, 0.01)
+    human_arm.update_angles(new_q)
+    
     env.plot()
