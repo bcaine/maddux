@@ -6,11 +6,11 @@ Created to use in a project for [Robert Platt's Robotics Course](http://www.ccs.
 #####  Features
 - Arbitrary Length Arms
 - Forward Kinematics
+- Inverse Kinematics
 - Simulation Environment (with objects like Balls and Targets)
 - 3D Environment Animations
 
 ##### In Progress
-- Inverse Kinematics
 - Inverse Velocity Kinematics
 - 3D Arm Animations
 - Learning/Control toolbox (Reinforcement Learning, Search)
