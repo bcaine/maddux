@@ -42,7 +42,7 @@ def main():
 
     if not success:
         parser.print_help()
-        print "Test Options: {}".format(examples.keys())
+        print "Examples: {}".format(examples.keys())
 
 
 if __name__ == "__main__":
