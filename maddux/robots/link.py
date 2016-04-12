@@ -55,15 +55,13 @@ class Link:
         
     def plot(self, ax):
         if self.length == 0:
-            plot_sphere(self.base_pos, 0.25, ax, color='b')
+            plot_sphere(self.base_pos, 0.1, ax, color='b')
             return ax
 
         if self.base_pos is None or self.end_pos is None:
             raise ValueError("Base and End positions were never defined")
 
-        vector = self.end_pos - self.base_pos
-        
-        x = np.linspace(0, self.length, 100)
-        line = x[:, np.newaxis] * vector + self.base_pos
-        return ax.plot(line[:, 0], line[:, 1], line[:, 2], 'b', linewidth=5)
+        pts = np.vstack((self.base_pos, self.end_pos))
+        return ax.plot(pts[:, 0], pts[:, 1], pts[:, 2],
+                       color='b', linewidth=3)
         
