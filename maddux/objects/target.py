@@ -1,12 +1,13 @@
 """
 A stationary object that something may collide with.
 """
+from static import StaticObject
 import numpy as np
 
 HIT_ERROR = 0.01
 
 
-class Target:
+class Target(StaticObject):
 
     def __init__(self, position, radius):
         """Target Init
