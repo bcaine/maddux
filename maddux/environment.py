@@ -55,9 +55,9 @@ class Environment:
                 map(lambda obj: obj.step(), self.dynamic_objects)
                 # Check for collisions
                 self._collision()
-            # Get next robot config
-            next_q = self.robot.qs[:i*robot_iter_per_frame + 1][-1]
-            self.robot.update_angles(next_q)
+            if self.robot is not None:
+                next_q = self.robot.qs[:i*robot_iter_per_frame + 1][-1]
+                self.robot.update_angles(next_q)
             self.plot(ax=ax, show=False)
 
         fig = plt.figure(figsize=(8, 8))
