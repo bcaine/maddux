@@ -70,6 +70,11 @@ class Environment:
         ax.set_ylim([0, self.dimensions[1]])
         ax.set_zlim([0, max(10, self.ball.positions[:, 2].max())])
 
+        # And set our labels
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
+        
         # Plot Trajectory
         ax.plot(self.ball.positions[:, 0], self.ball.positions[:, 1],
                 self.ball.positions[:, 2], 'r--', label='Trajectory')
