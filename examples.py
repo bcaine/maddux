@@ -7,11 +7,10 @@ Written from scratch because we're masochists.
 This may make more sense as a library than a CLI.
 Rethink this when we get a bit further along
 """
-
 import argparse
 import warnings
 import sys
-from examples import run_example, examples
+from maddux.examples import run_example, examples
 
 
 class HelpfulParser(argparse.ArgumentParser):

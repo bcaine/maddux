@@ -1,6 +1,6 @@
 import numpy as np
 import math
-from robots import simple_human_arm
+from maddux.robots import simple_human_arm
 
 
 def arm_test():

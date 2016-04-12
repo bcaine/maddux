@@ -1,7 +1,7 @@
 import numpy as np
-from environment import Environment
-from objects import Ball, Target
-from robots import simple_human_arm
+from maddux.environment import Environment
+from maddux.objects import Ball, Target
+from maddux.robots import simple_human_arm
 
 
 def plot_test():
