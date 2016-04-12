@@ -13,7 +13,8 @@ class Arm:
         :param q0: The default (resting state) joint configuration
                    (1xN numpy vector)
         :param name: Name of the arm
-        :param base: Base position of the arm
+        :param base: Base position of the arm (1x3 numpy array)
+        :param tool: Tool location.
         """
         self.num_links = links.size
         self.links = links
@@ -29,6 +30,9 @@ class Arm:
             self.tool = np.identity(4)
         else:
             self.tool = tool
+
+        # Create empty list of held objects
+        self.held_objects = []
 
         # Set the arm to its default position
         self.reset()
@@ -196,6 +200,30 @@ class Arm:
                 end_pos = utils.create_point_from_homogeneous_transform(t).T
                 link.end_pos = end_pos.A1
 
+        # After we update all these link positions, we can update
+        # the location of any object we are holding
+        for held_object in self.held_objects:
+            held_object.position = self.end_effector_position()
+
     def end_effector_position(self):
         """Return end effector position"""
         return self.links[-1].end_pos
+
+    def hold(self, obj):
+        """Hold a specific object"""
+        obj.attach()
+        obj.position = self.end_effector_position()
+        self.held_objects.append(obj)
+
+    def release(self, object_idx=None):
+        """Release one or all currently held objects
+        :param object_idx: (Optional) index of object to release
+        """
+        if object_idx is None:
+            # Release all objects
+            for obj in self.held_objects:
+                # TODO: Replace with End Effector Velocity
+                obj.throw(np.array([1.0, 1.0, 1.0]))
+        else:
+            # TODO: Replease with End Effector Velocity
+            self.held_objects[object_idx].throw(np.array([1.0, 1.0, 1.0]))
