@@ -1,11 +1,13 @@
 import numpy as np
 from environment import Environment
 from objects import Ball, Target
+from robots import simple_human_arm
 
-def animation_test():
+def ball_animation_test():
     ball = Ball(np.array([2.0, 0.0, 2.0]), 0.15)
     target = Target(np.array([5.0, 18.0, 2.0]), 0.5)
-    env = Environment(ball, target, dimensions=[10.0, 20.0, 100.0])
+    env = Environment(dimensions=[10.0, 20.0, 100.0],
+                      dynamic_objects=[ball], static_objects=[target])
     
     ball.throw([1.75, 11.5, 7.8])
     env.animate(3.0)
@@ -22,4 +24,16 @@ def animation_test():
     if any(is_hit):
         print "Collision Location: {}".format(ball.positions[min_location])
     else:
-        print "No collision. Closest: {}".format(ball.positions[min_location])
+        print "Closest Point: {}".format(ball.positions[min_location])
+
+def arm_animation_test():
+    q0 = np.array([0.5, 0.2, 0, 0.5, 1.5])
+    human_arm = simple_human_arm(2.0, 2.0, q0, np.array([2.0, 2.0, 0.0]))
+    
+    ball = Ball(np.array([2.0, 0.0, 2.0]), 0.15)
+    target = Target(np.array([5.0, 18.0, 2.0]), 0.5)    
+    env = Environment([10.0, 20.0, 100.0], dynamic_objects=[ball],
+                      static_objects=[target], robot=human_arm)
+    
+    # env.animate(3.0)
+    
