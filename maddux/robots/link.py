@@ -38,10 +38,10 @@ class Link:
         ca = np.cos(self.twist)
         st = np.sin(q)
         ct = np.cos(q)
-        T = np.matrix([[ct, -st * ca, st * sa,  self.length * ct],
-                       [st, ct * ca,  -ct * sa, self.length * st],
-                       [0,  sa,       ca,       self.offset],
-                       [0,  0,        0,        1]])
+        T = np.matrix([[ct, -st * ca, st * sa, self.length * ct],
+                       [st, ct * ca, -ct * sa, self.length * st],
+                       [0, sa, ca, self.offset],
+                       [0, 0, 0, 1]])
         return T
 
     def display(self):
@@ -51,8 +51,8 @@ class Link:
         print 'Link angle: {}'.format(self.theta)
         print 'Link offset: {}'.format(self.offset)
         print 'Link length: {}'.format(self.length)
-        print 'Link twist: {}'.format(self.twist)        
-        
+        print 'Link twist: {}'.format(self.twist)
+
     def plot(self, ax):
         if self.length == 0:
             plot_sphere(self.base_pos, 0.1, ax, color='b')
@@ -64,4 +64,3 @@ class Link:
         pts = np.vstack((self.base_pos, self.end_pos))
         return ax.plot(pts[:, 0], pts[:, 1], pts[:, 2],
                        color='b', linewidth=3)
-        

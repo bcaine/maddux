@@ -56,7 +56,7 @@ class Environment:
                 # Check for collisions
                 self._collision()
             if self.robot is not None:
-                next_q = self.robot.qs[:i*robot_iter_per_frame + 1][-1]
+                next_q = self.robot.qs[:i * robot_iter_per_frame + 1][-1]
                 self.robot.update_angles(next_q)
             self.plot(ax=ax, show=False)
 

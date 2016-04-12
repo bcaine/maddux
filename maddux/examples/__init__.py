@@ -11,9 +11,9 @@ examples = {
     'plot': plot_test,
 }
 
+
 def run_example(example):
     if example in examples:
         examples[example]()
         return True
     return False
-    

@@ -104,7 +104,7 @@ class Arm:
         """
         q = self.get_current_joint_config()
         self.qs = np.array([q.copy()])
-        
+
         goal = utils.create_homogeneous_transform_from_point(p)
         for i in xrange(num_iterations):
             # Calculate position error of the end effector
@@ -181,7 +181,8 @@ class Arm:
 
         for i, link in enumerate(self.links):
             if i == 0:
-                link.base_pos = utils.create_point_from_homogeneous_transform(self.base)
+                link.base_pos = utils.create_point_from_homogeneous_transform(
+                    self.base)
             else:
                 link.base_pos = self.links[i - 1].end_pos
 
