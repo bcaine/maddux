@@ -23,7 +23,7 @@ class Arm:
         if base is None:
             self.base = np.identity(4)
         else:
-            self.base = base
+            self.base = utils.create_homogeneous_transform_from_point(base)
 
         if tool is None:
             self.tool = np.identity(4)
