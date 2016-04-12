@@ -56,7 +56,7 @@ from maddux.objects import Ball, Target
 
 ball = Ball([2, 0, 2], 0.25)
 target = Target([2, 10, 2], 0.5)
-environment = Environment(ball, target)
+environment = Environment(dynamic_objects=[ball], static_objects=[target])
 
 release_velocity = np.array([0, 15, 5])
 ball.throw(release_velocity)
