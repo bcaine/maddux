@@ -11,5 +11,6 @@ def plot_test():
     target = Target(np.array([5.0, 18.0, 2.0]), 0.5)
     env = Environment(ball, target, robot=human_arm,
                       dimensions=[10.0, 20.0, 100.0])
-    
+
+    print human_arm.ikine(ball.position, 10000, 0.01)
     env.plot()

@@ -32,7 +32,17 @@ class Arm:
 
         # Set the arm to its default position
         self.reset()
-        self.update_link_positions(q0)
+        self.update_angles(q0)
+        self.update_link_positions()
+
+    def update_angles(self, new_angles):
+        """
+        Updates all the link's angles
+        :param new_angles: 1xN numpy array of link angles
+        """
+        for link, new_theta in zip(self.links, new_angles):
+            link.set_theta(new_theta)
+        self.update_link_positions()
 
     def update_link_angle(self, link, new_angle):
         """
@@ -40,8 +50,8 @@ class Arm:
         :param link: The link you want to update, given as a integer
         :param new_angle: The link's new angle
         """
-        self.links[link].theta = new_angle
-        self.update_link_positions(new_angle)
+        self.links[link].set_theta(new_angle)
+        self.update_link_positions()
 
     def get_current_joint_config(self):
         """
@@ -157,10 +167,9 @@ class Arm:
         for link in self.links:
             link.plot(ax)
 
-    def update_link_positions(self, q_new):
+    def update_link_positions(self):
         """
         Walk through all the links and update their positions.
-        :param q_new: New joint config
         """
 
         for i, link in enumerate(self.links):
@@ -174,7 +183,7 @@ class Arm:
             else:
                 # Compute FKine up to that link endpoint
                 # to get the location in homogenous coords
-                t = self.fkine(q=q_new, links=range(i + 1))
+                t = self.fkine(links=range(i + 1))
                 # Then convert that to world space
                 end_pos = utils.create_point_from_homogeneous_transform(t).T
                 link.end_pos = end_pos.A1
