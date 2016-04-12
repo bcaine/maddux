@@ -83,6 +83,9 @@ class Environment:
         self.ball.plot(ax)
         self.target.plot(ax)
 
+        if self.robot:
+            self.robot.plot(ax)
+
         if show:
             plt.show()
 

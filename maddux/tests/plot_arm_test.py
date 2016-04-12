@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import mpl_toolkits.mplot3d.axes3d as p3
 
-from maddux.robots import create_simple_human_arm
+from maddux.robots import simple_human_arm
 
 def plot_arm_test():
     q0 = np.array([1.5, 0.2, 0, 0.5, 1.5])
-    human_arm = create_simple_human_arm(2.0, 1.0, q0)
+    human_arm = simple_human_arm(2.0, 1.0, q0)
 
     fig = plt.figure()
     ax = p3.Axes3D(fig)
