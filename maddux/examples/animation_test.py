@@ -13,7 +13,7 @@ def ball_animation_test():
     target = Target(np.array([5.0, 18.0, 2.0]), 0.5)
     env = Environment(dimensions=[10.0, 20.0, 100.0],
                       dynamic_objects=balls, static_objects=[target])
-    env.animate(3.0)
+    env.animate(5.0)
 
 def arm_animation_test():
     q0 = np.array([0.5, 0.2, 0, 0.5, 1.5])
@@ -24,7 +24,7 @@ def arm_animation_test():
                       robot=human_arm)
 
     human_arm.ikine(ball.position)
-    env.animate(3.0)
+    env.animate(25.0)
 
 def arm_ball_animation_test():
     q0 = np.array([0.5, 0.2, 0, 0.5, 1.5])
