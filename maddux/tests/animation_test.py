@@ -34,6 +34,6 @@ def arm_animation_test():
     target = Target(np.array([5.0, 18.0, 2.0]), 0.5)    
     env = Environment([10.0, 20.0, 100.0], dynamic_objects=[ball],
                       static_objects=[target], robot=human_arm)
-    
-    # env.animate(3.0)
-    
+
+    human_arm.ikine(ball.position)
+    env.animate(3.0)

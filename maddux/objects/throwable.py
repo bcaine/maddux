@@ -19,7 +19,6 @@ class ThrowableObject:
 
     def throw(self, velocity):
         """Throw an object.
-
         :param velocity: 1x3 numpy array of object velocities
         """
         self.attached = False

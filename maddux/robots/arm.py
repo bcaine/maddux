@@ -8,7 +8,7 @@ import utils
 class Arm:
 
     def __init__(self, links, q0, name, base=None, tool=None):
-        """
+        """A robotic arm.
         :param links: Vector of Link objects (1xN numpy vector)
         :param q0: The default (resting state) joint configuration
                    (1xN numpy vector)
@@ -34,6 +34,10 @@ class Arm:
         self.reset()
         self.update_angles(q0)
         self.update_link_positions()
+
+        # A cache of all past q values for a run of ikine so we
+        # can animate the action
+        self.qs = np.array([q0.copy()])
 
     def update_angles(self, new_angles):
         """
@@ -99,6 +103,8 @@ class Arm:
         :param alpha: The stepsize for the ikine solver
         """
         q = self.get_current_joint_config()
+        self.qs = np.array([q.copy()])
+        
         goal = utils.create_homogeneous_transform_from_point(p)
         for i in xrange(num_iterations):
             # Calculate position error of the end effector
@@ -116,6 +122,7 @@ class Arm:
             delta_q = np.linalg.pinv(vel_J) * err
             delta_q = np.squeeze(np.asarray(delta_q))
             q = q + (alpha * delta_q.flatten())
+            self.qs = np.vstack((self.qs, q.copy()))
 
             if abs(np.linalg.norm(err)) <= 1e-6:
                 return q

@@ -44,14 +44,20 @@ class Environment:
         """
         # We want it at 30 fps
         frames = int(30 * duration)
-        iter_per_frame = int(1000 / 30)
+        dynamic_iter_per_frame = int(1000 / 30)
+
+        if self.robot:
+            robot_iter_per_frame = max(1, int(len(self.robot.qs) / frames))
 
         def update(i):
             ax.clear()
-            for _ in xrange(iter_per_frame):
+            for _ in xrange(dynamic_iter_per_frame):
                 map(lambda obj: obj.step(), self.dynamic_objects)
                 # Check for collisions
                 self._collision()
+            # Get next robot config
+            next_q = self.robot.qs[:i*robot_iter_per_frame + 1][-1]
+            self.robot.update_angles(next_q)
             self.plot(ax=ax, show=False)
 
         fig = plt.figure(figsize=(8, 8))
