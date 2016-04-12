@@ -19,12 +19,14 @@ def plot_sphere_data(position, radius):
     return (x, y, z)
 
 
-def plot_sphere(position, radius, ax, color='g'):
+def plot_sphere(position, radius, ax, color='g', linewidth=0):
     """Plot a sphere.
     :param position: position of sphere
     :param radius: radius of sphere
     :param ax: axes to plot on
     :param color: (Optional) color of sphere
+    :param linewidth: (Optional) width of ball gridlines
     """
     x, y, z = plot_sphere_data(position, radius)
-    return ax.plot_surface(x, y, z, rstride=4, cstride=4, color=color)
+    return ax.plot_surface(x, y, z, rstride=4, cstride=4,
+                           color=color, linewidth=0)
