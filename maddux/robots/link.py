@@ -2,6 +2,7 @@
 A Link in a robot arm.
 """
 import numpy as np
+from maddux.utils.plot import plot_sphere
 
 
 class Link:
@@ -54,15 +55,15 @@ class Link:
         
     def plot(self, ax):
         if self.length == 0:
-            # Plot sphere
-            return
+            plot_sphere(self.base_pos, 0.25, ax, color='b')
+            return ax
 
         if self.base_pos is None or self.end_pos is None:
             raise ValueError("Base and End positions were never defined")
 
         vector = self.end_pos - self.base_pos
         
-        line = np.linspace(0, self.length, 100)
-        line = line * vector.T
-        ax.plot(line[:, 0], line[:, 1], line[:, 2], 'b', linewidth=25)
+        x = np.linspace(0, self.length, 100)
+        line = x[:, np.newaxis] * vector + self.base_pos
+        return ax.plot(line[:, 0], line[:, 1], line[:, 2], 'b', linewidth=5)
         

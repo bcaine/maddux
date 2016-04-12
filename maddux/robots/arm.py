@@ -150,15 +150,12 @@ class Arm:
             J[:, i] = np.vstack((d, delta)).flatten()
         return J
 
-    def plot_link(self, ax, link):
-        """
-        Plot a given link on the robot
+    def plot(self, ax):
+        """Plot our robot
         :param ax: axes of plot
-        :param link: number link.
         """
-        if self.links[link].length == 0:
-            # Plot sphere
-            return ax
+        for link in self.links:
+            link.plot(ax)
 
     def update_link_positions(self, q_new):
         """
@@ -172,16 +169,12 @@ class Arm:
             else:
                 link.base_pos = self.links[i - 1].end_pos
 
-            print link.length
             if link.length == 0:
                 link.end_pos = link.base_pos
             else:
                 # Compute FKine up to that link endpoint
                 # to get the location in homogenous coords
-                t = self.fkine(q=q_new, links=range(i))
+                t = self.fkine(q=q_new, links=range(i + 1))
                 # Then convert that to world space
                 end_pos = utils.create_point_from_homogeneous_transform(t).T
                 link.end_pos = end_pos.A1
-            print link.base_pos
-            print link.end_pos
-            print np.linalg.norm(link.end_pos)
