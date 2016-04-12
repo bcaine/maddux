@@ -178,3 +178,7 @@ class Arm:
                 # Then convert that to world space
                 end_pos = utils.create_point_from_homogeneous_transform(t).T
                 link.end_pos = end_pos.A1
+
+    def end_effector_position(self):
+        """Return end effector position"""
+        return self.links[-1].end_pos
