@@ -9,10 +9,11 @@ Created to use in a project for [Robert Platt's Robotics Course](http://www.ccs.
 - Inverse Kinematics
 - Simulation Environment (with objects like Balls and Targets)
 - 3D Environment Animations
+- 3D Arm Animations
+
 
 ##### In Progress
 - Inverse Velocity Kinematics
-- 3D Arm Animations
 - Learning/Control toolbox (Reinforcement Learning, Search)
 
 ### Arm Usage
