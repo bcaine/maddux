@@ -52,3 +52,17 @@ class Link:
         print 'Link length: {}'.format(self.length)
         print 'Link twist: {}'.format(self.twist)        
         
+    def plot(self, ax):
+        if self.length == 0:
+            # Plot sphere
+            return
+
+        if self.base_pos is None or self.end_pos is None:
+            raise ValueError("Base and End positions were never defined")
+
+        vector = self.end_pos - self.base_pos
+        
+        line = np.linspace(0, self.length, 100)
+        line = line * vector.T
+        ax.plot(line[:, 0], line[:, 1], line[:, 2], 'b', linewidth=25)
+        

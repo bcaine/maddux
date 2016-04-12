@@ -1,7 +1,6 @@
 """
 A robot arm
 """
-
 import numpy as np
 import utils
 
@@ -31,6 +30,7 @@ class Arm:
 
         # Set the arm to its default position
         self.reset()
+        self.update_link_positions(q0)
 
     def update_link_angle(self, link, new_angle):
         """
@@ -39,6 +39,7 @@ class Arm:
         :param new_angle: The link's new angle
         """
         self.links[link].theta = new_angle
+        self.update_link_positions(new_angle)
 
     def get_current_joint_config(self):
         """
@@ -56,15 +57,19 @@ class Arm:
         for link, q in zip(self.links, self.q0):
             link.set_theta(q)
 
-    def fkine(self, q=None):
+    def fkine(self, links=None, q=None):
         """
         Computes the forward kinematics of the arm using the current joint
         configuration or a given joint configuration
-        :param q: Optional joint configuration to compute the FK on
+        :param links: (Optional) Specify which links to run fkine on
+        :param q: (Optional) joint configuration to compute the FK on
                   (1xN numpy vector)
         """
+        if links is None:
+            links = range(len(self.links))
+        
         t = self.base
-        for i, link in enumerate(self.links):
+        for i, link in zip(links, self.links):
             if np.any(q):
                 t = t * link.compute_transformation_matrix(q[i])
             else:
@@ -74,10 +79,11 @@ class Arm:
 
     def ikine(self, p, num_iterations=1000, alpha=0.1):
         """
-        Computes the inverse kinematics to find the correct joint configuration
-        to reach a given point
+        Computes the inverse kinematics to find the correct joint 
+        configuration to reach a given point
         :param p: The point we want to solve the inverse kinematics for
-        :param num_iterations: The number of iterations to try before giving up
+        :param num_iterations: The number of iterations to try before 
+                               giving up
         :param alpha: The stepsize for the ikine solver
         """
         q = self.get_current_joint_config()
@@ -101,7 +107,7 @@ class Arm:
 
             if abs(np.linalg.norm(err)) <= 1e-6:
                 return q
-        raise ValueError("Could not find solution in given number of iterations")
+        raise ValueError("Could not find solution.")
 
     def jacob0(self, q=None):
         """
@@ -152,20 +158,24 @@ class Arm:
             # Plot sphere
             return ax
 
-
-    def update_link_positions(self):
+    def update_link_positions(self, q_new):
         """
         Walk through all the links and update their positions.
+        :param q_new: New joint config
         """
 
         for i, link in enumerate(self.links):
             if i == 0:
                 link.base_pos = self.base_position
+            else:
+                link.base_pos = self.links[i - 1].end_pos
+
             if link.length == 0:
                 link.end_pos = link.base_pos
-
-            
-                    
-                
-            
-        
+            else:
+                # Compute FKine up to that link endpoint
+                # to get the location in config space
+                t = self.fkine(links=range(i), q_new)
+                # Then convert that to world space
+                end_pos = utils.create_point_from_homogeneous_tranform(t)
+                link.end_pos = end_pos
