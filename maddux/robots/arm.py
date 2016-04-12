@@ -34,14 +34,18 @@ class Arm:
         # Create empty list of held objects
         self.held_objects = []
 
-        # Set the arm to its default position
-        self.reset()
-        self.update_angles(q0)
-        self.update_link_positions()
-
         # A cache of all past q values for a run of ikine so we
         # can animate the action
         self.qs = np.array([q0.copy()])
+
+        # Set the arm to its default position
+        self.reset()
+
+    def reset(self):
+        """
+        Resets the arm back to its resting state, i.e. q0
+        """
+        self.update_angles(self, self.q0)
 
     def update_angles(self, new_angles):
         """
@@ -69,13 +73,6 @@ class Arm:
         for i, link in enumerate(self.links):
             q[i] = link.theta
         return q
-
-    def reset(self):
-        """
-        Resets the arm back to its resting state, i.e. q0
-        """
-        for link, q in zip(self.links, self.q0):
-            link.set_theta(q)
 
     def fkine(self, q=None, links=None):
         """
@@ -184,12 +181,14 @@ class Arm:
         """
 
         for i, link in enumerate(self.links):
+            # Set link base position
             if i == 0:
                 link.base_pos = utils.create_point_from_homogeneous_transform(
                     self.base)
             else:
                 link.base_pos = self.links[i - 1].end_pos
 
+            # Set link end position
             if link.length == 0:
                 link.end_pos = link.base_pos
             else:
