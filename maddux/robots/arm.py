@@ -7,7 +7,7 @@ import utils
 
 class Arm:
 
-    def __init__(self, links, q0, name, base_position=None):
+    def __init__(self, links, q0, name, base=None, tool=None):
         """
         :param links: Vector of Link objects (1xN numpy vector)
         :param q0: The default (resting state) joint configuration
@@ -19,14 +19,16 @@ class Arm:
         self.links = links
         self.q0 = q0
         self.name = name
-        
-        if base_position is None:
-            self.base_position = np.array([0, 0, 0])
-        else:
-            self.base_position = base_position
 
-        self.base = np.identity(4)
-        self.tool = np.identity(4)
+        if base is None:
+            self.base = np.identity(4)
+        else:
+            self.base = base
+
+        if tool is None:
+            self.tool = np.identity(4)
+        else:
+            self.tool = tool
 
         # Set the arm to its default position
         self.reset()
@@ -66,8 +68,8 @@ class Arm:
                   (1xN numpy vector)
         """
         if links is None:
-            links = range(len(self.links))
-        
+            links = self.num_links
+
         t = self.base
         for i, link in zip(links, self.links):
             if np.any(q):
@@ -79,10 +81,10 @@ class Arm:
 
     def ikine(self, p, num_iterations=1000, alpha=0.1):
         """
-        Computes the inverse kinematics to find the correct joint 
+        Computes the inverse kinematics to find the correct joint
         configuration to reach a given point
         :param p: The point we want to solve the inverse kinematics for
-        :param num_iterations: The number of iterations to try before 
+        :param num_iterations: The number of iterations to try before
                                giving up
         :param alpha: The stepsize for the ikine solver
         """
@@ -90,7 +92,7 @@ class Arm:
         goal = utils.create_homogeneous_transform_from_point(p)
         for i in xrange(num_iterations):
             # Calculate position error of the end effector
-            curr = self.fkine(q)
+            curr = self.fkine(q=q)
             err = goal - curr
 
             # Convert error from homogeneous to xyz space
@@ -175,7 +177,7 @@ class Arm:
             else:
                 # Compute FKine up to that link endpoint
                 # to get the location in config space
-                t = self.fkine(links=range(i), q_new)
+                t = self.fkine(links=range(i), q=q_new)
                 # Then convert that to world space
                 end_pos = utils.create_point_from_homogeneous_tranform(t)
                 link.end_pos = end_pos
