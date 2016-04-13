@@ -54,12 +54,14 @@ class Link:
         print 'Link twist: {}'.format(self.twist)
 
     def plot(self, ax):
-        if self.offset == 0 and self.length == 0:
-            plot_sphere(self.base_pos, 0.1, ax, color='b')
-            return ax
-
         if self.base_pos is None or self.end_pos is None:
             raise ValueError("Base and End positions were never defined")
+
+        plot_sphere(self.end_pos, 0.15, ax, color='black')
+
+        # If there's no length associated, we don't have to draw one
+        if self.length == 0 and self.offset == 0:
+            return ax
 
         pts = np.vstack((self.base_pos, self.end_pos))
 

@@ -9,11 +9,11 @@ def plot_sphere_data(position, radius):
     u = np.linspace(0, 2 * np.pi, 100)
     v = np.linspace(0, np.pi, 100)
 
-    x = (2 * radius * np.outer(np.cos(u), np.sin(v)) +
+    x = (radius * np.outer(np.cos(u), np.sin(v)) +
          position[0])
-    y = (2 * radius * np.outer(np.sin(u), np.sin(v)) +
+    y = (radius * np.outer(np.sin(u), np.sin(v)) +
          position[1])
-    z = (2 * radius * np.outer(np.ones(np.size(u)), np.cos(v)) +
+    z = (radius * np.outer(np.ones(np.size(u)), np.cos(v)) +
          position[2])
 
     return (x, y, z)
