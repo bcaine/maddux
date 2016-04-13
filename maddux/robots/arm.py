@@ -189,7 +189,7 @@ class Arm:
                 link.base_pos = self.links[i - 1].end_pos
 
             # Set link end position
-            if link.length == 0:
+            if link.length == 0 and link.offset == 0:
                 link.end_pos = link.base_pos
             else:
                 # Compute FKine up to that link endpoint
