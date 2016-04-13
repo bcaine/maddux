@@ -45,7 +45,7 @@ class Arm:
         """
         Resets the arm back to its resting state, i.e. q0
         """
-        self.update_angles(self, self.q0)
+        self.update_angles(self.q0)
 
     def update_angles(self, new_angles):
         """
