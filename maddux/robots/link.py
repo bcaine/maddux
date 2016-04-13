@@ -62,5 +62,6 @@ class Link:
             raise ValueError("Base and End positions were never defined")
 
         pts = np.vstack((self.base_pos, self.end_pos))
+
         return ax.plot(pts[:, 0], pts[:, 1], pts[:, 2],
                        color='b', linewidth=3)
