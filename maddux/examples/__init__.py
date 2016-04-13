@@ -5,6 +5,7 @@ from animation_test import (ball_animation_test,
                             arm_animation_test,
                             arm_ball_animation_test,
 )
+from throwing_test import throwing_test
 
 
 examples = {
@@ -14,6 +15,7 @@ examples = {
     'arm_ball_animation': arm_ball_animation_test,
     'plot_arm': plot_arm_test,
     'plot': plot_test,
+    'throw': throwing_test,
 }
 
 
