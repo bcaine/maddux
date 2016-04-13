@@ -5,7 +5,7 @@ from maddux.robots import simple_human_arm
 
 
 def plot_test():
-    q0 = np.array([0.5, 0.2, 0, 0.5, 1.5])
+    q0 = np.array([0.5, 0.2, 0, 0.5, 0, 0, 0])
     human_arm = simple_human_arm(2.0, 2.0, q0, np.array([2.0, 2.0, 0.0]))
 
     ball = Ball(np.array([2.0, 0.0, 2.0]), 0.15)

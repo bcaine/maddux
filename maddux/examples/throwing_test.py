@@ -4,7 +4,7 @@ from maddux.objects import Ball, Target
 from maddux.robots import simple_human_arm
 
 def throwing_test():
-    q0 = np.array([0, 0, 0, 0, 0])
+    q0 = np.array([0, 0, 0, 0, 0, 0, 0])
     human_arm = simple_human_arm(2.0, 2.0, q0, np.array([2.0, 2.0, 4.0]))
 
     ball = Ball(np.array([0, 0, 0]), 0.15)
@@ -15,6 +15,6 @@ def throwing_test():
     human_arm.hold(ball)
     # human_arm.ikine(np.array([3.0, 1.0, 1.0]))
 
-    
+
     env.animate(25.0)
 

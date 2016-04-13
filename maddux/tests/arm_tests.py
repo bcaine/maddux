@@ -5,7 +5,7 @@ from robots import simple_human_arm
 
 class ArmTest(unittest.TestCase):
     def test_fkine(self):
-        q0 = [0, math.pi/4, 0, -math.pi/4, math.pi/2]
+        q0 = [0, -math.pi/4, 0, -math.pi/4, 0, 0, 0]
         r = simple_human_arm(2, 1, q0)
 
         fkine_sol1 = np.array([[0.0, -1.0, 0.0, -2.4142],
