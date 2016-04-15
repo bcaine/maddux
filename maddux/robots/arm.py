@@ -229,14 +229,15 @@ class Arm:
         """Release one or all currently held objects
         :param object_idx: (Optional) index of object to release
         """
+
+        velocity = self.end_effector_velocity()[0:3]
         if object_idx is None:
             # Release all objects
             for obj in self.held_objects:
-                # TODO: Replace with End Effector Velocity
-                obj.throw(np.array([1.0, 1.0, 1.0]))
+                obj.throw(velocity)
         else:
             # TODO: Replease with End Effector Velocity
-            self.held_objects[object_idx].throw(np.array([1.0, 1.0, 1.0]))
+            self.held_objects[object_idx].throw(velocity)
 
     def end_effector_velocity(self):
         """Calculate the end effector velocity of the arm given 

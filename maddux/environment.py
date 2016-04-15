@@ -82,7 +82,7 @@ class Environment:
             # Check if it hit a target
             for static in self.static_objects:
                 if static.is_hit(pos):
-                    return pos
+                    return pos.copy()
 
             # Or a wall
             for i in range(len(pos)):
@@ -90,7 +90,7 @@ class Environment:
                 past_boundary = pos[i] >= self.dimensions[i]
 
                 if in_negative_space or past_boundary:
-                    return pos
+                    return pos.copy()
 
             # Otherwise step forward
             v[2] += t * GRAVITY
