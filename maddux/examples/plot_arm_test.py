@@ -6,7 +6,7 @@ from maddux.robots import simple_human_arm
 
 
 def plot_arm_test():
-    q0 = np.array([1.5, 0.2, 0, 0.5, 0, 0, 0])
+    q0 = np.array([0, 0, 0, np.pi/2.0, 0, 0, 0])
     human_arm = simple_human_arm(2.0, 1.0, q0)
 
     fig = plt.figure()
@@ -17,8 +17,5 @@ def plot_arm_test():
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
-
-    for link in human_arm.links:
-        link.plot(ax)
-
+    human_arm.plot(ax)
     plt.show()
