@@ -22,7 +22,7 @@ class Link:
         self.q_lim = q_lim
 
         self.set_theta(theta)
-        self.velocity = np.zeroes(3) # Link's current velocity
+        self.velocity = 0 # Link's current velocity
 
         if max_velocity is None:
             self.max_velocity = 30 # radians per second
