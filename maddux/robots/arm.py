@@ -65,6 +65,17 @@ class Arm:
         self.links[link].set_theta(new_angle)
         self.update_link_positions()
 
+    def update_link_velocity(self, link, accel, time):
+        """
+        Updates the given link's velocity with the given
+        acceleration over the given time
+        :param link: The link you want to update, given as a integer
+        :param accel: The acceleration (Radians per second^2)
+        :param time: The time (Seconds)
+        """
+        self.links[link].set_velocity(accel, time)
+        self.update_link_positions()
+
     def get_current_joint_config(self):
         """
         Gets the current joint configuration from the links
@@ -237,5 +248,5 @@ class Arm:
 
         dposition = self.jacob0(q_current) * np.asmatrix(q_new).T
         return dposition
-        
-        
+
+
