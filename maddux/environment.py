@@ -74,7 +74,7 @@ class Environment:
 
     def hypothetical_landing_position(self):
         """Find the position that the ball would land (or hit a wall)"""
-        pos = self.robot.end_effector_position()
+        pos = self.robot.end_effector_position().copy()
         # Only need linear velocity
         v = self.robot.end_effector_velocity()[0:3]
         
