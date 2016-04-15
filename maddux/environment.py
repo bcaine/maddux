@@ -20,7 +20,7 @@ class Environment:
         :param static_objects: (Optional) A list of stationary objects
         :param robot: (Optional) A robot to simulate
         """
-        if dimensions:
+        if dimensions is None:
             self.dimensions = np.array(dimensions)
         else:
             self.dimensions = np.array([10.0, 10.0, 100.0])
