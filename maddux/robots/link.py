@@ -3,31 +3,57 @@ A Link in a robot arm.
 """
 import numpy as np
 from maddux.utils.plot import plot_sphere
-
+import math
 
 class Link:
 
-    def __init__(self, theta, offset, length, twist, q_lim=None):
+    def __init__(self, theta, offset, length, twist, q_lim=None, max_velocity=None):
         """
         :param theta: Link angle, variable
         :param offset: Link offset, constant
         :param length: Link length, constant
         :param twist: Link twist, constant
         :param q_lim: Joint coordinate limits
+        :param max_velocity: Maximum radians the link can rotate per second
         """
         self.offset = offset
         self.length = length
         self.twist = twist
         self.q_lim = q_lim
+
         self.set_theta(theta)
+        self.velocity = np.zeroes(3) # Link's current velocity
+
+        if max_velocity is None:
+            self.max_velocity = 30 # radians per second
+        else:
+            self.max_velocity = max_velocity
 
         # This is updated once we add it to an arm
         self.base_pos = None
         self.end_pos = None
 
     def set_theta(self, theta):
+        """
+        Sets theta to the new theta and computes the new transformation matrix
+        :param theta: The new theta for the link
+        """
         self.theta = theta
         self.transform_matrix = self.compute_transformation_matrix(theta)
+
+    def update_velocity(self, accel, time):
+        """
+        Updates the current velocity of the link when acted upon by some
+        acceleration over some time
+        :param accel: The acceleration acting upon the link (radians per second^2)
+        :param time: The time the accelration is applied over (seconds)
+        """
+        new_velocity = self.velocity + (accel * time)
+        if new_velocity <= self.max_velocity:
+            self.velocity = new_velocity
+            new_theta = self.theta + (new_velocity * time)
+            new_theta = math.atan2(math.sin(new_theta), math.cos(new_theta))
+            self.set_theta(new_theta)
 
     def compute_transformation_matrix(self, q):
         """
