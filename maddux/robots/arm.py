@@ -238,15 +238,13 @@ class Arm:
             # TODO: Replease with End Effector Velocity
             self.held_objects[object_idx].throw(np.array([1.0, 1.0, 1.0]))
 
-    def end_effector_velocity(self, q_new, time):
-        """Calculate the end effector velocity of the arm given a new position.
-        :param qnew: 1xN new configuration of the arm.
-        :param time: Time since last config
+    def end_effector_velocity(self):
+        """Calculate the end effector velocity of the arm given 
+        its current angular velocities.
         """
-        q_current = self.get_current_joint_config()
-        dq = (q_new - q_current) / time
+        q = np.array([link.theta for link in self.links])
+        dq = np.array([link.velocity for link in self.links])
 
-        dposition = self.jacob0(q_current) * np.asmatrix(q_new).T
-        return dposition
+        return self.jacob0(q) * np.asmatrix(q_new).T
 
 
