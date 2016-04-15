@@ -245,6 +245,7 @@ class Arm:
         q = np.array([link.theta for link in self.links])
         dq = np.array([link.velocity for link in self.links])
 
-        return self.jacob0(q) * np.asmatrix(dq).T
+        velocity = self.jacob0(q) * np.asmatrix(dq).T
+        return velocity.A1
 
 

@@ -7,6 +7,9 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
 
+GRAVITY = -9.81
+
+
 class Environment:
 
     def __init__(self, dimensions=None, dynamic_objects=None,
@@ -68,6 +71,33 @@ class Environment:
         # Seems like really weird behavior..
         _ = animation.FuncAnimation(fig, update, frames=frames, blit=False)
         plt.show()
+
+    def hypothetical_landing_position(self):
+        """Find the position that the ball would land (or hit a wall)"""
+        pos = self.robot.end_effector_position()
+        # Only need linear velocity
+        v = self.robot.end_effector_velocity()[0:3]
+        
+        for t in np.linspace(0, 15, 5000):
+            # Check if it hit a target
+            for static in self.static_objects:
+                if static.is_hit(pos):
+                    return pos
+
+            # Or a wall
+            for i in range(len(pos)):
+                in_negative_space = pos[i] <= 0
+                past_boundary = pos[i] >= self.dimensions[i]
+
+                if in_negative_space or past_boundary:
+                    return pos
+
+            # Otherwise step forward
+            v[2] += t * GRAVITY
+            pos += t * v
+        # If we never hit anything (which is completely impossible (TM))
+        # return None
+        return None
 
     def _collision(self):
         """Check if any dynamic objects collide with any static objects
