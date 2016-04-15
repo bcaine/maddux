@@ -6,7 +6,7 @@ from maddux.robots import simple_human_arm
 
 
 def plot_arm_test():
-    q0 = np.array([0, 0, 0, np.pi/2.0, 0, 0, 0])
+    q0 = np.array([np.pi/2.0, np.pi/2.0, 0, np.pi/2.0, 0, 0, 0])
     human_arm = simple_human_arm(2.0, 1.0, q0)
 
     fig = plt.figure()
