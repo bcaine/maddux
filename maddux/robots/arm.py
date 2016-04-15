@@ -73,7 +73,7 @@ class Arm:
         :param accel: The acceleration (Radians per second^2)
         :param time: The time (Seconds)
         """
-        self.links[link].set_velocity(accel, time)
+        self.links[link].update_velocity(accel, time)
         self.update_link_positions()
 
     def get_current_joint_config(self):
@@ -245,6 +245,6 @@ class Arm:
         q = np.array([link.theta for link in self.links])
         dq = np.array([link.velocity for link in self.links])
 
-        return self.jacob0(q) * np.asmatrix(q_new).T
+        return self.jacob0(q) * np.asmatrix(dq).T
 
 
