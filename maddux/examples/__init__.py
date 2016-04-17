@@ -1,6 +1,7 @@
 from arm_test import arm_test
 from plot_arm_test import plot_arm_test
 from plot_test import plot_test
+from plot_obstacle_test import plot_obstacle_test
 from animation_test import (ball_animation_test,
                             arm_animation_test,
                             arm_ball_animation_test,
@@ -15,6 +16,7 @@ examples = {
     'arm_ball_animation': arm_ball_animation_test,
     'plot_arm': plot_arm_test,
     'plot': plot_test,
+    'plot_obstacle': plot_obstacle_test,
     'throw': throwing_test,
 }
 

@@ -77,7 +77,7 @@ class Environment:
         pos = self.robot.end_effector_position().copy()
         # Only need linear velocity
         v = self.robot.end_effector_velocity()[0:3]
-        
+
         for t in np.linspace(0, 15, 5000):
             # Check if it hit a target
             for static in self.static_objects:
@@ -136,7 +136,10 @@ class Environment:
         ax.set_xlim([0, self.dimensions[0]])
         ax.set_ylim([0, self.dimensions[1]])
 
-        zmax = max([o.positions[:, 2].max() for o in self.dynamic_objects])
+        if self.dynamic_objects:
+          zmax = max([o.positions[:, 2].max() for o in self.dynamic_objects])
+        else:
+          zmax = 10
         ax.set_zlim([0, max(10, zmax)])
 
         # And set our labels
