@@ -7,7 +7,7 @@ from maddux.environment import Environment
 from maddux.objects import Ball, Obstacle
 import numpy as np
 
-POS_CHANGE = 2.0
+POS_CHANGE = 0.1
 ACCURACY = 0.05
 
 class Planning(object):
