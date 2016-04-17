@@ -11,12 +11,12 @@ def sphere(position, radius):
                           radius=radius, color=vpython.color.blue)
 
 def box(p1, p2):
-    x, y, z = p1
-    L = x + p2[0]
-    H = y + p2[1]
-    W = z + p2[2]
-    return vpython.box(pos=vpython.vector(x, y, z),
-                       axis=vpython.vector(0, 0, 0),
+    x1, y1, z1 = p1
+    x2, y2, z2 = p2
+    L = x2 - x1
+    H = y2 - y1
+    W = z2 - z1
+    return vpython.box(pos=vpython.vector(x1, y1, z1),
                        length=L, height=H, width=W)
 
 def cylinder(p1, p2, radius=0.025):
