@@ -24,7 +24,7 @@ class Planning(object):
         self.ball = Ball([2.5, 2.5, 2.0], 0.25)
 
         q = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
-        self.robot = simple_human_arm(1.0, 1.0, q, np.array([2.0, 2.0, 2.0]))
+        self.robot = simple_human_arm(2.0, 2.0, q, np.array([3.0, 1.0, 0.0]))
 
         room_dimensions = np.array([10.0, 10.0, 20.0])
         self.env = Environment(room_dimensions,
@@ -102,3 +102,9 @@ class Planning(object):
         print "Moved {} times before throwing!".format(self.move_count)
         print "Last reward: {}".format(self.collected_rewards[-1])
 
+
+    def save_path(self, filepath, iteration):
+        filename = "{}/planning_path_{}".format(filepath, iteration)
+        np.save(filename, self.robot.qs)
+        
+        

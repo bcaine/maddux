@@ -8,6 +8,7 @@ from animation_test import (ball_animation_test,
 )
 from throwing_test import throwing_test
 from obstacle_collision_test import obstacle_collision_test
+from animate_path import animate_path
 
 
 examples = {
@@ -22,9 +23,20 @@ examples = {
     'obstacle_collision': obstacle_collision_test,
 }
 
+utils = {
+    'animate_path': animate_path
+}
+
 
 def run_example(example):
     if example in examples:
         examples[example]()
+        return True
+    return False
+
+
+def run_util(util, *args):
+    if util in utils:
+        utils[util](*args)
         return True
     return False
