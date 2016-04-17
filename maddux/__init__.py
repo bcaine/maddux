@@ -1,14 +1,17 @@
 from environment import Environment
 from simulate import Simulate
-plot_type = "matplotlib"
 
-if plot_type == "vpython":
+def in_ipython():
+    try:
+        cfg = get_ipython().config
+        return True
+    except NameError:
+        return False
+
+if in_ipython():
     import plots.vpython_plots as plots
-elif plot_type == "matplotlib":
-    import plots.matplotlib_plots as plots
 else:
-    raise ValueError("Please provide either matplotlib or" +\
-                     " vpython as plot_type")
+    import plots.matplotlib_plots as plots
 
 import robots
 import objects
