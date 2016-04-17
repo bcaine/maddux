@@ -9,10 +9,10 @@ def obstacle_collision_test():
                  Obstacle([3, 2, 1], [4, 2.5, 1.5])]
     ball = Ball([2.5, 2.5, 2.0], 0.25)
 
-    q0 = np.array([0.25, 0.5, 0.5, 2.0, 0, 0, 0])
-    human_arm = simple_human_arm(2.0, 2.0, q0, np.array([1.5, 1.5, 0.0]))
+    q0 = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
+    human_arm = simple_human_arm(2.0, 2.0, q0, np.array([3.0, 1.0, 0.0]))
     
-    env = Environment(dimensions=[10.0, 20.0, 100.0],
+    env = Environment(dimensions=[10.0, 10.0, 20.0],
                       dynamic_objects=[ball],
                       static_objects=obstacles,
                       robot=human_arm)

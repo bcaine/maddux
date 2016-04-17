@@ -52,7 +52,8 @@ class Planning(object):
             # Find the distance from our target (the ball)
             distance = np.linalg.norm(end_effector_pos -\
                                       self.ball.position)
-            distances.append(distance)
+            # Distances + some noise
+            distances.append(distance + np.random.normal(0, 0.5))
         return np.array(distances)
 
     def perform_action(self, action):
@@ -87,7 +88,7 @@ class Planning(object):
         for obstacle in self.obstacles:
             if self.robot.is_in_collision(obstacle):
                 self.collected_rewards.append(-1)
-                return -1
+                return -5
 
         # Find the distance from our target (the ball)
         new_dist = np.linalg.norm((self.robot.end_effector_position() -
@@ -95,6 +96,8 @@ class Planning(object):
         # Reward it if it decreased the distance between end effector
         # and target (ball).
         reward = old_dist - new_dist
+        if reward > 0:
+            reward *= 2
         self.collected_rewards.append(reward)
         return reward
 
