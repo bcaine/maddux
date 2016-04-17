@@ -19,11 +19,9 @@ class Planning(object):
         self.num_actions = len(self.actions)
         self.observation_size = len(self.actions)
 
-
-        self.ball = Ball(np.array([0, 0, 0]), 0.15)
-        self.obstacles = [Obstacle(np.array([1.0, 1.0, 1.0]),
-                                   np.array([1.2, 1.2, 1.2]))
-                          ]
+        self.obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
+                          Obstacle([3, 2, 1], [4, 2.5, 1.5])]
+        self.ball = Ball([2.5, 2.5, 2.0], 0.25)
 
         q = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
         self.robot = simple_human_arm(1.0, 1.0, q, np.array([2.0, 2.0, 2.0]))

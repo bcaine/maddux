@@ -5,22 +5,26 @@ from maddux.robots import simple_human_arm
 
 
 def obstacle_collision_test():
-    obstacle = Obstacle([2.0, 2.0, 0.0], [3.0, 3.0, 1.0])
-    ball = Ball([3.0, 3.0, 2.0], 0.25)
+    obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
+                 Obstacle([3, 2, 1], [4, 2.5, 1.5])]
+    ball = Ball([2.5, 2.5, 2.0], 0.25)
 
-    q0 = np.array([0.25, 0.5, 0.5, 0.75, 0, 0, 0])
-    human_arm = simple_human_arm(2.0, 2.0, q0, np.array([1.25, 1.25, 0.0]))
+    q0 = np.array([0.25, 0.5, 0.5, 2.0, 0, 0, 0])
+    human_arm = simple_human_arm(2.0, 2.0, q0, np.array([1.5, 1.5, 0.0]))
     
     env = Environment(dimensions=[10.0, 20.0, 100.0],
                       dynamic_objects=[ball],
-                      static_objects=[obstacle],
+                      static_objects=obstacles,
                       robot=human_arm)
-    env.plot()
+
+    human_arm.ikine(ball.position)
+    env.animate(25.0)
     
     print "Ball hit obstacle?",
-    print obstacle.is_hit_by_sphere(ball.position, ball.radius)
+    print any([obstacle.is_hit_by_sphere(ball.position, ball.radius) \
+               for obstacle in obstacles])
 
     print "Arm hit obstacle?",
-    print human_arm.is_in_collision(obstacle)
+    print any([human_arm.is_in_collision(obstacle) for obstacle in obstacles])
 
     
