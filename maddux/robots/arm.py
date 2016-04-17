@@ -56,18 +56,20 @@ class Arm:
             link.set_theta(new_theta)
         self.update_link_positions()
 
-    def update_link_angle(self, link, new_angle):
+    def update_link_angle(self, link, new_angle, save=False):
         """
         Updates the given link's angle with the given angle
         :param link: The link you want to update, given as a integer
         :param new_angle: The link's new angle
+        :paran save: Boolean value that determines if the update is saved
         """
         self.links[link].set_theta(new_angle)
         self.update_link_positions()
 
         # Save each config for replay
-        q = np.array([link.theta for link in self.links])
-        self.qs = np.vstack((self.qs, q.copy()))
+        if save:
+            q = np.array([link.theta for link in self.links])
+            self.qs = np.vstack((self.qs, q.copy()))
 
     def update_link_velocity(self, link, accel, time):
         """
@@ -239,9 +241,17 @@ class Arm:
             # TODO: Replease with End Effector Velocity
             self.held_objects[object_idx].throw(velocity)
 
-    def end_effector_position(self):
-        """Return end effector position"""
-        return self.links[-1].end_pos
+    def end_effector_position(self, q=None):
+        """
+        Return end effector position
+        :param q: Config to compute the end effector position on
+        """
+        if q is None:
+            return self.links[-1].end_pos
+
+        t = self.fkine(q=q)
+        end_pos = utils.create_point_from_homogeneous_transform(t).T
+        return end_pos
 
     def end_effector_velocity(self):
         """Calculate the end effector velocity of the arm given

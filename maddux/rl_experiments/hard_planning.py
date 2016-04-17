@@ -48,18 +48,16 @@ class HardPlanning(object):
             q_old = self.robot.links[link].theta
             q_new = q_old + action * POS_CHANGE
 
-            # Change to new angle to check the end effector position
-            self.robot.update_link_angle(link, q_new)
-            end_effector_pos = self.robot.end_effector_position()
-
-            # Then reset back to old angle
-            self.robot.update_link_angle(link, q_old)
+            # Get the end effector position after joint rotation
+            current_config = self.robot.get_current_joint_config()
+            current_config[link] = q_new
+            end_effector_pos = self.robot.end_effector_position(current_config)
 
             # Find the distance from our target (the ball)
             distance = np.linalg.norm(end_effector_pos -\
                                       self.ball.position)
             # Distances + some noise
-            distances.append(distance + np.random.normal(0, 0.5))
+            distances.append(distance)
         return np.array(distances)
 
     def perform_action(self, action):
@@ -72,7 +70,7 @@ class HardPlanning(object):
         q_old = self.robot.links[link].theta
         q_new = q_old + self.actions[action] * POS_CHANGE
 
-        self.robot.update_link_angle(link, q_new)
+        self.robot.update_link_angle(link, q_new, save=True)
         self.move_count += 1
 
     def is_over(self):
