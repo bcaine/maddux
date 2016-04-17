@@ -215,10 +215,6 @@ class Arm:
         for held_object in self.held_objects:
             held_object.position = self.end_effector_position()
 
-    def end_effector_position(self):
-        """Return end effector position"""
-        return self.links[-1].end_pos
-
     def hold(self, obj):
         """Hold a specific object"""
         obj.attach()
@@ -238,6 +234,10 @@ class Arm:
         else:
             # TODO: Replease with End Effector Velocity
             self.held_objects[object_idx].throw(velocity)
+
+    def end_effector_position(self):
+        """Return end effector position"""
+        return self.links[-1].end_pos
 
     def end_effector_velocity(self):
         """Calculate the end effector velocity of the arm given 
