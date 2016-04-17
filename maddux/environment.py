@@ -41,16 +41,23 @@ class Environment:
                 break
         return self.target.get_score(self.ball.leading_point())
 
-    def animate(self, duration):
+    def animate(self, duration=None, save_path=None):
         """Animates the running of the program
-        :param duration: Duration of animation in seconds
+        :param duration: (Optional) Duration of animation in seconds
+        :param save_path: (Optional) Path to save mp4 in instead of displaying
         """
-        # We want it at 30 fps
-        frames = int(30 * duration)
-        dynamic_iter_per_frame = int(1000 / 30)
+        fps = 15
+        dynamic_iter_per_frame = 10 * fps        
 
-        if self.robot:
-            robot_iter_per_frame = max(1, int(len(self.robot.qs) / frames))
+        if duration is None:
+            if self.robot is None:
+                # Sensible Default
+                frames = fps * 5
+            else:
+                frames = len(self.robot.qs)
+        else:
+            frames = int(fps * duration)
+
 
         def update(i):
             ax.clear()
@@ -59,7 +66,7 @@ class Environment:
                 # Check for collisions
                 self.collision()
             if self.robot is not None:
-                next_q = self.robot.qs[:i * robot_iter_per_frame + 1][-1]
+                next_q = self.robot.qs[i]
                 self.robot.update_angles(next_q)
             self.plot(ax=ax, show=False)
 
@@ -69,8 +76,13 @@ class Environment:
 
         # If we don't assign its return to something, it doesn't run.
         # Seems like really weird behavior..
-        _ = animation.FuncAnimation(fig, update, frames=frames, blit=False)
-        plt.show()
+        ani = animation.FuncAnimation(fig, update, frames=frames, blit=False)
+        if save_path is None:
+            plt.show()
+        else:
+            Writer = animation.writers['ffmpeg']
+            writer = Writer(fps=fps, metadata=dict(artist='Maddux'), bitrate=1800)
+            ani.save(save_path, writer=writer)
 
     def hypothetical_landing_position(self):
         """Find the position that the ball would land (or hit a wall)"""

@@ -24,8 +24,7 @@ def animate_path(saved_path_file):
     saved_path = np.load(saved_path_file)
 
     robot.qs = saved_path
-
-    env.animate(25.0)
+    env.animate(save_path="/home/ben/Development/maddux/test.mp4")
     
     
     
