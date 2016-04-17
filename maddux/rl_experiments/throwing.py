@@ -101,10 +101,10 @@ class ThrowingArm(object):
 
         if self.actions[action] == "Throw":
             # If we threw it, see the distance
-            reward = -new_dist
+            reward = -new_dist + 1.0
         else:
             # Otherwise, see how much we improved
-            reward = 1000 * (prior_dist - new_dist)
+            reward = (prior_dist - new_dist)
 
         self.distance_to_target = new_dist
         self.collected_rewards.append(reward)
