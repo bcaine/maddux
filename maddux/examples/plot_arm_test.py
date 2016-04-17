@@ -9,6 +9,17 @@ def plot_arm_test():
     q0 = np.array([np.pi/2.0, np.pi/2.0, 0, np.pi/2.0, 0, 0, 0])
     human_arm = simple_human_arm(2.0, 1.0, q0)
 
+    ax = create_plot()
+    human_arm.plot(ax)
+    plt.show()
+
+    human_arm.update_link_angle(0, 0.2)
+
+    ax = create_plot()
+    human_arm.plot(ax)
+    plt.show()
+
+def create_plot():
     fig = plt.figure()
     ax = p3.Axes3D(fig)
     ax.set_xlim([0, 3])
@@ -17,5 +28,5 @@ def plot_arm_test():
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
-    human_arm.plot(ax)
-    plt.show()
+
+    return ax
