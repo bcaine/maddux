@@ -50,6 +50,20 @@ class Obstacle(StaticObject):
         z_hit = z1 <= z <= z2
         return not (x_hit and y_hit and z_hit)
 
+    def is_hit_by_sphere(self, center, radius):
+        """
+        Checks if the rectangle is hit by a sphere
+        :param center: 1x3 numpy array of sphere's center
+        :param radius: the sphere's radius
+        """
+        dmin = 0
+        for i in range(3):
+            if center[i]< self.pt1[i]:
+              dmin += (center[i] - self.pt1[i]) ** 2
+            elif center[i] > self.pt[2]:
+              dmin += (center[i] - self.pt2[i]) ** 2
+        return dmin <= radius ** 2
+
     def display(self):
         print "Center: {}".format(self.center)
         print "Width: {}".format(self.width)

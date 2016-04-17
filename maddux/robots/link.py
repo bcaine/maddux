@@ -21,6 +21,9 @@ class Link:
         self.twist = twist
         self.q_lim = q_lim
 
+        self.link_size = 0.1
+        self.connector_size = 0.1
+
         self.set_theta(theta)
         self.velocity = 0 # Link's current velocity
 
@@ -69,6 +72,23 @@ class Link:
                        [0, sa, ca, self.offset],
                        [0, 0, 0, 1]])
         return T
+
+    def is_in_collision(self, env_object):
+        """
+        Checks if the arm is in collision with a given object
+        :param env_object: The object to check for collisions with
+        """
+        intersects_link_sphere = env_object.is_hit_by_sphere(self.base_pos, self.link_size / 2.0)
+
+        # If the link sphere is in collision we do not need to check anything else
+        if intersects_link_sphere:
+            return True
+
+        # If the link is just a joint we only need to check the sphere around the joint position
+        if self.length == 0 and self.offset == 0:
+            return intersects_link_sphere
+
+        # Otherwise we need to check if the object intersects with the arm connector
 
     def display(self):
         """

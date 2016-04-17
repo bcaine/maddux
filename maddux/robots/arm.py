@@ -240,7 +240,7 @@ class Arm:
         return self.links[-1].end_pos
 
     def end_effector_velocity(self):
-        """Calculate the end effector velocity of the arm given 
+        """Calculate the end effector velocity of the arm given
         its current angular velocities.
         """
         q = np.array([link.theta for link in self.links])
@@ -249,4 +249,12 @@ class Arm:
         velocity = self.jacob0(q) * np.asmatrix(dq).T
         return velocity.A1
 
-
+    def is_in_collision(self, env_object):
+        """
+        Checks if the arm is in collision with a given object
+        :param env_object: The object to check for collisions with
+        """
+        for link in self.links:
+            if link.is_in_collision(env_object):
+                return True
+        return False
