@@ -39,24 +39,34 @@ class Obstacle(StaticObject):
       paths = [bottom, top, front, back, left, right]
       return paths
 
-    def is_hit(self, positions):
+    def is_hit(self, position):
         """
         Checks if the rectangle is hit
-        :param position: A vector representing an objects positions
+        :param position: A vector representing an objects position or
+                         positions (if its a path)
         """
-        assert positions.shape[1] == 3
+        # TODO: Clean this up, its pretty gross
+        is_point = len(position.shape) == 1
         
+        if is_point:
+            x, y, z = position
+        else:
+            assert position.shape[1] == 3
+            x = position[:, 0]
+            y = position[:, 1]
+            z = position[:, 2]
+
         [x1, y1, z1] = self.pt1
         [x2, y2, z2] = self.pt2
-        x = positions[:, 0]
-        y = positions[:, 1]
-        z = positions[:, 2]
 
         x_hit = (x >= x1) & (x <= x2)
         y_hit = (y >= y1) & (y <= y2)
         z_hit = (z >= z1) & (z <= z2)
-        
-        return (np.any(x_hit) and np.any(y_hit) and np.any(z_hit))
+
+        if is_point:
+            return (x_hit and y_hit and z_hit)
+        else:
+            return (np.any(x_hit) and np.any(y_hit) and np.any(z_hit))
 
     def is_hit_by_sphere(self, center, radius):
         """
