@@ -7,6 +7,7 @@ from animation_test import (ball_animation_test,
                             arm_ball_animation_test,
 )
 from throwing_test import throwing_test
+from obstacle_collision_test import obstacle_collision_test
 
 
 examples = {
@@ -18,6 +19,7 @@ examples = {
     'plot': plot_test,
     'plot_obstacle': plot_obstacle_test,
     'throw': throwing_test,
+    'obstacle_collision': obstacle_collision_test,
 }
 
 

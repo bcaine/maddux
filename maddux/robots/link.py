@@ -7,7 +7,8 @@ import math
 
 class Link:
 
-    def __init__(self, theta, offset, length, twist, q_lim=None, max_velocity=None):
+    def __init__(self, theta, offset, length, twist,
+                 q_lim=None, max_velocity=None):
         """
         :param theta: Link angle, variable
         :param offset: Link offset, constant
@@ -48,7 +49,8 @@ class Link:
         """
         Updates the current velocity of the link when acted upon by some
         acceleration over some time
-        :param accel: The acceleration acting upon the link (radians per second^2)
+        :param accel: The acceleration acting upon the link 
+                      (radians per second^2)
         :param time: The time the accelration is applied over (seconds)
         """
         new_velocity = self.velocity + (accel * time)
@@ -78,17 +80,29 @@ class Link:
         Checks if the arm is in collision with a given object
         :param env_object: The object to check for collisions with
         """
-        intersects_link_sphere = env_object.is_hit_by_sphere(self.base_pos, self.link_size / 2.0)
+        intersects_joint = env_object.is_hit_by_sphere(self.base_pos,
+                                                       self.link_size / 2.0)
 
-        # If the link sphere is in collision we do not need to check anything else
-        if intersects_link_sphere:
+        # If the link sphere is in collision we do not need to
+        # check anything else
+        if intersects_joint:
             return True
 
-        # If the link is just a joint we only need to check the sphere around the joint position
+        # If the link is just a joint we only needed to check sphere,
+        # and since we would have already returned, we know we're safe
         if self.length == 0 and self.offset == 0:
-            return intersects_link_sphere
+            return False
 
-        # Otherwise we need to check if the object intersects with the arm connector
+        # Otherwise we need to check if the object intersects with
+        # the arm connector, so we vectorize it and call is_hit
+        length = max(self.length, self.offset)
+        lamb = np.linspace(0, length, 100)
+        v = self.end_pos - self.base_pos
+
+        positions = self.base_pos + lamb[:, np.newaxis] * v
+
+        return env_object.is_hit(positions)
+        
 
     def display(self):
         """

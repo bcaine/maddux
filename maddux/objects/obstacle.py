@@ -1,8 +1,10 @@
 """
 A stationary rectangular solid that something may collide with
 """
-from static import StaticObject
+import numpy as np
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
+from static import StaticObject
+
 
 class Obstacle(StaticObject):
 
@@ -37,18 +39,24 @@ class Obstacle(StaticObject):
       paths = [bottom, top, front, back, left, right]
       return paths
 
-    def is_hit(self, position):
+    def is_hit(self, positions):
         """
         Checks if the rectangle is hit
-        :param position: A object's position
+        :param position: A vector representing an objects positions
         """
+        assert positions.shape[1] == 3
+        
         [x1, y1, z1] = self.pt1
         [x2, y2, z2] = self.pt2
-        x, y, z = position
-        x_hit = x1 <= x <= x2
-        y_hit = y1 <= y <= y2
-        z_hit = z1 <= z <= z2
-        return not (x_hit and y_hit and z_hit)
+        x = positions[:, 0]
+        y = positions[:, 1]
+        z = positions[:, 2]
+
+        x_hit = (x >= x1) & (x <= x2)
+        y_hit = (y >= y1) & (y <= y2)
+        z_hit = (z >= z1) & (z <= z2)
+        
+        return (np.any(x_hit) and np.any(y_hit) and np.any(z_hit))
 
     def is_hit_by_sphere(self, center, radius):
         """
@@ -56,14 +64,17 @@ class Obstacle(StaticObject):
         :param center: 1x3 numpy array of sphere's center
         :param radius: the sphere's radius
         """
-        dmin = 0
-        for i in range(3):
-            if center[i]< self.pt1[i]:
-              dmin += (center[i] - self.pt1[i]) ** 2
-            elif center[i] > self.pt[2]:
-              dmin += (center[i] - self.pt2[i]) ** 2
-        return dmin <= radius ** 2
 
+        [x1, y1, z1] = self.pt1
+        [x2, y2, z2] = self.pt2
+        x, y, z = center
+
+        x_hit = (x + radius >= x1) & (x - radius <= x2)
+        y_hit = (y + radius >= y1) & (y - radius <= y2)
+        z_hit = (z + radius >= z1) & (z - radius <= z2)
+
+        return x_hit and y_hit and z_hit
+        
     def display(self):
         print "Center: {}".format(self.center)
         print "Width: {}".format(self.width)
