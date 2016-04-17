@@ -8,11 +8,12 @@ from static import StaticObject
 
 class Obstacle(StaticObject):
 
-    def __init__(self, pt1, pt2):
+    def __init__(self, pt1, pt2, color='r'):
         """
         """
         self.pt1 = pt1
         self.pt2 = pt2
+        self.color = color
 
     def get_paths(self):
       """
@@ -47,7 +48,7 @@ class Obstacle(StaticObject):
         """
         # TODO: Clean this up, its pretty gross
         is_point = len(position.shape) == 1
-        
+
         if is_point:
             x, y, z = position
         else:
@@ -84,7 +85,7 @@ class Obstacle(StaticObject):
         z_hit = (z + radius >= z1) & (z - radius <= z2)
 
         return x_hit and y_hit and z_hit
-        
+
     def display(self):
         print "Center: {}".format(self.center)
         print "Width: {}".format(self.width)
@@ -97,5 +98,5 @@ class Obstacle(StaticObject):
         :param ax: Figure to plot on
         """
         paths = self.get_paths()
-        rectangle = Poly3DCollection(paths)
+        rectangle = Poly3DCollection(paths, facecolors=self.color)
         ax.add_collection3d(rectangle)
