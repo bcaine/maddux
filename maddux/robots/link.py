@@ -39,7 +39,8 @@ class Link:
 
     def set_theta(self, theta):
         """
-        Sets theta to the new theta and computes the new transformation matrix
+        Sets theta to the new theta and computes the new 
+        transformation matrix
         :param theta: The new theta for the link
         """
         self.theta = theta
@@ -47,8 +48,8 @@ class Link:
 
     def update_velocity(self, accel, time):
         """
-        Updates the current velocity of the link when acted upon by some
-        acceleration over some time
+        Updates the current velocity of the link when acted upon 
+        by some acceleration over some time
         :param accel: The acceleration acting upon the link 
                       (radians per second^2)
         :param time: The time the accelration is applied over (seconds)
@@ -57,7 +58,8 @@ class Link:
         if new_velocity <= self.max_velocity:
             self.velocity = new_velocity
             new_theta = self.theta + (new_velocity * time)
-            new_theta = math.atan2(math.sin(new_theta), math.cos(new_theta))
+            new_theta = math.atan2(math.sin(new_theta),
+                                   math.cos(new_theta))
             self.set_theta(new_theta)
 
     def compute_transformation_matrix(self, q):
@@ -81,7 +83,7 @@ class Link:
         :param env_object: The object to check for collisions with
         """
         intersects_joint = env_object.is_hit_by_sphere(self.base_pos,
-                                                       self.link_size / 2.0)
+                                                       self.link_size/2)
 
         # If the link sphere is in collision we do not need to
         # check anything else
@@ -102,7 +104,6 @@ class Link:
         positions = self.base_pos + lamb[:, np.newaxis] * v
 
         return env_object.is_hit(positions)
-        
 
     def display(self):
         """

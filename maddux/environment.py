@@ -115,10 +115,16 @@ class Environment:
 
             for i in range(len(dynamic.position)):
                 in_negative_space = dynamic.position[i] <= 0
-                past_boundary = dynamic.position[i] >= self.dimensions[i]
+                past_boundary = (dynamic.position[i] >=
+                                 self.dimensions[i])
                 if in_negative_space or past_boundary:
                     dynamic.attach()
                     return True
+
+        # Check if the arm is touching any static objects
+        for static in self.static_objects:
+            if self.robot.is_in_collision(static):
+                return True
 
         return False
 
@@ -137,7 +143,8 @@ class Environment:
         ax.set_ylim([0, self.dimensions[1]])
 
         if self.dynamic_objects:
-          zmax = max([o.positions[:, 2].max() for o in self.dynamic_objects])
+          zmax = max([o.positions[:, 2].max() \
+                      for o in self.dynamic_objects])
         else:
           zmax = 10
         ax.set_zlim([0, max(10, zmax)])
