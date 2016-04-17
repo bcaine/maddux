@@ -163,3 +163,16 @@ class Environment:
 
         if show:
             plt.show()
+
+    def plot_vpython(self):
+        map(lambda obj: obj.plot(), self.dynamic_objects)
+        map(lambda obj: obj.plot(), self.static_objects)
+
+        if self.robot:
+            self.robot.plot()
+
+    def animate_vpython(self):
+        pass
+        
+
+            
