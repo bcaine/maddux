@@ -37,7 +37,7 @@ class Environment:
 
         for _ in xrange(duration_ms):
             map(lambda obj: obj.step(), self.dynamic_objects)
-            if self._collision():
+            if self.collision():
                 break
         return self.target.get_score(self.ball.leading_point())
 
@@ -57,7 +57,7 @@ class Environment:
             for _ in xrange(dynamic_iter_per_frame):
                 map(lambda obj: obj.step(), self.dynamic_objects)
                 # Check for collisions
-                self._collision()
+                self.collision()
             if self.robot is not None:
                 next_q = self.robot.qs[:i * robot_iter_per_frame + 1][-1]
                 self.robot.update_angles(next_q)
@@ -99,9 +99,9 @@ class Environment:
         # return None
         return None
 
-    def _collision(self):
+    def collision(self):
         """Check if any dynamic objects collide with any static objects
-           or walls.
+        or walls.
         :return: Boolean, whether there was a collision
         """
         for dynamic in self.dynamic_objects:
@@ -120,11 +120,6 @@ class Environment:
                 if in_negative_space or past_boundary:
                     dynamic.attach()
                     return True
-
-        # Check if the arm is touching any static objects
-        for static in self.static_objects:
-            if self.robot.is_in_collision(static):
-                return True
 
         return False
 

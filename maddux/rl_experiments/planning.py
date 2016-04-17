@@ -52,12 +52,14 @@ class Planning(object):
             self.robot.update_link_angle(link, q_old)
 
             # Find the distance from our target (the ball)
-            distance = np.linalg.norm(end_effector_pos - self.ball.position)
+            distance = np.linalg.norm(end_effector_pos -\
+                                      self.ball.position)
             distances.append(distance)
         return np.array(distances)
 
     def perform_action(self, action):
-        """Update internal state to reflect the fact that an action was taken
+        """Update internal state to reflect the fact that an 
+           action was taken
         :param action: Number of the action performed
         """
         # Update a specific links velocity
@@ -67,10 +69,6 @@ class Planning(object):
         
         self.robot.update_link_angle(link, q_new)
         self.move_count += 1
-
-    def step(self, dt):
-        """Update internal state as if time dt has passed"""
-        pass
 
     def is_over(self):
         """Check if simulation is over"""
@@ -83,17 +81,21 @@ class Planning(object):
         function was called.
         """
         # Calculate previous distance to target object (ball)
-        old_distance = np.linalg.norm(self.robot.end_effector_position -\
+        old_dist = np.linalg.norm(self.robot.end_effector_position -\
                                       self.ball.position)
         # Then perform the action
         self.perform_action(action)
 
-        # Find the distance from our target (the ball)
-        new_distance = np.linalg.norm(end_effector_pos - self.ball.position)
+        for obstacle in self.obstacles:
+            if self.robot.is_in_collision(obstacle):
+                return -1
 
+        # Find the distance from our target (the ball)
+        new_dist = np.linalg.norm(end_effector_pos -\
+                                  self.ball.position)
         # Reward it if it decreased the distance between end effector
         # and target (ball).
-        return old_distance - new_distance
+        return old_dist - new_dist
 
     def display_actions(self):
         print "Moved {} times before throwing!".format(self.move_count)
