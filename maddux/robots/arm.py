@@ -65,6 +65,10 @@ class Arm:
         self.links[link].set_theta(new_angle)
         self.update_link_positions()
 
+        # Save each config for replay
+        q = np.array([link.theta for link in self.links])
+        self.qs = np.vstack((self.qs, q.copy()))
+
     def update_link_velocity(self, link, accel, time):
         """
         Updates the given link's velocity with the given
