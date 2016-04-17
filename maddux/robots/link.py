@@ -83,7 +83,7 @@ class Link:
         :param env_object: The object to check for collisions with
         """
         intersects_joint = env_object.is_hit_by_sphere(self.base_pos,
-                                                       self.link_size/2)
+                                                       self.link_size)
 
         # If the link sphere is in collision we do not need to
         # check anything else
@@ -118,7 +118,7 @@ class Link:
         if self.base_pos is None or self.end_pos is None:
             raise ValueError("Base and End positions were never defined")
 
-        plot_sphere(self.end_pos, 0.15, ax, color='black')
+        plot_sphere(self.end_pos, self.link_size, ax, color='black')
 
         # If there's no length associated, we don't have to draw one
         if self.length == 0 and self.offset == 0:
