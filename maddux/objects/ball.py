@@ -3,7 +3,7 @@ A ball object to throw.
 """
 import numpy as np
 from throwable import ThrowableObject
-from maddux.utils.plot import plot_sphere
+from maddux import plots
 
 
 class Ball(ThrowableObject):
@@ -18,9 +18,8 @@ class Ball(ThrowableObject):
         """
         return self.position + np.array([0, self.radius, 0])
 
-    def plot(self, ax):
+    def plot(self, ax=None):
         """Plots the ball at its current location.
-
-        :param ax: Figure to plot on.
+        :param ax: Required if using Matplotlib. Figure to plot on.
         """
-        return plot_sphere(self.position, self.radius, ax)
+        return plots.sphere(self.position, self.radius, ax)

@@ -2,7 +2,7 @@
 A Link in a robot arm.
 """
 import numpy as np
-from maddux.utils.plot import plot_sphere
+from maddux import plots
 import math
 
 class Link:
@@ -114,11 +114,14 @@ class Link:
         print 'Link length: {}'.format(self.length)
         print 'Link twist: {}'.format(self.twist)
 
-    def plot(self, ax):
+    def plot(self, ax=None):
+        """Plot the link in an arm
+        :param ax: Required if using Matplotlib. Axis to plot on
+        """
         if self.base_pos is None or self.end_pos is None:
             raise ValueError("Base and End positions were never defined")
 
-        plot_sphere(self.end_pos, self.link_size, ax, color='black')
+        plots.sphere(self.end_pos, self.link_size, ax, color='black')
 
         # If there's no length associated, we don't have to draw one
         if self.length == 0 and self.offset == 0:

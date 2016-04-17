@@ -2,8 +2,8 @@
 A stationary rectangular solid that something may collide with
 """
 import numpy as np
-from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 from static import StaticObject
+from maddux import plots
 
 
 class Obstacle(StaticObject):
@@ -92,11 +92,9 @@ class Obstacle(StaticObject):
         print "Height: {}".format(self.height)
         print "Depth: {}".format(self.depth)
 
-    def plot(self, ax):
+    def plot(self, ax=None):
         """
         Plots the obstacle at its location
-        :param ax: Figure to plot on
+        :param ax: Required if using Matplotlib. Figure to plot on.
         """
-        paths = self.get_paths()
-        rectangle = Poly3DCollection(paths, facecolors=self.color)
-        ax.add_collection3d(rectangle)
+        return plots.box(self.pt1, self.pt2, ax)

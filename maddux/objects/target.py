@@ -3,6 +3,7 @@ A stationary object that something may collide with.
 """
 from static import StaticObject
 import numpy as np
+from maddux import plots
 
 HIT_ERROR = 0.01
 
@@ -53,10 +54,9 @@ class Target(StaticObject):
              self.position[2])
         return (x, y, z)
 
-    def plot(self, ax):
+    def plot(self, ax=None):
         """Plots the target at its location.
 
-        :param ax: Figure to plot on.
+        :param ax: If Matplotlib: Figure to plot on.
         """
-        x, y, z = self.plot_data()
-        return ax.plot_surface(x, y, z, color='b', linewidth=0, alpha=0.25)
+        return plots.sphere(self.position, self.radius, ax)
