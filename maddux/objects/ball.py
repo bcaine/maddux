@@ -22,4 +22,7 @@ class Ball(ThrowableObject):
         """Plots the ball at its current location.
         :param ax: Required if using Matplotlib. Figure to plot on.
         """
-        return plots.sphere(self.position, self.radius, ax)
+        if ax is None:
+            return plots.sphere(self.position, self.radius)
+        else:
+            return plots.sphere(self.position, self.radius, ax)        

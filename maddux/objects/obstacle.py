@@ -97,4 +97,7 @@ class Obstacle(StaticObject):
         Plots the obstacle at its location
         :param ax: Required if using Matplotlib. Figure to plot on.
         """
-        return plots.box(self.pt1, self.pt2, ax)
+        if ax is None:
+            return plots.box(self.pt1, self.pt2)
+        else:
+            return plots.box(self.pt1, self.pt2, ax)

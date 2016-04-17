@@ -121,10 +121,16 @@ class Link:
         if self.base_pos is None or self.end_pos is None:
             raise ValueError("Base and End positions were never defined")
 
-        plots.sphere(self.end_pos, self.link_size, ax, color='black')
+        if ax is None:
+            plots.sphere(self.end_pos, self.link_size)            
+        else:
+            plots.sphere(self.end_pos, self.link_size, ax)
 
         # If there's no length associated, we don't have to draw one
         if self.length == 0 and self.offset == 0:
             return ax
 
-        return plots.cylinder(self.base_pos, self.end_pos, ax, thickness=3)
+        if ax is None:
+            return plots.cylinder(self.base_pos, self.end_pos)
+        else:
+            return plots.cylinder(self.base_pos, self.end_pos, ax)

@@ -185,9 +185,9 @@ class Arm:
             J[:, i] = np.vstack((d, delta)).flatten()
         return J
 
-    def plot(self, ax):
+    def plot(self, ax=None):
         """Plot our robot
-        :param ax: axes of plot
+        :param ax: Required if using Matplotlib. Axes of plot
         """
         for link in self.links:
             link.plot(ax)
