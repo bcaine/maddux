@@ -127,7 +127,4 @@ class Link:
         if self.length == 0 and self.offset == 0:
             return ax
 
-        pts = np.vstack((self.base_pos, self.end_pos))
-
-        return ax.plot(pts[:, 0], pts[:, 1], pts[:, 2],
-                       color='b', linewidth=3)
+        return plots.cylinder(self.base_pos, self.end_pos, ax, thickness=3)

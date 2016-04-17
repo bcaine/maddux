@@ -69,3 +69,15 @@ def box(p1, p2, ax):
     data = box_data(p1, p2)
     rectangle = Poly3DCollection(data)
     return ax.add_collection3d(rectangle)
+
+
+def cylinder(p1, p2, ax, radius=5):
+    """Plot a 3d line with a specified thickness
+    :param p1: One endpoint
+    :param p2: The other endpoint
+    :param ax: Axis to plot on
+    :param radius: Default 5. Radius of Cylinder
+    """
+    pts = np.vstack((p1, p2))
+    return ax.plot(pts[:, 0], pts[:, 1], pts[:, 2],
+                   color='b', linewidth=radius*2)
