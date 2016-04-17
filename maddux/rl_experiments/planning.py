@@ -7,7 +7,7 @@ from maddux.environment import Environment
 from maddux.objects import Ball, Obstacle
 import numpy as np
 
-POS_CHANGE = 0.2
+POS_CHANGE = 2.0
 ACCURACY = 0.05
 
 class Planning(object):
@@ -71,7 +71,7 @@ class Planning(object):
     def is_over(self):
         """Check if simulation is over"""
         target = self.ball.position
-        end_effector = self.robot.end_effector_position
+        end_effector = self.robot.end_effector_position()
         return np.linalg.norm(target - end_effector) < ACCURACY
 
     def collect_reward(self, action):
@@ -79,21 +79,24 @@ class Planning(object):
         function was called.
         """
         # Calculate previous distance to target object (ball)
-        old_dist = np.linalg.norm(self.robot.end_effector_position -\
-                                      self.ball.position)
+        old_dist = np.linalg.norm((self.robot.end_effector_position() -
+                                   self.ball.position))
         # Then perform the action
         self.perform_action(action)
 
         for obstacle in self.obstacles:
             if self.robot.is_in_collision(obstacle):
+                self.collected_rewards.append(-1)
                 return -1
 
         # Find the distance from our target (the ball)
-        new_dist = np.linalg.norm(end_effector_pos -\
-                                  self.ball.position)
+        new_dist = np.linalg.norm((self.robot.end_effector_position() -
+                                   self.ball.position))
         # Reward it if it decreased the distance between end effector
         # and target (ball).
-        return old_dist - new_dist
+        reward = old_dist - new_dist
+        self.collected_rewards.append(reward)
+        return reward
 
     def display_actions(self):
         print "Moved {} times before throwing!".format(self.move_count)
