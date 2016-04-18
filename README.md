@@ -84,16 +84,6 @@ q0 = np.array([0, 0, 0, np.pi/2, 0])
 # Create arm
 r = Arm(links, q0, '1-link')
 ```
-```
-
-	Generates: 
-    [[ 0.00008795 -0.43180003  0.00008795  0.          0.        ]
-     [ 0.43179999 -0.00008795  0.43179999 -0.00008795  0.        ]
-     [ 0.          0.43179998  0.         -0.43179998  0.        ]
-     [ 0.          0.         -0.         -0.          0.99999998]
-     [-0.         -0.99999998 -0.          0.99999998 -0.00020367]
-     [ 1.         -0.00020367  1.         -0.00020367  0.00000004]]
-```
 
 ### Use with Deep Q Learning
 This library was created with the intent of experimenting with reinforcement learning on robot manipulators. [nivwusquorum/tensorflow-deepq](https://github.com/nivwusquorum/tensorflow-deepq) provides an excellent tool to experiment with Deep Q Learning.
