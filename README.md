@@ -40,7 +40,7 @@ env.plot()
 ![Example Arm](./images/arm_with_obstacles.png)
 
 
-### Environment Usage
+### Environment Visualizations and Animations
 
 ```python
 from maddux.environment import Environment
