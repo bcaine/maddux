@@ -64,10 +64,12 @@ class Obstacle(StaticObject):
         y_hit = (y >= y1) & (y <= y2)
         z_hit = (z >= z1) & (z <= z2)
 
+        all_hit = x_hit & y_hit & z_hit
+        
         if is_point:
             return (x_hit and y_hit and z_hit)
         else:
-            return (np.any(x_hit) and np.any(y_hit) and np.any(z_hit))
+            return np.any(all_hit)
 
     def is_hit_by_sphere(self, center, radius):
         """
