@@ -69,8 +69,6 @@ environment.animate(2.0)
 from maddux.robots.link import Link
 from maddux.robots.arm import Arm
 
-np.set_printoptions(suppress=True)
-
 # Create a series of links (each link has one joint)
 L1 = Link(0,0,0,1.571)
 L2 = Link(0,0,0,-1.571)
@@ -81,6 +79,7 @@ links = np.array([L1, L2, L3, L4, L5])
 
 # Initial arm angle
 q0 = np.array([0, 0, 0, np.pi/2, 0])
+
 # Create arm
 r = Arm(links, q0, '1-link')
 ```
