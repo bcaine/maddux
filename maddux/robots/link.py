@@ -2,7 +2,7 @@
 A Link in a robot arm.
 """
 import numpy as np
-from maddux.utils.plot import plot_sphere
+from maddux.plot import plot_sphere
 import math
 
 class Link:
