@@ -4,7 +4,7 @@ from maddux.objects import Ball, Obstacle
 from maddux.robots import simple_human_arm
 
 
-def animate_path(saved_path_file):
+def animate_path(input_file, output_file=None):
     """Load a saved path and animate it"""
     
     obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
@@ -21,10 +21,14 @@ def animate_path(saved_path_file):
                       robot=robot)
 
     # Load our saved path
-    saved_path = np.load(saved_path_file)
+    saved_path = np.load(input_file)
 
     robot.qs = saved_path
-    env.animate(save_path="/home/ben/Development/maddux/test.mp4")
+
+    if output_file is not None:
+        env.animate(save_path=output_file)
+    else:
+        env.animate()
     
     
     
