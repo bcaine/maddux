@@ -70,9 +70,8 @@ class Planning(object):
 
     def is_over(self):
         """Check if simulation is over"""
-        for obstacle in self.obstacles:
-            if self.robot.is_in_collision(obstacle):
-                return True
+        if self.collected_rewards and self.collected_rewards[-1] == -1:
+            return True
 
         target = self.ball.position
         end_effector = self.robot.end_effector_position()
@@ -91,7 +90,7 @@ class Planning(object):
         for obstacle in self.obstacles:
             if self.robot.is_in_collision(obstacle):
                 self.collected_rewards.append(-1)
-                return -5
+                return -1
 
         # Find the distance from our target (the ball)
         new_dist = np.linalg.norm((self.robot.end_effector_position() -

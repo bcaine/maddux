@@ -39,7 +39,7 @@ class Link:
 
     def set_theta(self, theta):
         """
-        Sets theta to the new theta and computes the new 
+        Sets theta to the new theta and computes the new
         transformation matrix
         :param theta: The new theta for the link
         """
@@ -48,9 +48,9 @@ class Link:
 
     def update_velocity(self, accel, time):
         """
-        Updates the current velocity of the link when acted upon 
+        Updates the current velocity of the link when acted upon
         by some acceleration over some time
-        :param accel: The acceleration acting upon the link 
+        :param accel: The acceleration acting upon the link
                       (radians per second^2)
         :param time: The time the accelration is applied over (seconds)
         """
@@ -98,7 +98,7 @@ class Link:
         # Otherwise we need to check if the object intersects with
         # the arm connector, so we vectorize it and call is_hit
         length = max(self.length, self.offset)
-        lamb = np.linspace(0, length, 100)
+        lamb = np.linspace(0, 1, 100)
         v = self.end_pos - self.base_pos
 
         positions = self.base_pos + lamb[:, np.newaxis] * v
