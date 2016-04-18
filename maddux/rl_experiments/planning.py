@@ -5,12 +5,18 @@ sys.path.insert(0, os.path.abspath('.'))
 import numpy as np
 from random import gauss
 
-POS_CHANGE = 0.1
-ACCURACY = 0.25
 
 class Planning(object):
 
-    def __init__(self, environment):
+    def __init__(self, environment, change_per_iter=0.1, target_accuracy=0.25):
+        """Planning module to take an environment and run RL experiments on
+        :param environment: Environment containing robot, obstacles, 
+                            target etc.
+        :param change_per_iter: Change of a joint each action
+        :param target_accuracy: Accuracy needed to declare target hit
+        """
+        self.change_per_iter = change_per_iter
+        self.target_accuracy = target_accuracy
         self.static_objects = environment.static_objects
         self.dynamic_objects = environment.dynamic_objects
         self.robot = environment.robot
@@ -34,7 +40,7 @@ class Planning(object):
 
             # Calculate old and new link positions
             q_old = self.robot.links[link].theta
-            q_new = q_old + action * POS_CHANGE
+            q_new = q_old + action * self.change_per_iter
 
             # Get the end effector position after joint rotation
             current_config = self.robot.get_current_joint_config()
@@ -56,19 +62,20 @@ class Planning(object):
         # Update a specific links velocity
         link = action / 2
         q_old = self.robot.links[link].theta
-        q_new = q_old + self.actions[action] * POS_CHANGE
+        q_new = q_old + self.actions[action] * self.change_per_iter
 
         self.robot.update_link_angle(link, q_new, True)
         self.move_count += 1
 
     def is_over(self):
         """Check if simulation is over"""
-        if self.collected_rewards and self.collected_rewards[-1] == -1:
-            return True
+        for obstacle in self.static_objects:
+            if self.robot.is_in_collision(obstacle):
+                return True
 
         target = self.target.position
         end_effector = self.robot.end_effector_position()
-        return np.linalg.norm(target - end_effector) < ACCURACY
+        return np.linalg.norm(target - end_effector) < self.target_accuracy
 
     def collect_reward(self, action):
         """Returns reward accumulated since last time this
