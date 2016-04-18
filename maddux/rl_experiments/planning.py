@@ -10,7 +10,7 @@ class Planning(object):
 
     def __init__(self, environment, change_per_iter=0.1, target_accuracy=0.25):
         """Planning module to take an environment and run RL experiments on
-        :param environment: Environment containing robot, obstacles, 
+        :param environment: Environment containing robot, obstacles,
                             target etc.
         :param change_per_iter: Change of a joint each action
         :param target_accuracy: Accuracy needed to declare target hit
@@ -69,9 +69,8 @@ class Planning(object):
 
     def is_over(self):
         """Check if simulation is over"""
-        for obstacle in self.static_objects:
-            if self.robot.is_in_collision(obstacle):
-                return True
+        if self.collected_rewards and self.collected_rewards[-1] == -1:
+            return True
 
         target = self.target.position
         end_effector = self.robot.end_effector_position()
