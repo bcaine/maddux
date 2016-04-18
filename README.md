@@ -84,6 +84,7 @@ q0 = np.array([0, 0, 0, np.pi/2, 0])
 # Create arm
 r = Arm(links, q0, '1-link')
 ```
+```
 
 	Generates: 
     [[ 0.00008795 -0.43180003  0.00008795  0.          0.        ]
