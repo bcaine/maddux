@@ -7,49 +7,40 @@ Created to use in a project for [Robert Platt's Robotics Course](http://www.ccs.
 - Arbitrary Length Arms
 - Forward Kinematics
 - Inverse Kinematics
-- Simulation Environment (with objects like Balls and Targets)
+- Simulation Environment (with objects like Balls, Targets, Obstacles)
 - 3D Environment Animations
 - 3D Arm Animations
+- End Effector Position, Velocity
 
 
-##### In Progress
-- Inverse Velocity Kinematics
-- Learning/Control toolbox (Reinforcement Learning, Search)
-
-### Arm Usage
+### Arm Visualization and Animations
 ```python
-from maddux.robots.link import Link
-from maddux.robots.arm import Arm
+import numpy as np
+from maddux.objects import Obstacle, Ball
+from maddux.environment import Environment
+from maddux.robots import simple_human_arm
 
-np.set_printoptions(suppress=True)
+obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
+             Obstacle([3, 2, 1], [4, 2.5, 1.5])]
+ball = Ball([2.5, 2.5, 2.0], 0.25)
 
-# Create a series of links (each link has one joint)
-L1 = Link(0,0,0,1.571)
-L2 = Link(0,0,0,-1.571)
-L3 = Link(0,0.4318,0,-1.571)
-L4 = Link(0,0,0,1.571)
-L5 = Link(0,0.4318,0,1.571)
-links = np.array([L1, L2, L3, L4, L5])
+q0 = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
+human_arm = simple_human_arm(2.0, 2.0, q0, np.array([3.0, 1.0, 0.0]))
 
-# Initial arm angle
-q0 = np.array([0, 0, 0, np.pi/2, 0])
-# Create arm
-r = Arm(links, q0, '1-link')
+env = Environment(dimensions=[10.0, 10.0, 20.0],
+                  dynamic_objects=[ball],
+                  static_objects=obstacles,
+                  robot=human_arm)
 
-# Calculate the jacobian
-print r.jacob0([0, 0, 0, np.pi/2, 0])
+q_new = human_arm.ikine(ball.position)
+human_arm.update_angles(q_new)
+env.plot()
 ```
 
-	Generates: 
-    [[ 0.00008795 -0.43180003  0.00008795  0.          0.        ]
-     [ 0.43179999 -0.00008795  0.43179999 -0.00008795  0.        ]
-     [ 0.          0.43179998  0.         -0.43179998  0.        ]
-     [ 0.          0.         -0.         -0.          0.99999998]
-     [-0.         -0.99999998 -0.          0.99999998 -0.00020367]
-     [ 1.         -0.00020367  1.         -0.00020367  0.00000004]]
+![Example Arm](./images/arm_with_obstacles.png)
 
 
-### Animation and Plotting Usage
+### Environment Usage
 
 ```python
 from maddux.environment import Environment
@@ -71,7 +62,52 @@ environment.plot()
 environment.animate(2.0)
 ```
 
-An example of what the environment looks like plotted.
-
 ![Example Plot](./images/example_plot.png)
+
+### Arm Usage
+```python
+from maddux.robots.link import Link
+from maddux.robots.arm import Arm
+
+np.set_printoptions(suppress=True)
+
+# Create a series of links (each link has one joint)
+L1 = Link(0,0,0,1.571)
+L2 = Link(0,0,0,-1.571)
+L3 = Link(0,0.4318,0,-1.571)
+L4 = Link(0,0,0,1.571)
+L5 = Link(0,0.4318,0,1.571)
+links = np.array([L1, L2, L3, L4, L5])
+
+# Initial arm angle
+q0 = np.array([0, 0, 0, np.pi/2, 0])
+# Create arm
+r = Arm(links, q0, '1-link')
+```
+
+	Generates: 
+    [[ 0.00008795 -0.43180003  0.00008795  0.          0.        ]
+     [ 0.43179999 -0.00008795  0.43179999 -0.00008795  0.        ]
+     [ 0.          0.43179998  0.         -0.43179998  0.        ]
+     [ 0.          0.         -0.         -0.          0.99999998]
+     [-0.         -0.99999998 -0.          0.99999998 -0.00020367]
+     [ 1.         -0.00020367  1.         -0.00020367  0.00000004]]
+```
+
+### Use with Deep Q Learning
+This library was created with the intent of experimenting with reinforcement learning on robot manipulators. [nivwusquorum/tensorflow-deepq](https://github.com/nivwusquorum/tensorflow-deepq) provides an excellent tool to experiment with Deep Q Learning.
+
+[maddux/rl_experiments/](./maddux/rl_experiments/) provides full reinforcement learning classes and arm environments for doing obstacle avoidance and manipulator control using the above Deep Q Learning framework. 
+
+For fun, here's some examples
+
+##### Iteration 0
+
+![Iteration 0](./images/simple_0.gif)
+
+##### Iteration 100
+![Iteration 100](./images/simple_100.gif)
+
+##### Iteration 1000
+![Iteration 1000](./images/simple_1000.gif)
 
