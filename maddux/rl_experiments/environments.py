@@ -14,7 +14,7 @@ def get_easy_environment():
                         Obstacle([3, 2, 1], [4, 2.5, 1.5])]
     easy_ball = Ball([2.5, 2.5, 2.0], 0.25)
     easy_q = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
-    easy_robot = easy_human_arm(2.0, 2.0, easy_q,
+    easy_robot = simple_human_arm(2.0, 2.0, easy_q,
                                     np.array([3.0, 1.0, 0.0]))
 
     return Environment(room_dimensions,
@@ -27,7 +27,7 @@ def get_medium_environment():
                         Obstacle([3, 2, 1], [4, 2.5, 1.5])]
     medium_ball = Ball([2.5, 2.5, 2.0], 0.25)
     medium_q = np.array([0, 0, 0, 0, 0, 0, 0])
-    medium_robot = easy_human_arm(2.0, 2.0, medium_q,
+    medium_robot = simple_human_arm(2.0, 2.0, medium_q,
                                     np.array([3.0, 1.0, 0.0]))
 
     return Environment(room_dimensions,
@@ -43,7 +43,7 @@ def get_hard_environment():
                       Obstacle([0.5, 2.5, 0.0], [1.5, 4.0, 1.0])]
     hard_ball = Ball([1.0, 3.25, 2.0], 0.5)
     hard_q = np.array([0, 0, 0, -np.pi/2.0, 0, 0, 0])
-    hard_robot = easy_human_arm(3.0, 2.0, hard_q, np.array([1.0, 1.0, 0.0]))
+    hard_robot = simple_human_arm(3.0, 2.0, hard_q, np.array([1.0, 1.0, 0.0]))
 
     return Environment(room_dimensions,
                        dynamic_objects=[hard_ball],
