@@ -7,13 +7,13 @@ import utils
 
 class Arm:
 
-    def __init__(self, links, q0, name, active_links, base=None, tool=None):
+    def __init__(self, links, q0, name, active_links=None, base=None, tool=None):
         """A robotic arm.
         :param links: Vector of Link objects (1xN numpy vector)
         :param q0: The default (resting state) joint configuration
                    (1xN numpy vector)
         :param name: Name of the arm
-        :param active_links: Number of active links on the arm
+        :param active_links: Number of active links on the arm (Defaults to all)
         :param base: Base position of the arm (1x3 numpy array)
         :param tool: Tool location.
         """
@@ -21,7 +21,11 @@ class Arm:
         self.links = links
         self.q0 = q0
         self.name = name
-        self.active_links = active_links
+
+        if active_links is None:
+            self.active_links = len(links)
+        else:
+            self.active_links = active_links
 
         if base is None:
             self.base = np.identity(4)
