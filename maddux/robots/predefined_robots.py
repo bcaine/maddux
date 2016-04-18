@@ -23,3 +23,25 @@ def simple_human_arm(seg1_len, seg2_len, q0, base=None):
 
     robot = Arm(links, q0, 'simple_human_arm', 4, base)
     return robot
+
+def noodle_arm(seg_lens, q0, base=None):
+    """
+    Creates a complex arm with 10 segments
+    :param seg_lens: 1x10 numpy array with the lengths of each sement
+    :param q0: The starting joint configuration
+    :param base: (Optional) optional base location of arm
+    """
+    L1  = Link(0, seg_lens[0], 0, 1.571)
+    L2  = Link(0, seg_lens[1], 0, -1.571)
+    L3  = Link(0, seg_lens[2], 0, -1.571)
+    L4  = Link(0, seg_lens[3], 0, 1.571)
+    L5  = Link(0, seg_lens[4], 0, 1.571)
+    L6  = Link(0, seg_lens[5], 0, -1.571)
+    L7  = Link(0, seg_lens[6], 0, 1.571)
+    L8  = Link(0, seg_lens[7], 0, 1.571)
+    L9  = Link(0, seg_lens[8], 0, -1.571)
+    L10 = Link(0, seg_lens[9], 0, 1.571)
+    links = np.array([L1, L2, L3, L4, L5, L6, L7, L8, L9, L10])
+
+    robot = Arm(links, q0, 'noodle_arm', 10, base)
+    return robot

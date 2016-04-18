@@ -2,7 +2,7 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath('.'))
 
-from maddux.robots import simple_human_arm
+from maddux.robots import simple_human_arm, noodle_arm
 from maddux.environment import Environment
 from maddux.objects import Ball, Obstacle
 import numpy as np
@@ -50,10 +50,18 @@ def get_hard_environment():
                        static_objects=hard_obstacles,
                        robot=hard_robot)
 
+def get_noodle_environment():
+    simple_q = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    noodle_robot = noodle_arm(simple_q, np.array([3.0, 1.0, 0.0]))
+
+    return Environment(room_dimensions, robot=noodle_robot)
+
+
 environments = {
     "simple": get_simple_environment,
     "medium": get_medium_environment,
     "hard": get_hard_environment,
+    "noodle": get_noodle_environment,
 }
 
 
