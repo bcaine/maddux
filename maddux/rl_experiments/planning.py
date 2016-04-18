@@ -30,31 +30,13 @@ class Planning(object):
         self.move_count = 0
         self.collected_rewards = []
         self.num_actions = len(self.actions)
-        self.observation_size = len(self.actions)
+        self.observation_size = 4
 
         self.hit_obstacle = False
 
     def observe(self):
         """Returns current observation"""
-        distances = []
-        for i, action in enumerate(self.actions):
-            link = i / 2
-
-            # Calculate old and new link positions
-            q_old = self.robot.links[link].theta
-            q_new = q_old + action * self.change_per_iter
-
-            # Get the end effector position after joint rotation
-            current_config = self.robot.get_current_joint_config()
-            current_config[link] = q_new
-            end_effector_pos = self.robot.end_effector_position(
-                current_config)
-
-            # Find the distance from our target (the ball)
-            distance = np.linalg.norm(end_effector_pos - self.target.position)
-            # Distances + some noise
-            distances.append(distance)
-        return np.array(distances)
+        return self.robot.get_current_joint_config()[0:4]
 
     def perform_action(self, action):
         """Update internal state to reflect the fact that an

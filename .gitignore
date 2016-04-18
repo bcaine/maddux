@@ -2,3 +2,5 @@
 *.py~
 *.md~
 *.gitignore~
+saved_experiments/
+*.ipynb_checkpoints/
