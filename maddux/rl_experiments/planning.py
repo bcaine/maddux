@@ -32,6 +32,8 @@ class Planning(object):
         self.num_actions = len(self.actions)
         self.observation_size = len(self.actions)
 
+        self.hit_obstacle = False
+
     def observe(self):
         """Returns current observation"""
         distances = []
@@ -69,7 +71,7 @@ class Planning(object):
 
     def is_over(self):
         """Check if simulation is over"""
-        if self.collected_rewards and self.collected_rewards[-1] == -1:
+        if self.hit_obstacle:
             return True
 
         target = self.target.position
@@ -88,8 +90,9 @@ class Planning(object):
 
         for obstacle in self.static_objects:
             if self.robot.is_in_collision(obstacle):
-                self.collected_rewards.append(-1)
-                return -1
+                self.hit_obstacle = True
+                self.collected_rewards.append(-10)
+                return -10
 
         # Find the distance from our target (the ball)
         new_dist = np.linalg.norm((self.robot.end_effector_position() -
