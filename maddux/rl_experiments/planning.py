@@ -94,11 +94,16 @@ class Planning(object):
         # Find the distance from our target (the ball)
         new_dist = np.linalg.norm((self.robot.end_effector_position() -
                                    self.target.position))
-        # Reward it if it decreased the distance between end effector
-        # and target (ball).
-        reward = old_dist - new_dist
-        if reward > 0:
-            reward *= 2
+
+        # If we hit the target, give it a big reward
+        if new_dist < self.target_accuracy:
+            reward = 10
+        else:
+            # Reward it if it decreased the distance between end effector
+            # and target (ball).
+            reward = old_dist - new_dist
+            if reward > 0:
+                reward *= 2
         self.collected_rewards.append(reward)
         return reward
 

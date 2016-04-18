@@ -10,51 +10,60 @@ import numpy as np
 room_dimensions = np.array([10.0, 10.0, 10.0])
 
 def get_easy_environment():
-    easy_obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
-                        Obstacle([3, 2, 1], [4, 2.5, 1.5])]
-    easy_ball = Ball([2.5, 2.5, 2.0], 0.25)
-    easy_q = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
-    easy_robot = simple_human_arm(2.0, 2.0, easy_q,
-                                    np.array([3.0, 1.0, 0.0]))
+    obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
+                 Obstacle([3, 2, 1], [4, 2.5, 1.5])]
+    ball = Ball([2.5, 2.5, 2.0], 0.25)
+    q = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
+    robot = simple_human_arm(2.0, 2.0, q, np.array([3.0, 1.0, 0.0]))
 
     return Environment(room_dimensions,
-                       dynamic_objects=[easy_ball],
-                       static_objects=easy_obstacles,
-                       robot=easy_robot)
+                       dynamic_objects=[ball],
+                       static_objects=obstacles,
+                       robot=robot)
 
 def get_medium_environment():
-    medium_obstacles = [Obstacle([2.5, 0, 2.2], [3.5, 1, 2.5]),
-                        Obstacle([3, 2, 1], [4, 2.5, 1.5])]
-    medium_ball = Ball([2.5, 2.5, 2.0], 0.25)
-    medium_q = np.array([0, 0, 0, 0, 0, 0, 0])
-    medium_robot = simple_human_arm(2.0, 2.0, medium_q,
-                                    np.array([3.0, 1.0, 0.0]))
+    obstacles = [Obstacle([2.5, 0, 2.2], [3.5, 1, 2.5]),
+                 Obstacle([3, 2, 1], [4, 2.5, 1.5])]
+    ball = Ball([2.5, 2.5, 2.0], 0.25)
+    q = np.array([0, 0, 0, 0, 0, 0, 0])
+    robot = simple_human_arm(2.0, 2.0, q, np.array([3.0, 1.0, 0.0]))
 
     return Environment(room_dimensions,
-                       dynamic_objects=[medium_ball],
-                       static_objects=medium_obstacles,
-                       robot=medium_robot)
+                       dynamic_objects=[ball],
+                       static_objects=obstacles,
+                       robot=robot)
 
 def get_hard_environment():
-    hard_obstacles = [Obstacle([0.0, 2.0, 0.0], [1.5, 2.5, 3.0]),
-                      Obstacle([0.0, 4.0, 0.0], [1.5, 4.5, 3.0]),
-                      Obstacle([0.0, 2.5, 0.0], [0.5, 4.0, 3.0]),
-                      Obstacle([0.0, 2.0, 3.0], [1.5, 4.5, 3.5]),
-                      Obstacle([0.5, 2.5, 0.0], [1.5, 4.0, 1.0])]
-    hard_ball = Ball([1.0, 3.25, 2.0], 0.5)
-    hard_q = np.array([0, 0, 0, -np.pi/2.0, 0, 0, 0])
-    hard_robot = simple_human_arm(3.0, 2.0, hard_q, np.array([1.0, 1.0, 0.0]))
+    obstacles = [Obstacle([0.0, 2.0, 0.0], [1.5, 2.5, 3.0]),
+                Obstacle([0.0, 4.0, 0.0], [1.5, 4.5, 3.0]),
+                Obstacle([0.0, 2.5, 0.0], [0.5, 4.0, 3.0]),
+                Obstacle([0.0, 2.0, 3.0], [1.5, 4.5, 3.5]),
+                Obstacle([0.5, 2.5, 0.0], [1.5, 4.0, 1.0])]
+    ball = Ball([1.0, 3.25, 2.0], 0.5)
+    q = np.array([0, 0, 0, -np.pi/2.0, 0, 0, 0])
+    robot = simple_human_arm(3.0, 2.0, q, np.array([1.0, 1.0, 0.0]))
 
     return Environment(room_dimensions,
-                       dynamic_objects=[hard_ball],
-                       static_objects=hard_obstacles,
-                       robot=hard_robot)
+                       dynamic_objects=[ball],
+                       static_objects=obstacles,
+                       robot=robot)
 
 def get_noodle_environment():
-    simple_q = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-    noodle_robot = noodle_arm(simple_q, np.array([3.0, 1.0, 0.0]))
+    obstacles = [Obstacle([0.0, 2.0, 0.0], [1.5, 2.5, 3.0]),
+                Obstacle([4.0, 4.0, 0.0], [4.5, 4.5, 3.0]),
+                Obstacle([5.0, 0, 2.0], [5.5, 0.5, 3.0]),
+                Obstacle([2.0, 2.0, 3.0], [5.0, 2.5, 3.5]),
+                Obstacle([3.0, 4.5, 6.0], [7.0, 6.0, 5.0])]
+    ball = Ball([5.0, 5.0, 3.0], 0.5)
+    q = np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
-    return Environment(room_dimensions, robot=noodle_robot)
+    seg_lengths = [1, 2, 1, 2, 1, 2, 1, 2, 1, 2]
+    robot = noodle_arm(seg_lengths, q, np.array([3.0, 1.0, 0.0]))
+
+    return Environment(room_dimensions,
+                       dynamic_objects=[ball],
+                       static_objects=obstacles,
+                       robot=robot)
 
 
 environments = {
