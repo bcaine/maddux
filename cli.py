@@ -25,7 +25,7 @@ class HelpfulParser(argparse.ArgumentParser):
 
 def main():
     parser = HelpfulParser(description="A robotic arm toolbox")
-    parser.add_argument('-e', '--example', type=str, required=False,
+    parser.add_argument('-x', '--example', type=str, required=False,
                         help="Which example to run.")
     parser.add_argument('-u', '--util', type=str, required=False,
                         help="Run a utility. May require additional args")
@@ -33,6 +33,8 @@ def main():
                         help="A path to an input file")
     parser.add_argument('-o', '--output', type=str, required=False,
                         help="A path to an output file")
+    parser.add_argument('-e', '--environment', type=str, required=False,
+                        help="An environment to simulate inside of")
 
     success = False
     if len(sys.argv):

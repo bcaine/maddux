@@ -7,9 +7,7 @@ from maddux.environment import Environment
 from maddux.objects import Ball, Obstacle
 import numpy as np
 
-
 room_dimensions = np.array([10.0, 10.0, 10.0])
-
 
 def get_simple_environment():
     simple_obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
@@ -39,3 +37,10 @@ def get_hard_environment():
                        dynamic_objects=[hard_ball],
                        static_objects=hard_obstacles,
                        robot=hard_robot)
+
+environments = {
+    "simple": get_simple_environment,
+    "hard": get_hard_environment,
+}
+
+

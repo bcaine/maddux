@@ -6,6 +6,7 @@ utils = {
 
 def run_util(**kwargs):
     util = kwargs.get('util')
+    environment = kwargs.get('environment')
     input_file = kwargs.get('input')
     output_file = kwargs.get('output')
     
@@ -18,7 +19,10 @@ def run_util(**kwargs):
             if input_file is None:
                 print "Please Provide an input file"
                 return False
-            animate_path(input_file, output_file)
+            if environment is None:
+                print "Please provide an environment"
+                return False
+            animate_path(environment, input_file, output_file)
         else:
             utils[util]()
         return True
