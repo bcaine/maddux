@@ -2,9 +2,6 @@ import sys
 import os
 sys.path.insert(0, os.path.abspath('.'))
 
-from maddux.robots import simple_human_arm
-from maddux.environment import Environment
-from maddux.objects import Ball, Obstacle
 import numpy as np
 from random import gauss
 
@@ -13,25 +10,21 @@ ACCURACY = 0.25
 
 class Planning(object):
 
-    def __init__(self, num_joints=4):
-        self.actions = [-1, 1] * num_joints
+    def __init__(self, environment):
+        self.static_objects = environment.static_objects
+        self.dynamic_objects = environment.dynamic_objects
+        self.robot = environment.robot
+        self.env = environment
+
+        # Assume target is first dynamic object
+        self.target = self.dynamic_objects[0]
+
+        # Define our actions and observation data
+        self.actions = [-1, 1] * self.robot.active_links
         self.move_count = 0
         self.collected_rewards = []
         self.num_actions = len(self.actions)
         self.observation_size = len(self.actions)
-
-        self.obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
-                          Obstacle([3, 2, 1], [4, 2.5, 1.5])]
-        self.ball = Ball([2.5, 2.5, 2.0], 0.25)
-
-        q = np.array([0, 0, 0, np.pi / 2, 0, 0, 0])
-        self.robot = simple_human_arm(2.0, 2.0, q, np.array([3.0, 1.0, 0.0]))
-
-        room_dimensions = np.array([10.0, 10.0, 20.0])
-        self.env = Environment(room_dimensions,
-                               dynamic_objects=[self.ball],
-                               static_objects=self.obstacles,
-                               robot=self.robot)
 
     def observe(self):
         """Returns current observation"""
@@ -46,11 +39,11 @@ class Planning(object):
             # Get the end effector position after joint rotation
             current_config = self.robot.get_current_joint_config()
             current_config[link] = q_new
-            end_effector_pos = self.robot.end_effector_position(current_config)
+            end_effector_pos = self.robot.end_effector_position(
+                current_config)
 
             # Find the distance from our target (the ball)
-            distance = np.linalg.norm(end_effector_pos -\
-                                      self.ball.position)
+            distance = np.linalg.norm(end_effector_pos - self.target.position)
             # Distances + some noise
             distances.append(distance)
         return np.array(distances)
@@ -73,7 +66,7 @@ class Planning(object):
         if self.collected_rewards and self.collected_rewards[-1] == -1:
             return True
 
-        target = self.ball.position
+        target = self.target.position
         end_effector = self.robot.end_effector_position()
         return np.linalg.norm(target - end_effector) < ACCURACY
 
@@ -83,18 +76,18 @@ class Planning(object):
         """
         # Calculate previous distance to target object (ball)
         old_dist = np.linalg.norm((self.robot.end_effector_position() -
-                                   self.ball.position))
+                                   self.target.position))
         # Then perform the action
         self.perform_action(action)
 
-        for obstacle in self.obstacles:
+        for obstacle in self.static_objects:
             if self.robot.is_in_collision(obstacle):
                 self.collected_rewards.append(-1)
                 return -1
 
         # Find the distance from our target (the ball)
         new_dist = np.linalg.norm((self.robot.end_effector_position() -
-                                   self.ball.position))
+                                   self.target.position))
         # Reward it if it decreased the distance between end effector
         # and target (ball).
         reward = old_dist - new_dist
@@ -106,7 +99,6 @@ class Planning(object):
     def display_actions(self):
         print "Moved {} times before throwing!".format(self.move_count)
         print "Last reward: {}".format(self.collected_rewards[-1])
-
 
     def save_path(self, filepath, iteration):
         filename = "{}/planning_path_{}".format(filepath, iteration)

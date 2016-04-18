@@ -21,5 +21,5 @@ def simple_human_arm(seg1_len, seg2_len, q0, base=None):
     L7 = Link(0, 0, 0, 0)
     links = np.array([L1, L2, L3, L4, L5, L6, L7])
 
-    robot = Arm(links, q0, 'simple_human_arm', base)
+    robot = Arm(links, q0, 'simple_human_arm', 4, base)
     return robot
