@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>maddux.objects package &mdash; Maddux 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Maddux 0.1 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="maddux-objects-package">
+<h1>maddux.objects package<a class="headerlink" href="#maddux-objects-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-maddux.objects.ball">
+<span id="maddux-objects-ball-module"></span><h2>maddux.objects.ball module<a class="headerlink" href="#module-maddux.objects.ball" title="Permalink to this headline">¶</a></h2>
+<p>A ball object to throw.</p>
+<dl class="class">
+<dt id="maddux.objects.ball.Ball">
+<em class="property">class </em><code class="descclassname">maddux.objects.ball.</code><code class="descname">Ball</code><span class="sig-paren">(</span><em>position</em>, <em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.ball.Ball" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#maddux.objects.throwable.ThrowableObject" title="maddux.objects.throwable.ThrowableObject"><code class="xref py py-class docutils literal"><span class="pre">maddux.objects.throwable.ThrowableObject</span></code></a></p>
+<dl class="method">
+<dt id="maddux.objects.ball.Ball.leading_point">
+<code class="descname">leading_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.ball.Ball.leading_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the outermost point on the y axis
+that will hit the target.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.ball.Ball.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.ball.Ball.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the ball at its current location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ax</strong> &#8211; Figure to plot on.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-maddux.objects.dynamic">
+<span id="maddux-objects-dynamic-module"></span><h2>maddux.objects.dynamic module<a class="headerlink" href="#module-maddux.objects.dynamic" title="Permalink to this headline">¶</a></h2>
+<p>An abstract base class for dynamic objects.</p>
+<dl class="class">
+<dt id="maddux.objects.dynamic.DynamicObject">
+<em class="property">class </em><code class="descclassname">maddux.objects.dynamic.</code><code class="descname">DynamicObject</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.dynamic.DynamicObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="maddux.objects.dynamic.DynamicObject.attach">
+<code class="descname">attach</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.dynamic.DynamicObject.attach" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attach to an object (stop moving)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.dynamic.DynamicObject.display">
+<code class="descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.dynamic.DynamicObject.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display information</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.dynamic.DynamicObject.leading_point">
+<code class="descname">leading_point</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.dynamic.DynamicObject.leading_point" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns position of leading point in the direction the object
+is traveling.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.dynamic.DynamicObject.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.dynamic.DynamicObject.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the dynamic object at its current location</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.dynamic.DynamicObject.step">
+<code class="descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.dynamic.DynamicObject.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Step forward in time (one ms)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-maddux.objects.obstacle">
+<span id="maddux-objects-obstacle-module"></span><h2>maddux.objects.obstacle module<a class="headerlink" href="#module-maddux.objects.obstacle" title="Permalink to this headline">¶</a></h2>
+<p>A stationary rectangular solid that something may collide with</p>
+<dl class="class">
+<dt id="maddux.objects.obstacle.Obstacle">
+<em class="property">class </em><code class="descclassname">maddux.objects.obstacle.</code><code class="descname">Obstacle</code><span class="sig-paren">(</span><em>pt1</em>, <em>pt2</em>, <em>color='r'</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.obstacle.Obstacle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#maddux.objects.static.StaticObject" title="maddux.objects.static.StaticObject"><code class="xref py py-class docutils literal"><span class="pre">maddux.objects.static.StaticObject</span></code></a></p>
+<dl class="method">
+<dt id="maddux.objects.obstacle.Obstacle.display">
+<code class="descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.obstacle.Obstacle.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.obstacle.Obstacle.get_paths">
+<code class="descname">get_paths</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.obstacle.Obstacle.get_paths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the paths for each of the surfaces of the
+rectangle for plotting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.obstacle.Obstacle.is_hit">
+<code class="descname">is_hit</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.obstacle.Obstacle.is_hit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the rectangle is hit
+:param position: A vector representing an objects position or</p>
+<blockquote>
+<div>positions (if its a path)</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.obstacle.Obstacle.is_hit_by_sphere">
+<code class="descname">is_hit_by_sphere</code><span class="sig-paren">(</span><em>center</em>, <em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.obstacle.Obstacle.is_hit_by_sphere" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the rectangle is hit by a sphere
+:param center: 1x3 numpy array of sphere&#8217;s center
+:param radius: the sphere&#8217;s radius</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.obstacle.Obstacle.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.obstacle.Obstacle.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the obstacle at its location
+:param ax: Figure to plot on</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-maddux.objects.static">
+<span id="maddux-objects-static-module"></span><h2>maddux.objects.static module<a class="headerlink" href="#module-maddux.objects.static" title="Permalink to this headline">¶</a></h2>
+<p>An abstract base class for static objects.</p>
+<dl class="class">
+<dt id="maddux.objects.static.StaticObject">
+<em class="property">class </em><code class="descclassname">maddux.objects.static.</code><code class="descname">StaticObject</code><a class="headerlink" href="#maddux.objects.static.StaticObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="maddux.objects.static.StaticObject.display">
+<code class="descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.static.StaticObject.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display relevant data about static object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.static.StaticObject.is_hit">
+<code class="descname">is_hit</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.static.StaticObject.is_hit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tells whether another object hit the static object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.static.StaticObject.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.static.StaticObject.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot static object.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-maddux.objects.target">
+<span id="maddux-objects-target-module"></span><h2>maddux.objects.target module<a class="headerlink" href="#module-maddux.objects.target" title="Permalink to this headline">¶</a></h2>
+<p>A stationary object that something may collide with.</p>
+<dl class="class">
+<dt id="maddux.objects.target.Target">
+<em class="property">class </em><code class="descclassname">maddux.objects.target.</code><code class="descname">Target</code><span class="sig-paren">(</span><em>position</em>, <em>radius</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.target.Target" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#maddux.objects.static.StaticObject" title="maddux.objects.static.StaticObject"><code class="xref py py-class docutils literal"><span class="pre">maddux.objects.static.StaticObject</span></code></a></p>
+<dl class="method">
+<dt id="maddux.objects.target.Target.display">
+<code class="descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.target.Target.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.target.Target.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.target.Target.get_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an object position hitting the target, return the score</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.target.Target.is_hit">
+<code class="descname">is_hit</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.target.Target.is_hit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the target is hit.
+:param position: A ball object&#8217;s position</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.target.Target.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.target.Target.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the target at its location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ax</strong> &#8211; Figure to plot on.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.target.Target.plot_data">
+<code class="descname">plot_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.target.Target.plot_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the plot data at the targets location</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-maddux.objects.throwable">
+<span id="maddux-objects-throwable-module"></span><h2>maddux.objects.throwable module<a class="headerlink" href="#module-maddux.objects.throwable" title="Permalink to this headline">¶</a></h2>
+<p>A base throwable object class that encodes traits like gravity,
+velocity, etc.</p>
+<dl class="class">
+<dt id="maddux.objects.throwable.ThrowableObject">
+<em class="property">class </em><code class="descclassname">maddux.objects.throwable.</code><code class="descname">ThrowableObject</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.throwable.ThrowableObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#maddux.objects.dynamic.DynamicObject" title="maddux.objects.dynamic.DynamicObject"><code class="xref py py-class docutils literal"><span class="pre">maddux.objects.dynamic.DynamicObject</span></code></a></p>
+<dl class="method">
+<dt id="maddux.objects.throwable.ThrowableObject.attach">
+<code class="descname">attach</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.throwable.ThrowableObject.attach" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.throwable.ThrowableObject.display">
+<code class="descname">display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.throwable.ThrowableObject.display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.throwable.ThrowableObject.step">
+<code class="descname">step</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.throwable.ThrowableObject.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update one timestep (one ms)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="maddux.objects.throwable.ThrowableObject.throw">
+<code class="descname">throw</code><span class="sig-paren">(</span><em>velocity</em><span class="sig-paren">)</span><a class="headerlink" href="#maddux.objects.throwable.ThrowableObject.throw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Throw an object.
+:param velocity: 1x3 numpy array of object velocities</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-maddux.objects">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-maddux.objects" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">maddux.objects package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-maddux.objects.ball">maddux.objects.ball module</a></li>
+<li><a class="reference internal" href="#module-maddux.objects.dynamic">maddux.objects.dynamic module</a></li>
+<li><a class="reference internal" href="#module-maddux.objects.obstacle">maddux.objects.obstacle module</a></li>
+<li><a class="reference internal" href="#module-maddux.objects.static">maddux.objects.static module</a></li>
+<li><a class="reference internal" href="#module-maddux.objects.target">maddux.objects.target module</a></li>
+<li><a class="reference internal" href="#module-maddux.objects.throwable">maddux.objects.throwable module</a></li>
+<li><a class="reference internal" href="#module-maddux.objects">Module contents</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/maddux.objects.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2016, Ben Caine & Colin Kohler.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.7</a>
+      
+      |
+      <a href="_sources/maddux.objects.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
