@@ -10,15 +10,25 @@ class Obstacle(StaticObject):
 
     def __init__(self, pt1, pt2, color='r'):
         """
+        Create a 3D Rectangle from 2 points
+        :param pt1: The first point defining the rect
+        :type pt1: 1x3 numpy.array
+        :param pt2: The second point defining the rect
+        :type pt2: 1x3 numpy.array
+        :param color:
+        :type color: String
+        :rtype: None
         """
         self.pt1 = pt1
         self.pt2 = pt2
         self.color = color
 
+    # TODO: Make this use numpy arrays instead of lists
     def get_paths(self):
       """
       Returns the paths for each of the surfaces of the
       rectangle for plotting
+      :rtype: list of 6 4x3 numpy.arrays
       """
       [x1, y1, z1] = self.pt1
       [x2, y2, z2] = self.pt2
@@ -43,8 +53,9 @@ class Obstacle(StaticObject):
     def is_hit(self, position):
         """
         Checks if the rectangle is hit
-        :param position: A vector representing an objects position or
-                         positions (if its a path)
+        :param position: An objects position or positions (if its a path)
+        :type position: 1x3 numpy.array or Nx3 numpy.array
+        :rtype: Boolean
         """
         # TODO: Clean this up, its pretty gross
         is_point = len(position.shape) == 1
@@ -65,7 +76,7 @@ class Obstacle(StaticObject):
         z_hit = (z >= z1) & (z <= z2)
 
         all_hit = x_hit & y_hit & z_hit
-        
+
         if is_point:
             return (x_hit and y_hit and z_hit)
         else:
@@ -74,8 +85,11 @@ class Obstacle(StaticObject):
     def is_hit_by_sphere(self, center, radius):
         """
         Checks if the rectangle is hit by a sphere
-        :param center: 1x3 numpy array of sphere's center
+        :param center: Sphere's center
+        :type center: 1x3 numpy.array
         :param radius: the sphere's radius
+        :type radius: integer
+        :rtype: Boolean
         """
 
         [x1, y1, z1] = self.pt1
@@ -89,6 +103,10 @@ class Obstacle(StaticObject):
         return x_hit and y_hit and z_hit
 
     def display(self):
+        """
+        Display obstacle properties
+        :rtype: None
+        """
         print "Center: {}".format(self.center)
         print "Width: {}".format(self.width)
         print "Height: {}".format(self.height)
@@ -98,6 +116,8 @@ class Obstacle(StaticObject):
         """
         Plots the obstacle at its location
         :param ax: Figure to plot on
+        :type ax: matplotlib figure
+        :rtpye: None
         """
         paths = self.get_paths()
         rectangle = Poly3DCollection(paths, facecolors=self.color)
