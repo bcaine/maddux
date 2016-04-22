@@ -80,7 +80,12 @@
           
             
             
-                <ul class="simple">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.html">maddux package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.robots.html">maddux.robots package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.objects.html">maddux.objects package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.utils.html">maddux.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.examples.html">maddux.examples package</a></li>
 </ul>
 
             
@@ -126,7 +131,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for maddux.robots.link</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A Link object holds all information related to a robot link such as</span>
 <span class="sd">the DH parameters and position in relation to the world.</span>
 <span class="sd">&quot;&quot;&quot;</span>
@@ -179,9 +184,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">connector_size</span> <span class="o">=</span> <span class="n">connector_size</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_theta</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># Link&#39;s current velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># Link&#39;s current velocity</span>
 
-        <span class="c"># This is updated once we add it to an arm</span>
+        <span class="c1"># This is updated once we add it to an arm</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span> <span class="o">=</span> <span class="bp">None</span>
 
@@ -237,7 +242,7 @@
                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
         <span class="k">return</span> <span class="n">T</span></div>
 
-    <span class="c"># TODO: Abstract this to take dynamic objects as well as static ones</span>
+    <span class="c1"># TODO: Abstract this to take dynamic objects as well as static ones</span>
 <div class="viewcode-block" id="Link.is_in_collision"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.is_in_collision">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_collision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env_object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if the arm is in collision with a given static object</span>
 
@@ -249,18 +254,18 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">intersects_joint</span> <span class="o">=</span> <span class="n">env_object</span><span class="o">.</span><span class="n">is_hit_by_sphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span><span class="p">,</span>
                                                        <span class="bp">self</span><span class="o">.</span><span class="n">link_size</span><span class="p">)</span>
-        <span class="c"># If the link sphere is in collision we do not need to</span>
-        <span class="c"># check anything else</span>
+        <span class="c1"># If the link sphere is in collision we do not need to</span>
+        <span class="c1"># check anything else</span>
         <span class="k">if</span> <span class="n">intersects_joint</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">True</span>
 
-        <span class="c"># If the link is just a joint we only needed to check sphere,</span>
-        <span class="c"># and since we would have already returned, we know we&#39;re safe</span>
+        <span class="c1"># If the link is just a joint we only needed to check sphere,</span>
+        <span class="c1"># and since we would have already returned, we know we&#39;re safe</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">False</span>
 
-        <span class="c"># Otherwise we need to check if the object intersects with</span>
-        <span class="c"># the arm connector, so we vectorize it and call is_hit</span>
+        <span class="c1"># Otherwise we need to check if the object intersects with</span>
+        <span class="c1"># the arm connector, so we vectorize it and call is_hit</span>
         <span class="n">lamb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
         <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span>
 
@@ -273,10 +278,10 @@
 
 <span class="sd">        :rtype: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">print</span> <span class="s">&#39;Link angle: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&#39;Link offset: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&#39;Link length: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
-        <span class="k">print</span> <span class="s">&#39;Link twist: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">twist</span><span class="p">)</span></div>
+        <span class="k">print</span> <span class="s1">&#39;Link angle: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s1">&#39;Link offset: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s1">&#39;Link length: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s1">&#39;Link twist: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">twist</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Link.plot"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Plots the link on the given matplotlib figure</span>
@@ -287,18 +292,18 @@
 <span class="sd">        :rtype: None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Base and End positions were never defined&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Base and End positions were never defined&quot;</span><span class="p">)</span>
 
-        <span class="n">plot_sphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_size</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">)</span>
+        <span class="n">plot_sphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_size</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
 
-        <span class="c"># If there&#39;s no length associated, we don&#39;t have to draw one</span>
+        <span class="c1"># If there&#39;s no length associated, we don&#39;t have to draw one</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">ax</span>
 
         <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span><span class="p">))</span>
 
         <span class="k">return</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
-                       <span class="n">color</span><span class="o">=</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div></div>
+                       <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div></div>
 </pre></div>
 
            </div>

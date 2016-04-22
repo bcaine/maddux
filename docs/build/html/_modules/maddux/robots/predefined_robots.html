@@ -80,7 +80,12 @@
           
             
             
-                <ul class="simple">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.html">maddux package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.robots.html">maddux.robots package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.objects.html">maddux.objects package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.utils.html">maddux.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.examples.html">maddux.examples package</a></li>
 </ul>
 
             
@@ -126,7 +131,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for maddux.robots.predefined_robots</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">link</span> <span class="kn">import</span> <span class="n">Link</span>
+<span></span><span class="kn">from</span> <span class="nn">link</span> <span class="kn">import</span> <span class="n">Link</span>
 <span class="kn">from</span> <span class="nn">arm</span> <span class="kn">import</span> <span class="n">Arm</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
@@ -159,7 +164,7 @@
     <span class="n">L7</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">links</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="n">L4</span><span class="p">,</span> <span class="n">L5</span><span class="p">,</span> <span class="n">L6</span><span class="p">,</span> <span class="n">L7</span><span class="p">])</span>
 
-    <span class="n">robot</span> <span class="o">=</span> <span class="n">Arm</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="s">&#39;simple_human_arm&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+    <span class="n">robot</span> <span class="o">=</span> <span class="n">Arm</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="s1">&#39;simple_human_arm&#39;</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">robot</span></div>
 
 
@@ -190,7 +195,7 @@
     <span class="n">L10</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">seg_lens</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.571</span><span class="p">)</span>
     <span class="n">links</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="n">L4</span><span class="p">,</span> <span class="n">L5</span><span class="p">,</span> <span class="n">L6</span><span class="p">,</span> <span class="n">L7</span><span class="p">,</span> <span class="n">L8</span><span class="p">,</span> <span class="n">L9</span><span class="p">,</span> <span class="n">L10</span><span class="p">])</span>
 
-    <span class="n">robot</span> <span class="o">=</span> <span class="n">Arm</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="s">&#39;noodle_arm&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+    <span class="n">robot</span> <span class="o">=</span> <span class="n">Arm</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="s1">&#39;noodle_arm&#39;</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">robot</span></div>
 </pre></div>
 

@@ -80,7 +80,12 @@
           
             
             
-                <ul class="simple">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.html">maddux package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.robots.html">maddux.robots package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.objects.html">maddux.objects package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.utils.html">maddux.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.examples.html">maddux.examples package</a></li>
 </ul>
 
             
@@ -128,7 +133,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for maddux.utils.animate_path</h1><div class="highlight"><pre>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">maddux.predefined_environments</span> <span class="kn">import</span> <span class="n">predefined_environments</span>
 
 <div class="viewcode-block" id="animate_path"><a class="viewcode-back" href="../../../maddux.utils.html#maddux.utils.animate_path.animate_path">[docs]</a><span class="k">def</span> <span class="nf">animate_path</span><span class="p">(</span><span class="n">environment</span><span class="p">,</span> <span class="n">input_file</span><span class="p">,</span> <span class="n">output_file</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -148,11 +153,11 @@
     <span class="k">if</span> <span class="n">environment</span> <span class="ow">in</span> <span class="n">environments</span><span class="p">:</span>
         <span class="n">env</span> <span class="o">=</span> <span class="n">environments</span><span class="p">[</span><span class="n">environment</span><span class="p">]()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;Please provide an environment from: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="k">print</span> <span class="s2">&quot;Please provide an environment from: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">environments</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
         <span class="k">return</span>
 
-    <span class="c"># Load our saved path</span>
+    <span class="c1"># Load our saved path</span>
     <span class="n">saved_path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span>
     <span class="n">env</span><span class="o">.</span><span class="n">robot</span><span class="o">.</span><span class="n">qs</span> <span class="o">=</span> <span class="n">saved_path</span>
 

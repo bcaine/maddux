@@ -80,7 +80,12 @@
           
             
             
-                <ul class="simple">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.html">maddux package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.robots.html">maddux.robots package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.objects.html">maddux.objects package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.utils.html">maddux.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.examples.html">maddux.examples package</a></li>
 </ul>
 
             
@@ -126,7 +131,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for maddux.robots.utils</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Random collection of utilities for the robots to use</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
@@ -145,7 +150,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Matrix must be a 4x4 homogenous transformation&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Matrix must be a 4x4 homogenous transformation&#39;</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
     <span class="n">n</span> <span class="o">=</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     <span class="n">rotation</span> <span class="o">=</span> <span class="n">transform</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">rotation</span></div>

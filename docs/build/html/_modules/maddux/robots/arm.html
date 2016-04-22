@@ -80,7 +80,12 @@
           
             
             
-                <ul class="simple">
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.html">maddux package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.robots.html">maddux.robots package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.objects.html">maddux.objects package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.utils.html">maddux.utils package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.examples.html">maddux.examples package</a></li>
 </ul>
 
             
@@ -126,7 +131,7 @@
            <div itemprop="articleBody">
             
   <h1>Source code for maddux.robots.arm</h1><div class="highlight"><pre>
-<span class="sd">&quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">A robot arm defined by a sequence of DH links</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
@@ -135,8 +140,8 @@
 
 <div class="viewcode-block" id="Arm"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.arm.Arm">[docs]</a><span class="k">class</span> <span class="nc">Arm</span><span class="p">:</span>
 
-    <span class="c"># TODO: Do something about active_links, its real bad...</span>
-    <span class="c"># TODO: Make sure the tool frame works</span>
+    <span class="c1"># TODO: Do something about active_links, its real bad...</span>
+    <span class="c1"># TODO: Make sure the tool frame works</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">links</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">active_links</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="n">base</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">tool</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;A robotic arm.</span>
@@ -171,8 +176,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">active_links</span> <span class="o">=</span> <span class="n">active_links</span>
 
-        <span class="c"># TODO: Make base and tool 4x4 homogeneous transforms</span>
-        <span class="c">#       otherwise we can&#39;t specify rotation ever</span>
+        <span class="c1"># TODO: Make base and tool 4x4 homogeneous transforms</span>
+        <span class="c1">#       otherwise we can&#39;t specify rotation ever</span>
         <span class="k">if</span> <span class="n">base</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">base</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
@@ -183,14 +188,14 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tool</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_homogeneous_transform_from_point</span><span class="p">(</span><span class="n">tool</span><span class="p">)</span>
 
-        <span class="c"># Create empty list of held objects</span>
+        <span class="c1"># Create empty list of held objects</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">held_objects</span> <span class="o">=</span> <span class="p">[]</span>
 
-        <span class="c"># A cache of all past q values for a run of ikine so we</span>
-        <span class="c"># can animate the action</span>
+        <span class="c1"># A cache of all past q values for a run of ikine so we</span>
+        <span class="c1"># can animate the action</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">qs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">q0</span><span class="o">.</span><span class="n">copy</span><span class="p">()])</span>
 
-        <span class="c"># Set the arm to its default position</span>
+        <span class="c1"># Set the arm to its default position</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span>
 
 <div class="viewcode-block" id="Arm.reset"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.arm.Arm.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -240,12 +245,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">[</span><span class="n">link</span><span class="p">]</span><span class="o">.</span><span class="n">set_theta</span><span class="p">(</span><span class="n">new_angle</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">update_link_positions</span><span class="p">()</span>
 
-        <span class="c"># Save each config for replay</span>
+        <span class="c1"># Save each config for replay</span>
         <span class="k">if</span> <span class="n">save</span><span class="p">:</span>
             <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">l</span><span class="o">.</span><span class="n">theta</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">qs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">qs</span><span class="p">,</span> <span class="n">q</span><span class="o">.</span><span class="n">copy</span><span class="p">()))</span></div>
 
-    <span class="c"># TODO: Acceleration over time seems like a weird way to update this</span>
+    <span class="c1"># TODO: Acceleration over time seems like a weird way to update this</span>
 <div class="viewcode-block" id="Arm.update_link_velocity"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.arm.Arm.update_link_velocity">[docs]</a>    <span class="k">def</span> <span class="nf">update_link_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">accel</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Updates the given link&#39;s velocity with the given</span>
 <span class="sd">        acceleration over the given time</span>
@@ -271,26 +276,26 @@
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">):</span>
-            <span class="c"># Set link base position</span>
+            <span class="c1"># Set link base position</span>
             <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">link</span><span class="o">.</span><span class="n">base_pos</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_point_from_homogeneous_transform</span><span class="p">(</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">base</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">link</span><span class="o">.</span><span class="n">base_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">links</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">end_pos</span>
 
-            <span class="c"># Set link end position</span>
+            <span class="c1"># Set link end position</span>
             <span class="k">if</span> <span class="n">link</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">link</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="n">link</span><span class="o">.</span><span class="n">end_pos</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">base_pos</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="c"># Compute FKine up to that link endpoint</span>
-                <span class="c"># to get the location in homogenous coords</span>
+                <span class="c1"># Compute FKine up to that link endpoint</span>
+                <span class="c1"># to get the location in homogenous coords</span>
                 <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fkine</span><span class="p">(</span><span class="n">links</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
-                <span class="c"># Then convert that to world space</span>
+                <span class="c1"># Then convert that to world space</span>
                 <span class="n">end_pos</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_point_from_homogeneous_transform</span><span class="p">(</span><span class="n">t</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
                 <span class="n">link</span><span class="o">.</span><span class="n">end_pos</span> <span class="o">=</span> <span class="n">end_pos</span><span class="o">.</span><span class="n">A1</span>
 
-        <span class="c"># After we update all these link positions, we can update</span>
-        <span class="c"># the location of any object we are holding</span>
+        <span class="c1"># After we update all these link positions, we can update</span>
+        <span class="c1"># the location of any object we are holding</span>
         <span class="k">for</span> <span class="n">held_object</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">held_objects</span><span class="p">:</span>
             <span class="n">held_object</span><span class="o">.</span><span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_effector_position</span><span class="p">()</span></div>
 
@@ -370,9 +375,9 @@
 <span class="sd">        :returns: 1xN vector of the joint configuration for given point p.</span>
 <span class="sd">        :rtype: numpy.ndarray</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c"># Check to make sure alpha is between 0 and 1</span>
+        <span class="c1"># Check to make sure alpha is between 0 and 1</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">alpha</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">):</span>
-            <span class="k">print</span> <span class="s">&quot;Invalid alpha. Defaulting to 0.1&quot;</span>
+            <span class="k">print</span> <span class="s2">&quot;Invalid alpha. Defaulting to 0.1&quot;</span>
             <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span>
 
         <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_current_joint_config</span><span class="p">()</span>
@@ -380,18 +385,18 @@
 
         <span class="n">goal</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_homogeneous_transform_from_point</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">num_iterations</span><span class="p">):</span>
-            <span class="c"># Calculate position error of the end effector</span>
+            <span class="c1"># Calculate position error of the end effector</span>
             <span class="n">curr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fkine</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
             <span class="n">err</span> <span class="o">=</span> <span class="n">goal</span> <span class="o">-</span> <span class="n">curr</span>
 
-            <span class="c"># Convert error from homogeneous to xyz space</span>
+            <span class="c1"># Convert error from homogeneous to xyz space</span>
             <span class="n">err</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">create_point_from_homogeneous_transform</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
 
-            <span class="c"># Get the psudoinverse of the Jacobian</span>
+            <span class="c1"># Get the psudoinverse of the Jacobian</span>
             <span class="n">J</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacob0</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
             <span class="n">vel_J</span> <span class="o">=</span> <span class="n">J</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:]</span>
 
-            <span class="c"># Increment q a tiny bit</span>
+            <span class="c1"># Increment q a tiny bit</span>
             <span class="n">delta_q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">vel_J</span><span class="p">)</span> <span class="o">*</span> <span class="n">err</span>
             <span class="n">delta_q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">delta_q</span><span class="p">))</span>
             <span class="n">q</span> <span class="o">=</span> <span class="n">q</span> <span class="o">+</span> <span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">delta_q</span><span class="o">.</span><span class="n">flatten</span><span class="p">())</span>
@@ -399,7 +404,7 @@
 
             <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">err</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="mf">1e-6</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">q</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Could not find solution.&quot;</span><span class="p">)</span></div>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Could not find solution.&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Arm.jacob0"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.arm.Arm.jacob0">[docs]</a>    <span class="k">def</span> <span class="nf">jacob0</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calculates the jacobian in the world frame by finding it in</span>
@@ -412,17 +417,17 @@
 <span class="sd">        :rtype: numpy.matrix</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
-        <span class="c"># Get the tool frame jacobian</span>
+        <span class="c1"># Get the tool frame jacobian</span>
         <span class="n">J</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">jacobn</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
 
-        <span class="c"># Set up homogeneous transform matrix for the world</span>
+        <span class="c1"># Set up homogeneous transform matrix for the world</span>
         <span class="n">eet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fkine</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
         <span class="n">rotation</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">get_rotation_from_homogeneous_transform</span><span class="p">(</span><span class="n">eet</span><span class="p">)</span>
         <span class="n">zeros</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
         <span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">rotation</span><span class="p">,</span> <span class="n">zeros</span><span class="p">))</span>
         <span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">zeros</span><span class="p">,</span> <span class="n">rotation</span><span class="p">))</span>
 
-        <span class="c"># Convert to world frame</span>
+        <span class="c1"># Convert to world frame</span>
         <span class="n">J</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">))</span> <span class="o">*</span> <span class="n">J</span>
         <span class="k">return</span> <span class="n">J</span></div>
 
@@ -475,14 +480,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">velocity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_effector_velocity</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">object_idx</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="c"># Release all objects</span>
+            <span class="c1"># Release all objects</span>
             <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">held_objects</span><span class="p">:</span>
                 <span class="n">obj</span><span class="o">.</span><span class="n">throw</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="c"># TODO: Replease with End Effector Velocity</span>
+            <span class="c1"># TODO: Replease with End Effector Velocity</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">held_objects</span><span class="p">[</span><span class="n">object_idx</span><span class="p">]</span><span class="o">.</span><span class="n">throw</span><span class="p">(</span><span class="n">velocity</span><span class="p">)</span></div>
 
-    <span class="c"># TODO: Let env_object be any object, not just static</span>
+    <span class="c1"># TODO: Let env_object be any object, not just static</span>
 <div class="viewcode-block" id="Arm.is_in_collision"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.arm.Arm.is_in_collision">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_collision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env_object</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Checks if the arm is in collision with a given object</span>
 
