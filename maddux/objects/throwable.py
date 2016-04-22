@@ -19,7 +19,11 @@ class ThrowableObject(DynamicObject):
 
     def throw(self, velocity):
         """Throw an object.
-        :param velocity: 1x3 numpy array of object velocities
+        
+        :param velocity: Velocity to throw at (vx, vy, vz)
+        :type velocity: np.ndarray
+
+        :rtype: None
         """
         self.attached = False
         self.velocity = np.array(velocity)
@@ -33,10 +37,12 @@ class ThrowableObject(DynamicObject):
                                         self.position.copy()))
 
     def attach(self):
+        """Attach an object to its current position"""
         self.attached = True
         self.velocity = np.array([0, 0, 0])
 
     def display(self):
+        """Display information about object"""
         print "Positon: {}".format(self.position)
         print "Velocity: {}".format(self.velocity)
         print "Attached: {}".format(self.attached)
