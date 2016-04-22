@@ -7,8 +7,18 @@ import numpy as np
 class DynamicObject:
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, position):
+    def __init__(self, position, target=False):
+        """DynamicObject abstract class init
+
+        :param position: Current (x,y,z) position of the Dynamic Object
+        :type position: numpy.ndarray
+        
+        :param target: (Default=False) Whether this object is the target of 
+                       an experiment
+        :type target: bool
+        """
         self.position = np.array(position)
+        self.target = target
         self.positions = np.array([self.position.copy()])
 
     @abc.abstractmethod
@@ -24,13 +34,6 @@ class DynamicObject:
     @abc.abstractmethod
     def display(self):
         """Display information"""
-        return
-
-    @abc.abstractmethod
-    def leading_point(self):
-        """Returns position of leading point in the direction the object
-           is traveling.
-        """
         return
 
     @abc.abstractmethod

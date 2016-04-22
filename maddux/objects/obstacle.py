@@ -9,14 +9,17 @@ from static import StaticObject
 class Obstacle(StaticObject):
 
     def __init__(self, pt1, pt2, color='r'):
-        """
-        Create a 3D Rectangle from 2 points
-        :param pt1: The first point defining the rect
-        :type pt1: 1x3 numpy.array
-        :param pt2: The second point defining the rect
-        :type pt2: 1x3 numpy.array
-        :param color:
-        :type color: String
+        """Create a 3D Rectangle from 2 points
+
+        :param pt1: The first point (x, y, z) defining the rect
+        :type pt1: numpy.ndarray
+
+        :param pt2: The second point (x, y, z) defining the rect
+        :type pt2: numpy.ndarray
+
+        :param color: color of the obstacle
+        :type color: str
+
         :rtype: None
         """
         self.pt1 = pt1
@@ -25,10 +28,11 @@ class Obstacle(StaticObject):
 
     # TODO: Make this use numpy arrays instead of lists
     def get_paths(self):
-      """
-      Returns the paths for each of the surfaces of the
-      rectangle for plotting
-      :rtype: list of 6 4x3 numpy.arrays
+      """Returns the paths for each of the surfaces of the
+      rectangle for plotting.
+      
+      :returns (bottom, top, front, back, left, right)
+      :rtype: list of 6 4x3 numpy.ndarrays
       """
       [x1, y1, z1] = self.pt1
       [x2, y2, z2] = self.pt2
@@ -51,13 +55,15 @@ class Obstacle(StaticObject):
       return paths
 
     def is_hit(self, position):
+        """Checks if the rectangle is hit by a point or path
+
+        :param position: An objects position (x, y, z) or positions if 
+                         it is a path([x1, x2, ..], [y1, y2, ..], [z1, z2, ..]
+        :type position: numpy.ndarray or numpy.matrix
+
+        :returns: Whether the obstacle was hit by a point or path
+        :rtype: bool
         """
-        Checks if the rectangle is hit
-        :param position: An objects position or positions (if its a path)
-        :type position: 1x3 numpy.array or Nx3 numpy.array
-        :rtype: Boolean
-        """
-        # TODO: Clean this up, its pretty gross
         is_point = len(position.shape) == 1
 
         if is_point:
@@ -83,13 +89,16 @@ class Obstacle(StaticObject):
             return np.any(all_hit)
 
     def is_hit_by_sphere(self, center, radius):
-        """
-        Checks if the rectangle is hit by a sphere
-        :param center: Sphere's center
-        :type center: 1x3 numpy.array
-        :param radius: the sphere's radius
-        :type radius: integer
-        :rtype: Boolean
+        """Checks if the rectangle is hit by a sphere
+
+        :param center: Sphere's center (x, y, z)
+        :type center: numpy.ndarray
+        
+        :param radius: The sphere's radius
+        :type radius: int
+        
+        :returns: Whether obstacle was hit by a sphere
+        :rtype: bool
         """
 
         [x1, y1, z1] = self.pt1
@@ -103,8 +112,8 @@ class Obstacle(StaticObject):
         return x_hit and y_hit and z_hit
 
     def display(self):
-        """
-        Display obstacle properties
+        """Display obstacle properties
+        
         :rtype: None
         """
         print "Center: {}".format(self.center)
@@ -113,10 +122,11 @@ class Obstacle(StaticObject):
         print "Depth: {}".format(self.depth)
 
     def plot(self, ax):
-        """
-        Plots the obstacle at its location
+        """Plots the obstacle at its location
+
         :param ax: Figure to plot on
-        :type ax: matplotlib figure
+        :type ax: matplotlib.axes
+        
         :rtpye: None
         """
         paths = self.get_paths()

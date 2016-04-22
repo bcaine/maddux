@@ -3,11 +3,15 @@ import numpy as np
 
 def plot_sphere_data(position, radius):
     """Given a position and radius, get the data needed to plot.
-    :param position: position of sphere
-    :type position: 1x3 numpy.array
+    
+    :param position: Position in (x, y, z) of sphere
+    :type position: numpy.ndarray
+    
     :param radius: radius of sphere
-    :type radius: integer
-    :rtype: 3-tuple of numpy.array
+    :type radius: int
+    
+    :returns: (x, y, z) tuple of sphere data to use to create a surface
+    :rtype: (np.ndarray, np.ndarray, np.ndarray)
     """
     u = np.linspace(0, 2 * np.pi, 100)
     v = np.linspace(0, np.pi, 100)
@@ -24,17 +28,23 @@ def plot_sphere_data(position, radius):
 
 def plot_sphere(position, radius, ax, color='g', linewidth=0):
     """Plot a sphere.
-    :param position: position of sphere
-    :type position: 1x3 numpy.array
+    
+    :param position: Position in (x, y, z) of sphere
+    :type position: numpy.ndarray
+
     :param radius: radius of sphere
-    :type radius: integer
+    :type radius: int
+    
     :param ax: axes to plot on
-    :type ax: matplotlib figure
+    :type ax: matplotlib.axes
+
     :param color: (Optional) color of sphere
-    :type color: String
+    :type color: str
+
     :param linewidth: (Optional) width of ball gridlines
-    :type linewidth: integer
-    :rtype: matplotlib figure
+    :type linewidth: int
+
+    :rtype: matplotlib.axes
     """
     x, y, z = plot_sphere_data(position, radius)
     return ax.plot_surface(x, y, z, rstride=4, cstride=4,
