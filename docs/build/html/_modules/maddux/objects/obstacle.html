@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>maddux.objects.obstacle &mdash; Maddux 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Maddux 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Maddux
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="simple">
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Maddux</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>maddux.objects.obstacle</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for maddux.objects.obstacle</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A stationary rectangular solid that something may collide with</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d.art3d</span> <span class="kn">import</span> <span class="n">Poly3DCollection</span>
+<span class="kn">from</span> <span class="nn">static</span> <span class="kn">import</span> <span class="n">StaticObject</span>
+
+
+<div class="viewcode-block" id="Obstacle"><a class="viewcode-back" href="../../../maddux.objects.html#maddux.objects.obstacle.Obstacle">[docs]</a><span class="k">class</span> <span class="nc">Obstacle</span><span class="p">(</span><span class="n">StaticObject</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a 3D Rectangle from 2 points</span>
+
+<span class="sd">        :param pt1: The first point (x, y, z) defining the rect</span>
+<span class="sd">        :type pt1: numpy.ndarray</span>
+
+<span class="sd">        :param pt2: The second point (x, y, z) defining the rect</span>
+<span class="sd">        :type pt2: numpy.ndarray</span>
+
+<span class="sd">        :param color: color of the obstacle</span>
+<span class="sd">        :type color: str</span>
+
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pt1</span> <span class="o">=</span> <span class="n">pt1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pt2</span> <span class="o">=</span> <span class="n">pt2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+
+    <span class="c"># TODO: Make this use numpy arrays instead of lists</span>
+<div class="viewcode-block" id="Obstacle.get_paths"><a class="viewcode-back" href="../../../maddux.objects.html#maddux.objects.obstacle.Obstacle.get_paths">[docs]</a>    <span class="k">def</span> <span class="nf">get_paths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the paths for each of the surfaces of the</span>
+<span class="sd">        rectangle for plotting.</span>
+
+<span class="sd">        :returns (bottom, top, front, back, left, right)</span>
+<span class="sd">        :rtype: list of 6 4x3 numpy.ndarrays</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt1</span>
+        <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt2</span>
+        <span class="n">pt1</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">]</span>
+        <span class="n">pt2</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span>
+        <span class="n">pt3</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z1</span><span class="p">]</span>
+        <span class="n">pt4</span> <span class="o">=</span> <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span>
+        <span class="n">pt5</span> <span class="o">=</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">]</span>
+        <span class="n">pt6</span> <span class="o">=</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span>
+        <span class="n">pt7</span> <span class="o">=</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z1</span><span class="p">]</span>
+        <span class="n">pt8</span> <span class="o">=</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span>
+
+        <span class="n">bottom</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt3</span><span class="p">,</span> <span class="n">pt7</span><span class="p">,</span> <span class="n">pt5</span><span class="p">]</span>
+        <span class="n">top</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt2</span><span class="p">,</span> <span class="n">pt4</span><span class="p">,</span> <span class="n">pt8</span><span class="p">,</span> <span class="n">pt6</span><span class="p">]</span>
+        <span class="n">front</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">,</span> <span class="n">pt6</span><span class="p">,</span> <span class="n">pt5</span><span class="p">]</span>
+        <span class="n">back</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt3</span><span class="p">,</span> <span class="n">pt4</span><span class="p">,</span> <span class="n">pt8</span><span class="p">,</span> <span class="n">pt7</span><span class="p">]</span>
+        <span class="n">left</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt1</span><span class="p">,</span> <span class="n">pt2</span><span class="p">,</span> <span class="n">pt4</span><span class="p">,</span> <span class="n">pt3</span><span class="p">]</span>
+        <span class="n">right</span> <span class="o">=</span> <span class="p">[</span><span class="n">pt5</span><span class="p">,</span> <span class="n">pt6</span><span class="p">,</span> <span class="n">pt8</span><span class="p">,</span> <span class="n">pt7</span><span class="p">]</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">bottom</span><span class="p">,</span> <span class="n">top</span><span class="p">,</span> <span class="n">front</span><span class="p">,</span> <span class="n">back</span><span class="p">,</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">paths</span></div>
+
+<div class="viewcode-block" id="Obstacle.is_hit"><a class="viewcode-back" href="../../../maddux.objects.html#maddux.objects.obstacle.Obstacle.is_hit">[docs]</a>    <span class="k">def</span> <span class="nf">is_hit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the rectangle is hit by a point or path</span>
+
+<span class="sd">        :param position: An objects position (x, y, z) or positions if</span>
+<span class="sd">                         it is a path([x1, x2, ..], [y1, y2, ..], [z1, z2, ..]</span>
+<span class="sd">        :type position: numpy.ndarray or numpy.matrix</span>
+
+<span class="sd">        :returns: Whether the obstacle was hit by a point or path</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_point</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="n">is_point</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">position</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">position</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">position</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">position</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">position</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+
+        <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt1</span>
+        <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt2</span>
+
+        <span class="n">x_hit</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;=</span> <span class="n">x1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;=</span> <span class="n">x2</span><span class="p">)</span>
+        <span class="n">y_hit</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">&gt;=</span> <span class="n">y1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">&lt;=</span> <span class="n">y2</span><span class="p">)</span>
+        <span class="n">z_hit</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="n">z1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">z</span> <span class="o">&lt;=</span> <span class="n">z2</span><span class="p">)</span>
+
+        <span class="n">all_hit</span> <span class="o">=</span> <span class="n">x_hit</span> <span class="o">&amp;</span> <span class="n">y_hit</span> <span class="o">&amp;</span> <span class="n">z_hit</span>
+
+        <span class="k">if</span> <span class="n">is_point</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">x_hit</span> <span class="ow">and</span> <span class="n">y_hit</span> <span class="ow">and</span> <span class="n">z_hit</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">all_hit</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Obstacle.is_hit_by_sphere"><a class="viewcode-back" href="../../../maddux.objects.html#maddux.objects.obstacle.Obstacle.is_hit_by_sphere">[docs]</a>    <span class="k">def</span> <span class="nf">is_hit_by_sphere</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the rectangle is hit by a sphere</span>
+
+<span class="sd">        :param center: Sphere&#39;s center (x, y, z)</span>
+<span class="sd">        :type center: numpy.ndarray</span>
+
+<span class="sd">        :param radius: The sphere&#39;s radius</span>
+<span class="sd">        :type radius: int</span>
+
+<span class="sd">        :returns: Whether obstacle was hit by a sphere</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="p">[</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">z1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt1</span>
+        <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pt2</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">center</span>
+
+        <span class="n">x_hit</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;=</span> <span class="n">x1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="n">x2</span><span class="p">)</span>
+        <span class="n">y_hit</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;=</span> <span class="n">y1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="n">y2</span><span class="p">)</span>
+        <span class="n">z_hit</span> <span class="o">=</span> <span class="p">(</span><span class="n">z</span> <span class="o">+</span> <span class="n">radius</span> <span class="o">&gt;=</span> <span class="n">z1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">z</span> <span class="o">-</span> <span class="n">radius</span> <span class="o">&lt;=</span> <span class="n">z2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">x_hit</span> <span class="ow">and</span> <span class="n">y_hit</span> <span class="ow">and</span> <span class="n">z_hit</span></div>
+
+<div class="viewcode-block" id="Obstacle.display"><a class="viewcode-back" href="../../../maddux.objects.html#maddux.objects.obstacle.Obstacle.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display obstacle properties</span>
+
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&quot;Center: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Width: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Height: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&quot;Depth: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depth</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Obstacle.plot"><a class="viewcode-back" href="../../../maddux.objects.html#maddux.objects.obstacle.Obstacle.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plots the obstacle at its location</span>
+
+<span class="sd">        :param ax: Figure to plot on</span>
+<span class="sd">        :type ax: matplotlib.axes</span>
+
+<span class="sd">        :rtpye: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_paths</span><span class="p">()</span>
+        <span class="n">rectangle</span> <span class="o">=</span> <span class="n">Poly3DCollection</span><span class="p">(</span><span class="n">paths</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_collection3d</span><span class="p">(</span><span class="n">rectangle</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ben Caine &amp; Colin Kohler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

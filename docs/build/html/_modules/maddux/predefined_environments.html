@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>maddux.predefined_environments &mdash; Maddux 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Maddux 0.1 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> Maddux
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="simple">
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">Maddux</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>maddux.predefined_environments</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for maddux.predefined_environments</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">))</span>
+
+<span class="kn">from</span> <span class="nn">maddux.robots</span> <span class="kn">import</span> <span class="n">simple_human_arm</span><span class="p">,</span> <span class="n">noodle_arm</span>
+<span class="kn">from</span> <span class="nn">maddux.environment</span> <span class="kn">import</span> <span class="n">Environment</span>
+<span class="kn">from</span> <span class="nn">maddux.objects</span> <span class="kn">import</span> <span class="n">Ball</span><span class="p">,</span> <span class="n">Obstacle</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">room_dimensions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="get_easy_environment"><a class="viewcode-back" href="../../maddux.html#maddux.predefined_environments.get_easy_environment">[docs]</a><span class="k">def</span> <span class="nf">get_easy_environment</span><span class="p">():</span>
+    <span class="n">obstacles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Obstacle</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])]</span>
+    <span class="n">ball</span> <span class="o">=</span> <span class="n">Ball</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">robot</span> <span class="o">=</span> <span class="n">simple_human_arm</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">Environment</span><span class="p">(</span><span class="n">room_dimensions</span><span class="p">,</span>
+                       <span class="n">dynamic_objects</span><span class="o">=</span><span class="p">[</span><span class="n">ball</span><span class="p">],</span>
+                       <span class="n">static_objects</span><span class="o">=</span><span class="n">obstacles</span><span class="p">,</span>
+                       <span class="n">robot</span><span class="o">=</span><span class="n">robot</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_medium_environment"><a class="viewcode-back" href="../../maddux.html#maddux.predefined_environments.get_medium_environment">[docs]</a><span class="k">def</span> <span class="nf">get_medium_environment</span><span class="p">():</span>
+    <span class="n">obstacles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Obstacle</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">],</span> <span class="p">[</span><span class="mf">3.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])]</span>
+    <span class="n">ball</span> <span class="o">=</span> <span class="n">Ball</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">robot</span> <span class="o">=</span> <span class="n">simple_human_arm</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">Environment</span><span class="p">(</span><span class="n">room_dimensions</span><span class="p">,</span>
+                       <span class="n">dynamic_objects</span><span class="o">=</span><span class="p">[</span><span class="n">ball</span><span class="p">],</span>
+                       <span class="n">static_objects</span><span class="o">=</span><span class="n">obstacles</span><span class="p">,</span>
+                       <span class="n">robot</span><span class="o">=</span><span class="n">robot</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_hard_environment"><a class="viewcode-back" href="../../maddux.html#maddux.predefined_environments.get_hard_environment">[docs]</a><span class="k">def</span> <span class="nf">get_hard_environment</span><span class="p">():</span>
+    <span class="n">obstacles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Obstacle</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])]</span>
+    <span class="n">ball</span> <span class="o">=</span> <span class="n">Ball</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.25</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">robot</span> <span class="o">=</span> <span class="n">simple_human_arm</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">Environment</span><span class="p">(</span><span class="n">room_dimensions</span><span class="p">,</span>
+                       <span class="n">dynamic_objects</span><span class="o">=</span><span class="p">[</span><span class="n">ball</span><span class="p">],</span>
+                       <span class="n">static_objects</span><span class="o">=</span><span class="n">obstacles</span><span class="p">,</span>
+                       <span class="n">robot</span><span class="o">=</span><span class="n">robot</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_very_hard_environment"><a class="viewcode-back" href="../../maddux.html#maddux.predefined_environments.get_very_hard_environment">[docs]</a><span class="k">def</span> <span class="nf">get_very_hard_environment</span><span class="p">():</span>
+    <span class="n">obstacles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Obstacle</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">3.2</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">])]</span>
+    <span class="n">ball</span> <span class="o">=</span> <span class="n">Ball</span><span class="p">([</span><span class="mf">2.8</span><span class="p">,</span> <span class="mf">3.8</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="mf">0.25</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">robot</span> <span class="o">=</span> <span class="n">simple_human_arm</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">Environment</span><span class="p">(</span><span class="n">room_dimensions</span><span class="p">,</span>
+                       <span class="n">dynamic_objects</span><span class="o">=</span><span class="p">[</span><span class="n">ball</span><span class="p">],</span>
+                       <span class="n">static_objects</span><span class="o">=</span><span class="n">obstacles</span><span class="p">,</span>
+                       <span class="n">robot</span><span class="o">=</span><span class="n">robot</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_noodle_environment"><a class="viewcode-back" href="../../maddux.html#maddux.predefined_environments.get_noodle_environment">[docs]</a><span class="k">def</span> <span class="nf">get_noodle_environment</span><span class="p">():</span>
+    <span class="n">obstacles</span> <span class="o">=</span> <span class="p">[</span><span class="n">Obstacle</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">4.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">5.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">]),</span>
+                 <span class="n">Obstacle</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">])]</span>
+    <span class="n">ball</span> <span class="o">=</span> <span class="n">Ball</span><span class="p">([</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">],</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">seg_lengths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="n">robot</span> <span class="o">=</span> <span class="n">noodle_arm</span><span class="p">(</span><span class="n">seg_lengths</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]))</span>
+
+    <span class="k">return</span> <span class="n">Environment</span><span class="p">(</span><span class="n">room_dimensions</span><span class="p">,</span>
+                       <span class="n">dynamic_objects</span><span class="o">=</span><span class="p">[</span><span class="n">ball</span><span class="p">],</span>
+                       <span class="n">static_objects</span><span class="o">=</span><span class="n">obstacles</span><span class="p">,</span>
+                       <span class="n">robot</span><span class="o">=</span><span class="n">robot</span><span class="p">)</span></div>
+
+
+<span class="n">predefined_environments</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&quot;easy&quot;</span><span class="p">:</span> <span class="n">get_easy_environment</span><span class="p">,</span>
+    <span class="s">&quot;medium&quot;</span><span class="p">:</span> <span class="n">get_medium_environment</span><span class="p">,</span>
+    <span class="s">&quot;hard&quot;</span><span class="p">:</span> <span class="n">get_hard_environment</span><span class="p">,</span>
+    <span class="s">&quot;very_hard&quot;</span><span class="p">:</span> <span class="n">get_very_hard_environment</span><span class="p">,</span>
+    <span class="s">&quot;noodle&quot;</span><span class="p">:</span> <span class="n">get_noodle_environment</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ben Caine &amp; Colin Kohler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
