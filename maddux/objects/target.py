@@ -12,33 +12,25 @@ class Target(StaticObject):
     def __init__(self, position, radius):
         """
         Target Init
+        
         :param position: Position of center
-        :type position: 1x3 numpy.array
+        :type position: 1x3 numpy.ndarray
+        
         :param radius: radius of target
-        :type radius: integer
+        :type radius: int
+        
         :rtype: None
         """
         self.position = np.array(position)
         self.radius = radius
-
-    def get_score(self, position):
-        """
-        Given an object position hitting the target, return the score
-        :param position: Position of object to score
-        :type position: 1x3 numpy.array
-        :rtype: integer
-        """
-        distance = np.linalg.norm(position - self.position)
-        score = 0.75 ** distance
-        if self.is_hit(position):
-            return 10 * score
-        else:
-            return score
+        self.target = True
 
     def is_hit(self, position):
         """Check if the target is hit.
+        
         :param position: A object's position
-        :type position: 1x3 numpy.array
+        :type position: numpy.array
+        
         :rtype: Boolean
         """
         diff = np.absolute(position - self.position)
