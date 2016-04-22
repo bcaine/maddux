@@ -80,7 +80,7 @@ def get_noodle_environment():
                        robot=robot)
 
 
-environments = {
+predefined_environments = {
     "easy": get_easy_environment,
     "medium": get_medium_environment,
     "hard": get_hard_environment,

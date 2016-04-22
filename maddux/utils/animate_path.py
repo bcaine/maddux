@@ -1,5 +1,5 @@
 import numpy as np
-from maddux.rl_experiments.environments import environments
+from maddux.predefined_environments import predefined_environments
 
 def animate_path(environment, input_file, output_file=None):
     """
