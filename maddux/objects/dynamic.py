@@ -37,13 +37,6 @@ class DynamicObject:
         return
 
     @abc.abstractmethod
-    def leading_point(self):
-        """Returns position of leading point in the direction the object
-           is traveling.
-        """
-        return
-
-    @abc.abstractmethod
     def plot(self, ax):
         """Plot the dynamic object at its current location"""
         return
