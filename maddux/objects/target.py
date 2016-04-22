@@ -12,13 +12,13 @@ class Target(StaticObject):
     def __init__(self, position, radius):
         """
         Target Init
-        
+
         :param position: Position of center
         :type position: 1x3 numpy.ndarray
-        
+
         :param radius: radius of target
         :type radius: int
-        
+
         :rtype: None
         """
         self.position = np.array(position)
@@ -27,10 +27,10 @@ class Target(StaticObject):
 
     def is_hit(self, position):
         """Check if the target is hit.
-        
+
         :param position: A object's position
         :type position: numpy.array
-        
+
         :rtype: Boolean
         """
         diff = np.absolute(position - self.position)

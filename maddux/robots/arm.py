@@ -4,13 +4,15 @@ A robot arm defined by a sequence of DH links
 import numpy as np
 import utils
 
+
 class Arm:
 
     # TODO: Do something about active_links, its real bad...
     # TODO: Make sure the tool frame works
-    def __init__(self, links, q0, name, active_links=None, base=None, tool=None):
+    def __init__(self, links, q0, name, active_links=None,
+                 base=None, tool=None):
         """A robotic arm.
-        
+
         :param links: 1xN Vector of Link objects
         :type links: numpy.ndarray
 
@@ -19,7 +21,7 @@ class Arm:
 
         :param name: Name of the arm
         :type name: str
-        
+
         :param active_links: Number of active links on the arm (Defaults to all)
         :type active_links: int or None
 
@@ -65,14 +67,14 @@ class Arm:
 
     def reset(self):
         """Resets the arm back to its resting state, i.e. q0
-        
+
         :rtype: None
         """
         self.update_angles(self.q0)
 
     def get_current_joint_config(self):
         """Gets the current joint configuration from the links
-        
+
         :returns: 1xN vector of current joint config
         :rtype: numpy.ndarray
         """
@@ -83,7 +85,7 @@ class Arm:
 
     def update_angles(self, new_angles):
         """Updates all the link's angles
-        
+
         :param new_angles: 1xN vector of new link angles
         :type new_angles: numpy.ndarray
 
@@ -167,7 +169,7 @@ class Arm:
     def end_effector_position(self, q=None):
         """Return end effector position
 
-        :param q: Config to compute the end effector position for a given 
+        :param q: Config to compute the end effector position for a given
                   1xN q vector
         :type q: numpy.ndarray or None
 
@@ -184,7 +186,7 @@ class Arm:
     def end_effector_velocity(self):
         """Calculate the end effector velocity of the arm given
         its current angular velocities.
-        
+
         :returns: Returns linear and angular velocity in each dimension
                   (vx, vy, vz, wx, wy, wz).
         :rtype: np.ndarray
@@ -195,14 +197,13 @@ class Arm:
         velocity = self.jacob0(q) * np.asmatrix(dq).T
         return velocity.A1
 
-
     def fkine(self, q=None, links=None):
         """Computes the forward kinematics of the arm using the current joint
         configuration or a given joint configuration
 
         :param q: (Optional) 1xN vector of joint configuration to compute the FK on
         :type q: numpy.ndarray or None
-        
+
         :param links: (Optional) Specify which links to run fkine on.
                       for example: links=[1,2,3].
         :type links: int or None
@@ -243,8 +244,8 @@ class Arm:
         """
         # Check to make sure alpha is between 0 and 1
         if not (0.0 <= alpha <= 1.0):
-          print "Invalid alpha. Defaulting to 0.1"
-          alpha = 0.1
+            print "Invalid alpha. Defaulting to 0.1"
+            alpha = 0.1
 
         q = self.get_current_joint_config()
         self.qs = np.array([q.copy()])
@@ -352,7 +353,6 @@ class Arm:
         else:
             # TODO: Replease with End Effector Velocity
             self.held_objects[object_idx].throw(velocity)
-
 
     # TODO: Let env_object be any object, not just static
     def is_in_collision(self, env_object):

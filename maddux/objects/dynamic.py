@@ -4,6 +4,7 @@ An abstract base class for dynamic objects.
 import abc
 import numpy as np
 
+
 class DynamicObject:
     __metaclass__ = abc.ABCMeta
 
@@ -12,8 +13,8 @@ class DynamicObject:
 
         :param position: Current (x,y,z) position of the Dynamic Object
         :type position: numpy.ndarray
-        
-        :param target: (Default=False) Whether this object is the target of 
+
+        :param target: (Default=False) Whether this object is the target of
                        an experiment
         :type target: bool
         """

@@ -6,6 +6,7 @@ import numpy as np
 from maddux.plot import plot_sphere
 import math
 
+
 class Link:
 
     def __init__(self, theta, offset, length, twist,
@@ -31,7 +32,7 @@ class Link:
         :param max_velocity: Maximum radians the link can rotate per second
         :type max_velocity: int
 
-        :param link_size: The size of the link (used in collision detection 
+        :param link_size: The size of the link (used in collision detection
                           and plotting)
         :type link_size: int
 
@@ -50,7 +51,7 @@ class Link:
         self.connector_size = connector_size
 
         self.set_theta(theta)
-        self.velocity = 0 # Link's current velocity
+        self.velocity = 0  # Link's current velocity
 
         # This is updated once we add it to an arm
         self.base_pos = None
@@ -91,7 +92,7 @@ class Link:
 
     def compute_transformation_matrix(self, q):
         """Transformation matrix from the current theta to the new theta
-        
+
         :param q: the new theta
         :type q: int
 
@@ -102,10 +103,10 @@ class Link:
         ca = np.cos(self.twist)
         st = np.sin(q)
         ct = np.cos(q)
-        T = np.matrix([[ct, -st * ca, st * sa,  self.length * ct],
-                       [st, ct * ca,  -ct * sa, self.length * st],
-                       [0,  sa,       ca,       self.offset],
-                       [0,  0,        0,        1]])
+        T = np.matrix([[ct, -st * ca, st * sa, self.length * ct],
+                       [st, ct * ca, -ct * sa, self.length * st],
+                       [0, sa, ca, self.offset],
+                       [0, 0, 0, 1]])
         return T
 
     # TODO: Abstract this to take dynamic objects as well as static ones

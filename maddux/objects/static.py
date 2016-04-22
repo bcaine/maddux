@@ -4,6 +4,7 @@ An abstract base class for static objects.
 import abc
 import numpy as np
 
+
 class StaticObject:
     __metaclass__ = abc.ABCMeta
 
@@ -21,4 +22,3 @@ class StaticObject:
     def plot(self, ax):
         """Plot static object."""
         return
-    

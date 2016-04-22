@@ -28,36 +28,36 @@ class Obstacle(StaticObject):
 
     # TODO: Make this use numpy arrays instead of lists
     def get_paths(self):
-      """Returns the paths for each of the surfaces of the
-      rectangle for plotting.
-      
-      :returns (bottom, top, front, back, left, right)
-      :rtype: list of 6 4x3 numpy.ndarrays
-      """
-      [x1, y1, z1] = self.pt1
-      [x2, y2, z2] = self.pt2
-      pt1 = [x1, y1, z1]
-      pt2 = [x1, y1, z2]
-      pt3 = [x1, y2, z1]
-      pt4 = [x1, y2, z2]
-      pt5 = [x2, y1, z1]
-      pt6 = [x2, y1, z2]
-      pt7 = [x2, y2, z1]
-      pt8 = [x2, y2, z2]
+        """Returns the paths for each of the surfaces of the
+        rectangle for plotting.
 
-      bottom = [pt1, pt3, pt7, pt5]
-      top = [pt2, pt4, pt8, pt6]
-      front = [pt1, pt2, pt6, pt5]
-      back = [pt3, pt4, pt8, pt7]
-      left = [pt1, pt2, pt4, pt3]
-      right = [pt5, pt6, pt8, pt7]
-      paths = [bottom, top, front, back, left, right]
-      return paths
+        :returns (bottom, top, front, back, left, right)
+        :rtype: list of 6 4x3 numpy.ndarrays
+        """
+        [x1, y1, z1] = self.pt1
+        [x2, y2, z2] = self.pt2
+        pt1 = [x1, y1, z1]
+        pt2 = [x1, y1, z2]
+        pt3 = [x1, y2, z1]
+        pt4 = [x1, y2, z2]
+        pt5 = [x2, y1, z1]
+        pt6 = [x2, y1, z2]
+        pt7 = [x2, y2, z1]
+        pt8 = [x2, y2, z2]
+
+        bottom = [pt1, pt3, pt7, pt5]
+        top = [pt2, pt4, pt8, pt6]
+        front = [pt1, pt2, pt6, pt5]
+        back = [pt3, pt4, pt8, pt7]
+        left = [pt1, pt2, pt4, pt3]
+        right = [pt5, pt6, pt8, pt7]
+        paths = [bottom, top, front, back, left, right]
+        return paths
 
     def is_hit(self, position):
         """Checks if the rectangle is hit by a point or path
 
-        :param position: An objects position (x, y, z) or positions if 
+        :param position: An objects position (x, y, z) or positions if
                          it is a path([x1, x2, ..], [y1, y2, ..], [z1, z2, ..]
         :type position: numpy.ndarray or numpy.matrix
 
@@ -93,10 +93,10 @@ class Obstacle(StaticObject):
 
         :param center: Sphere's center (x, y, z)
         :type center: numpy.ndarray
-        
+
         :param radius: The sphere's radius
         :type radius: int
-        
+
         :returns: Whether obstacle was hit by a sphere
         :rtype: bool
         """
@@ -113,7 +113,7 @@ class Obstacle(StaticObject):
 
     def display(self):
         """Display obstacle properties
-        
+
         :rtype: None
         """
         print "Center: {}".format(self.center)
@@ -126,7 +126,7 @@ class Obstacle(StaticObject):
 
         :param ax: Figure to plot on
         :type ax: matplotlib.axes
-        
+
         :rtpye: None
         """
         paths = self.get_paths()

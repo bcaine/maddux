@@ -19,7 +19,7 @@ class ThrowableObject(DynamicObject):
 
     def throw(self, velocity):
         """Throw an object.
-        
+
         :param velocity: Velocity to throw at (vx, vy, vz)
         :type velocity: np.ndarray
 

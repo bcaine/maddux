@@ -10,13 +10,13 @@ class Ball(ThrowableObject):
 
     def __init__(self, position, radius, target=False):
         """Ball object that can move, have a velocity, and hit objects
-        
+
         :param position: The position (x,y,z) of the center of the ball
         :type position: numpy.ndarray
-        
+
         :param: radius: The radius of the ball
         :type radius: int
-        
+
         :rtype: None
         """
         self.radius = radius
@@ -24,7 +24,7 @@ class Ball(ThrowableObject):
 
     def plot(self, ax):
         """Plots the ball at its current location.
-        
+
         :param ax: Figure to plot on.
         :type ax: matplotlib.axes
 

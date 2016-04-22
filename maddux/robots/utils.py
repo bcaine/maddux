@@ -8,7 +8,7 @@ import numpy as np
 def get_rotation_from_homogeneous_transform(transform):
     """Extract the rotation section of the homogeneous transformation
 
-    :param transform: The 4x4 homogeneous transform to extract the 
+    :param transform: The 4x4 homogeneous transform to extract the
                       rotation matrix from.
     :type transform: numpy.ndarray
 
