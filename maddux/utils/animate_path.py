@@ -2,14 +2,17 @@ import numpy as np
 from maddux.rl_experiments.environments import environments
 
 def animate_path(environment, input_file, output_file=None):
-    """
-    Load a saved path and animate it
+    """Load a saved path and animate it
+    
     :param environment: The environment the path occured in
-    :type environment: String
+    :type environment: str
+    
     :param input_file: The file holding the joint configs
-    :type input_file: String
+    :type input_file: str
+    
     :param output_file: The file to save the animation to as a .mp4
-    :type output_file: String or None
+    :type output_file: str or None
+
     :rtpye: None
     """
     if environment in environments:
