@@ -3,13 +3,13 @@ import numpy as np
 
 def plot_sphere_data(position, radius):
     """Given a position and radius, get the data needed to plot.
-    
+
     :param position: Position in (x, y, z) of sphere
     :type position: numpy.ndarray
-    
+
     :param radius: radius of sphere
     :type radius: int
-    
+
     :returns: (x, y, z) tuple of sphere data to use to create a surface
     :rtype: (np.ndarray, np.ndarray, np.ndarray)
     """
@@ -28,13 +28,13 @@ def plot_sphere_data(position, radius):
 
 def plot_sphere(position, radius, ax, color='g', linewidth=0):
     """Plot a sphere.
-    
+
     :param position: Position in (x, y, z) of sphere
     :type position: numpy.ndarray
 
     :param radius: radius of sphere
     :type radius: int
-    
+
     :param ax: axes to plot on
     :type ax: matplotlib.axes
 

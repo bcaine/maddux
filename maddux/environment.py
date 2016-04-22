@@ -15,7 +15,7 @@ class Environment:
     def __init__(self, dimensions=None, dynamic_objects=None,
                  static_objects=None, robot=None):
         """An environment to run experiments in
-        
+
         :param dimensions: (Optional) The dimensions of env
         :type dimensions: 1x3 numpy.array or None
 
@@ -43,7 +43,7 @@ class Environment:
 
         :param duration: duration to run environment in seconds
         :type duration: integer
-        
+
         :rtype: None
         """
         duration_ms = int(duration * 1000)
@@ -55,7 +55,7 @@ class Environment:
 
     def animate(self, duration=None, save_path=None):
         """Animates the running of the program
-        
+
         :param duration: (Optional) Duration of animation in seconds
         :type duration: int or None
 
@@ -75,7 +75,6 @@ class Environment:
                 frames = len(self.robot.qs)
         else:
             frames = int(fps * duration)
-
 
         def update(i):
             ax.clear()
@@ -99,12 +98,14 @@ class Environment:
             plt.show()
         else:
             Writer = animation.writers['ffmpeg']
-            writer = Writer(fps=fps, metadata=dict(artist='Maddux'), bitrate=1800)
+            writer = Writer(
+                fps=fps, metadata=dict(
+                    artist='Maddux'), bitrate=1800)
             ani.save(save_path, writer=writer)
 
     def hypothetical_landing_position(self):
         """Find the position that the ball would land (or hit a wall)
-        
+
         :returns: Position (x, y, z) of hypothetical landing position of a
                   thrown object based on end effector velocity.
         :rtype: numpy.ndarray or None
@@ -135,9 +136,9 @@ class Environment:
         return None
 
     def collision(self):
-        """Check if any dynamic objects collide with any static 
+        """Check if any dynamic objects collide with any static
         objects or walls.
-        
+
         :return: Whether there was a collision
         :rtype: bool
         """
@@ -162,10 +163,10 @@ class Environment:
 
     def plot(self, ax=None, show=True):
         """Plot throw trajectory and ball
-        
+
         :param ax: Current axis if a figure already exists
         :type ax: matplotlib.axes
-        
+
         :param show: (Default: True) Whether to show the figure
         :type show: bool
 
@@ -180,10 +181,10 @@ class Environment:
         ax.set_ylim([0, self.dimensions[1]])
 
         if self.dynamic_objects:
-          zmax = max([o.positions[:, 2].max() \
-                      for o in self.dynamic_objects])
+            zmax = max([o.positions[:, 2].max()
+                        for o in self.dynamic_objects])
         else:
-          zmax = 10
+            zmax = 10
         ax.set_zlim([0, max(10, zmax)])
 
         # And set our labels
