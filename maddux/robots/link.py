@@ -1,5 +1,6 @@
 """
-A Link in a robot arm.
+A Link object holds all information related to a robot link such as
+the DH parameters and position in relation to the world.
 """
 import numpy as np
 from maddux.plot import plot_sphere
@@ -8,30 +9,38 @@ import math
 class Link:
 
     def __init__(self, theta, offset, length, twist,
-                 q_lim=None, max_velocity=None):
+                 q_lim=None, max_velocity=30.0, link_size=0.1,
+                 connector_size=0.1):
         """
         :param theta: Link angle, variable
+        :type theta: integer
         :param offset: Link offset, constant
+        :type offset: integer
         :param length: Link length, constant
+        :type length: integer
         :param twist: Link twist, constant
+        :type twist: integer
         :param q_lim: Joint coordinate limits
+        :type q_lim: numpy.array or None
         :param max_velocity: Maximum radians the link can rotate per second
+        :type max_velocity: integer
+        :param link_size: The size of the link (used in collision detection and plotting)
+        :type link_size: integer
+        :param connector_size: The size of the link connector
+        :type  connector_size: integer
+        :rtype: None
         """
         self.offset = offset
         self.length = length
         self.twist = twist
         self.q_lim = q_lim
 
-        self.link_size = 0.1
-        self.connector_size = 0.1
+        self.max_velocity = max_velocity
+        self.link_size = link_size
+        self.connector_size = connector_size
 
         self.set_theta(theta)
         self.velocity = 0 # Link's current velocity
-
-        if max_velocity is None:
-            self.max_velocity = 30 # radians per second
-        else:
-            self.max_velocity = max_velocity
 
         # This is updated once we add it to an arm
         self.base_pos = None
@@ -42,6 +51,8 @@ class Link:
         Sets theta to the new theta and computes the new
         transformation matrix
         :param theta: The new theta for the link
+        :type theta: integer
+        :rtype: None
         """
         self.theta = theta
         self.transform_matrix = self.compute_transformation_matrix(theta)
@@ -52,7 +63,10 @@ class Link:
         by some acceleration over some time
         :param accel: The acceleration acting upon the link
                       (radians per second^2)
+        :type accel: integer
         :param time: The time the accelration is applied over (seconds)
+        :type time: integer
+        :rtype: None
         """
         new_velocity = self.velocity + (accel * time)
         if new_velocity <= self.max_velocity:
@@ -66,25 +80,29 @@ class Link:
         """
         Transformation matrix from the current theta to the new theta
         :param q: the new theta
+        :type q: integer
+        :rtype: 4x4 numpy matrix
         """
         sa = np.sin(self.twist)
         ca = np.cos(self.twist)
         st = np.sin(q)
         ct = np.cos(q)
-        T = np.matrix([[ct, -st * ca, st * sa, self.length * ct],
-                       [st, ct * ca, -ct * sa, self.length * st],
-                       [0, sa, ca, self.offset],
-                       [0, 0, 0, 1]])
+        T = np.matrix([[ct, -st * ca, st * sa,  self.length * ct],
+                       [st, ct * ca,  -ct * sa, self.length * st],
+                       [0,  sa,       ca,       self.offset],
+                       [0,  0,        0,        1]])
         return T
 
+    # TODO: Abstract this to take dynamic objects as well as static ones
     def is_in_collision(self, env_object):
         """
-        Checks if the arm is in collision with a given object
+        Checks if the arm is in collision with a given static object
         :param env_object: The object to check for collisions with
+        :type env_object: maddux.objects.StaticObject
+        :rtype: Boolean
         """
         intersects_joint = env_object.is_hit_by_sphere(self.base_pos,
                                                        self.link_size)
-
         # If the link sphere is in collision we do not need to
         # check anything else
         if intersects_joint:
@@ -97,7 +115,6 @@ class Link:
 
         # Otherwise we need to check if the object intersects with
         # the arm connector, so we vectorize it and call is_hit
-        length = max(self.length, self.offset)
         lamb = np.linspace(0, 1, 100)
         v = self.end_pos - self.base_pos
 
@@ -108,6 +125,7 @@ class Link:
     def display(self):
         """
         Display the link's properties nicely
+        :rtype: None
         """
         print 'Link angle: {}'.format(self.theta)
         print 'Link offset: {}'.format(self.offset)
@@ -115,6 +133,12 @@ class Link:
         print 'Link twist: {}'.format(self.twist)
 
     def plot(self, ax):
+        """
+        Plots the link on the given matplotlib figure
+        :param ax: Figure to plot link upon
+        :type ax: matplotlib figure
+        :rtype: None
+        """
         if self.base_pos is None or self.end_pos is None:
             raise ValueError("Base and End positions were never defined")
 
