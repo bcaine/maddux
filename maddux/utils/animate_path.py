@@ -1,12 +1,17 @@
 import numpy as np
-from maddux.environment import Environment
-from maddux.objects import Ball, Obstacle
-from maddux.robots import simple_human_arm
 from maddux.rl_experiments.environments import environments
 
-
 def animate_path(environment, input_file, output_file=None):
-    """Load a saved path and animate it"""
+    """
+    Load a saved path and animate it
+    :param environment: The environment the path occured in
+    :type environment: String
+    :param input_file: The file holding the joint configs
+    :type input_file: String
+    :param output_file: The file to save the animation to as a .mp4
+    :type output_file: String or None
+    :rtpye: None
+    """
     if environment in environments:
         env = environments[environment]()
     else:
@@ -22,6 +27,3 @@ def animate_path(environment, input_file, output_file=None):
         env.animate(save_path=output_file)
     else:
         env.animate()
-    
-    
-    

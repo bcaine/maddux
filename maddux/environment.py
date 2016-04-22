@@ -15,10 +15,15 @@ class Environment:
     def __init__(self, dimensions=None, dynamic_objects=None,
                  static_objects=None, robot=None):
         """An environment to run experiments in
-        :param dimensions: (Optional) 1x3 array of the dimensions of env
+        :param dimensions: (Optional) The dimensions of env
+        :type dimensions: 1x3 numpy.array or None
         :param dynamic_objects: (Optional) A list of objects that can move
+        :type dynamic_objects: list of maddux.objects.DynamicObject or None
         :param static_objects: (Optional) A list of stationary objects
+        :type static_objects: list of maddux.objects.StaticObject or None
         :param robot: (Optional) A robot to simulate
+        :type robot: maddux.robot.Arm or None
+        :rtype: None
         """
         if dimensions is None:
             self.dimensions = np.array(dimensions)
@@ -31,7 +36,9 @@ class Environment:
     def run(self, duration):
         """Run for a certain duration
         :param duration: duration to run environment in seconds
+        :type duration: integer
         :return score: The value showing how close the ball is to the target
+        :rtype: integer
         """
         duration_ms = int(duration * 1000)
 
@@ -44,10 +51,13 @@ class Environment:
     def animate(self, duration=None, save_path=None):
         """Animates the running of the program
         :param duration: (Optional) Duration of animation in seconds
+        :type duration: integer or None
         :param save_path: (Optional) Path to save mp4 in instead of displaying
+        :type save_path: String or None
+        :rtype: None
         """
         fps = 15
-        dynamic_iter_per_frame = 10 * fps        
+        dynamic_iter_per_frame = 10 * fps
 
         if duration is None:
             if self.robot is None:
@@ -85,7 +95,10 @@ class Environment:
             ani.save(save_path, writer=writer)
 
     def hypothetical_landing_position(self):
-        """Find the position that the ball would land (or hit a wall)"""
+        """
+        Find the position that the ball would land (or hit a wall)
+        :rtype: 1x3 numpy.array or None
+        """
         pos = self.robot.end_effector_position().copy()
         # Only need linear velocity
         v = self.robot.end_effector_velocity()[0:3]
@@ -112,9 +125,10 @@ class Environment:
         return None
 
     def collision(self):
-        """Check if any dynamic objects collide with any static objects
-        or walls.
-        :return: Boolean, whether there was a collision
+        """
+        Check if any dynamic objects collide with any static objects or walls.
+        :return: Whether there was a collision
+        :rtype: Boolean
         """
         for dynamic in self.dynamic_objects:
             if dynamic.attached:
@@ -137,9 +151,11 @@ class Environment:
 
     def plot(self, ax=None, show=True):
         """Plot throw trajectory and ball
-
         :param ax: Current axis if a figure already exists
+        :type ax: matplotlib figure or None
         :param show: (Default: True) Whether to show the figure
+        :type show: Boolean
+        :rtype: None
         """
         if ax is None:
             fig = plt.figure(figsize=(12, 12))
