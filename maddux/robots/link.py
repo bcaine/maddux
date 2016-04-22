@@ -11,23 +11,33 @@ class Link:
     def __init__(self, theta, offset, length, twist,
                  q_lim=None, max_velocity=30.0, link_size=0.1,
                  connector_size=0.1):
-        """
+        """Link init
+
         :param theta: Link angle, variable
-        :type theta: integer
+        :type theta: int
+
         :param offset: Link offset, constant
-        :type offset: integer
+        :type offset: int
+
         :param length: Link length, constant
-        :type length: integer
+        :type length: int
+
         :param twist: Link twist, constant
-        :type twist: integer
+        :type twist: int
+
         :param q_lim: Joint coordinate limits
-        :type q_lim: numpy.array or None
+        :type q_lim: numpy.ndarray or None
+
         :param max_velocity: Maximum radians the link can rotate per second
-        :type max_velocity: integer
-        :param link_size: The size of the link (used in collision detection and plotting)
-        :type link_size: integer
+        :type max_velocity: int
+
+        :param link_size: The size of the link (used in collision detection 
+                          and plotting)
+        :type link_size: int
+
         :param connector_size: The size of the link connector
-        :type  connector_size: integer
+        :type  connector_size: int
+
         :rtype: None
         """
         self.offset = offset
@@ -47,25 +57,28 @@ class Link:
         self.end_pos = None
 
     def set_theta(self, theta):
-        """
-        Sets theta to the new theta and computes the new
+        """Sets theta to the new theta and computes the new
         transformation matrix
+
         :param theta: The new theta for the link
-        :type theta: integer
+        :type theta: int
+
         :rtype: None
         """
         self.theta = theta
         self.transform_matrix = self.compute_transformation_matrix(theta)
 
     def update_velocity(self, accel, time):
-        """
-        Updates the current velocity of the link when acted upon
+        """Updates the current velocity of the link when acted upon
         by some acceleration over some time
+
         :param accel: The acceleration acting upon the link
                       (radians per second^2)
-        :type accel: integer
+        :type accel: int
+
         :param time: The time the accelration is applied over (seconds)
-        :type time: integer
+        :type time: int
+
         :rtype: None
         """
         new_velocity = self.velocity + (accel * time)
@@ -77,10 +90,12 @@ class Link:
             self.set_theta(new_theta)
 
     def compute_transformation_matrix(self, q):
-        """
-        Transformation matrix from the current theta to the new theta
+        """Transformation matrix from the current theta to the new theta
+        
         :param q: the new theta
-        :type q: integer
+        :type q: int
+
+        :returns: Transformation matrix from current q to provided q
         :rtype: 4x4 numpy matrix
         """
         sa = np.sin(self.twist)
@@ -95,11 +110,13 @@ class Link:
 
     # TODO: Abstract this to take dynamic objects as well as static ones
     def is_in_collision(self, env_object):
-        """
-        Checks if the arm is in collision with a given static object
+        """Checks if the arm is in collision with a given static object
+
         :param env_object: The object to check for collisions with
         :type env_object: maddux.objects.StaticObject
-        :rtype: Boolean
+
+        :returns: Whether link hits the provided env_object
+        :rtype: bool
         """
         intersects_joint = env_object.is_hit_by_sphere(self.base_pos,
                                                        self.link_size)
@@ -123,8 +140,8 @@ class Link:
         return env_object.is_hit(positions)
 
     def display(self):
-        """
-        Display the link's properties nicely
+        """Display the link's properties nicely
+
         :rtype: None
         """
         print 'Link angle: {}'.format(self.theta)
@@ -133,10 +150,11 @@ class Link:
         print 'Link twist: {}'.format(self.twist)
 
     def plot(self, ax):
-        """
-        Plots the link on the given matplotlib figure
+        """Plots the link on the given matplotlib figure
+
         :param ax: Figure to plot link upon
-        :type ax: matplotlib figure
+        :type ax: matplotlib.axes
+
         :rtype: None
         """
         if self.base_pos is None or self.end_pos is None:

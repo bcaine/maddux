@@ -10,18 +10,25 @@ class Arm:
     # TODO: Make sure the tool frame works
     def __init__(self, links, q0, name, active_links=None, base=None, tool=None):
         """A robotic arm.
-        :param links: Vector of Link objects
-        :type links: 1xN numpy.array
-        :param q0: The default (resting state) joint configuration
-        :type q0: 1xN numpy.array
+        
+        :param links: 1xN Vector of Link objects
+        :type links: numpy.ndarray
+
+        :param q0: 1xN vector of default (resting state) joint configurations
+        :type q0: numpy.ndarray
+
         :param name: Name of the arm
-        :type name: String
+        :type name: str
+        
         :param active_links: Number of active links on the arm (Defaults to all)
-        :type active_links: integer or None
-        :param base: Base position of the arm in (x,y,z) cords
-        :type base: 1x3 numpy.array or None
+        :type active_links: int or None
+
+        :param base: Base position (x, y, z) of the arm in (x,y,z) cords
+        :type base: numpy.ndarray or None
+
         :param tool: Tool location in (z,y,z) cords
-        :type tool: 1x3 numpy.array or None
+        :type tool: numpy.ndarray or None
+
         :rtype: None
         """
         self.num_links = links.size
@@ -57,16 +64,17 @@ class Arm:
         self.reset()
 
     def reset(self):
-        """
-        Resets the arm back to its resting state, i.e. q0
+        """Resets the arm back to its resting state, i.e. q0
+        
         :rtype: None
         """
         self.update_angles(self.q0)
 
     def get_current_joint_config(self):
-        """
-        Gets the current joint configuration from the links
-        :rtype: 1xN numpy.array
+        """Gets the current joint configuration from the links
+        
+        :returns: 1xN vector of current joint config
+        :rtype: numpy.ndarray
         """
         q = np.zeros(self.num_links)
         for i, link in enumerate(self.links):
@@ -74,10 +82,11 @@ class Arm:
         return q
 
     def update_angles(self, new_angles):
-        """
-        Updates all the link's angles
-        :param new_angles: The new link angles
-        :type new_angles: 1xN numpy.array
+        """Updates all the link's angles
+        
+        :param new_angles: 1xN vector of new link angles
+        :type new_angles: numpy.ndarray
+
         :rtype: None
         """
         for link, new_theta in zip(self.links, new_angles):
@@ -85,14 +94,17 @@ class Arm:
         self.update_link_positions()
 
     def update_link_angle(self, link, new_angle, save=False):
-        """
-        Updates the given link's angle with the given angle
+        """Updates the given link's angle with the given angle
+
         :param link: The link you want to update
-        :type link: integer
+        :type link: int
+
         :param new_angle: The link's new angle
-        :type new_angle: integer
+        :type new_angle: int
+
         :paran save: Flag that determines if the update is cached
-        :type Boolean
+        :type save: bool
+
         :rtype: None
         """
         self.links[link].set_theta(new_angle)
@@ -105,23 +117,26 @@ class Arm:
 
     # TODO: Acceleration over time seems like a weird way to update this
     def update_link_velocity(self, link, accel, time):
-        """
-        Updates the given link's velocity with the given
+        """Updates the given link's velocity with the given
         acceleration over the given time
+
         :param link: The link you want to update
-        :type link: integer
+        :type link: int
+
         :param accel: The acceleration (Radians per second^2)
-        :type accel: integer
+        :type accel: int
+
         :param time: The time (Seconds)
-        :type time: integer
+        :type time: int
+
         :rtype: None
         """
         self.links[link].update_velocity(accel, time)
         self.update_link_positions()
 
     def update_link_positions(self):
-        """
-        Walk through all the links and update their positions.
+        """Walk through all the links and update their positions.
+
         :rtype: None
         """
 
@@ -150,11 +165,14 @@ class Arm:
             held_object.position = self.end_effector_position()
 
     def end_effector_position(self, q=None):
-        """
-        Return end effector position
-        :param q: Config to compute the end effector position on
-        :type q: 1xN numpy.array or None
-        :rtype: 1x3 numpy.array
+        """Return end effector position
+
+        :param q: Config to compute the end effector position for a given 
+                  1xN q vector
+        :type q: numpy.ndarray or None
+
+        :returns: Position (x, y, z) of end effector
+        :rtype: numpy.ndarray
         """
         if q is None:
             return self.links[-1].end_pos
@@ -164,10 +182,12 @@ class Arm:
         return end_pos
 
     def end_effector_velocity(self):
-        """
-        Calculate the end effector velocity of the arm given
+        """Calculate the end effector velocity of the arm given
         its current angular velocities.
-        :rtype: integer
+        
+        :returns: Returns linear and angular velocity in each dimension
+                  (vx, vy, vz, wx, wy, wz).
+        :rtype: np.ndarray
         """
         q = np.array([link.theta for link in self.links])
         dq = np.array([link.velocity for link in self.links])
@@ -177,20 +197,25 @@ class Arm:
 
 
     def fkine(self, q=None, links=None):
-        """
-        Computes the forward kinematics of the arm using the current joint
+        """Computes the forward kinematics of the arm using the current joint
         configuration or a given joint configuration
-        :param q: (Optional) joint configuration to compute the FK on
-        :type q: 1xN numpy.array or None
-        :param links: (Optional) Specify which links to run fkine on
-        :type links: integer or None
+
+        :param q: (Optional) 1xN vector of joint configuration to compute the FK on
+        :type q: numpy.ndarray or None
+        
+        :param links: (Optional) Specify which links to run fkine on.
+                      for example: links=[1,2,3].
+        :type links: int or None
+
+        :returns: Homogenous coordinates of point at the end of either
+                  the specified list of links, or the end effector
         :rtype: 4x4 numpy.array
         """
         if links is None:
             links = range(self.num_links)
 
         t = self.base
-        # TODO: Whats the point of links? Seems unused/used wrong
+
         for i, link in zip(links, self.links):
             if np.any(q):
                 t = t * link.compute_transformation_matrix(q[i])
@@ -200,17 +225,21 @@ class Arm:
         return t
 
     def ikine(self, p, num_iterations=1000, alpha=0.1):
-        """
-        Computes the inverse kinematics to find the correct joint
+        """Computes the inverse kinematics to find the correct joint
         configuration to reach a given point
-        :param p: The point we want to solve the inverse kinematics for
-        :type p: 1x3 numpy.array
+
+        :param p: The point (x, y, z) to solve the inverse kinematics for
+        :type p: numpy.ndarray
+
         :param num_iterations: The number of iterations to try before
                                giving up
-        :type num_iterations: integer
+        :type num_iterations: int
+
         :param alpha: The stepsize for the ikine solver (0.0 - 1.0)
-        :type alpha: integer
-        :rtype: 1xN numpy.array
+        :type alpha: int
+
+        :returns: 1xN vector of the joint configuration for given point p.
+        :rtype: numpy.ndarray
         """
         # Check to make sure alpha is between 0 and 1
         if not (0.0 <= alpha <= 1.0):
@@ -244,12 +273,14 @@ class Arm:
         raise ValueError("Could not find solution.")
 
     def jacob0(self, q=None):
-        """
-        Calculates the jacobian in the world frame by finding it in
-        the tool frame and then converting to the world frame
-        :param q: Optional joint configuration to compute the jacobian on
-        :type q: 1xN numpy.array
-        :rtype: 6xN numpy.array
+        """Calculates the jacobian in the world frame by finding it in
+        the tool frame and then converting to the world frame.
+
+        :param q: (Optional) 1xN joint configuration to compute the jacobian on
+        :type q: numpy.ndarray
+
+        :returns: 6xN Jacobian in the world frame
+        :rtype: numpy.matrix
         """
 
         # Get the tool frame jacobian
@@ -267,11 +298,13 @@ class Arm:
         return J
 
     def jacobn(self, q=None):
-        """
-        Calculates the jacobian in the tool frame
-        :param q: Optional joint configuration to compute the jacobian on
-        :type q: 1xN numpy.array
-        :rtype: 6xN numpy.array
+        """Calculates the jacobian in the tool frame
+
+        :param q: (Optional) 1xN joint configuration to compute the jacobian on
+        :type q: 1xN numpy.ndarray
+
+        :returns: 6xN Jacobian in the tool frame
+        :rtype: numpy.matrix
         """
         J = np.zeros((6, self.num_links))
         U = self.tool
@@ -292,10 +325,11 @@ class Arm:
         return J
 
     def hold(self, obj):
-        """
-        Hold a specific object
+        """Hold a specific object
+
         :param obj: Object to be held
         :type obj: maddux.objects.DynamicObject
+
         :rtype: None
         """
         obj.attach()
@@ -304,8 +338,10 @@ class Arm:
 
     def release(self, object_idx=None):
         """Release one or all currently held objects
+
         :param object_idx: (Optional) index of object to release
-        :type object_idx = integer or None
+        :type object_idx = int or None
+
         :rtype: None
         """
         velocity = self.end_effector_velocity()[0:3]
@@ -320,11 +356,13 @@ class Arm:
 
     # TODO: Let env_object be any object, not just static
     def is_in_collision(self, env_object):
-        """
-        Checks if the arm is in collision with a given object
+        """Checks if the arm is in collision with a given object
+
         :param env_object: The object to check for collisions with
         :type env_object: maddux.Objects.StaticObject
-        :rtype: Boolean
+
+        :returns: Whether you hit the env_object
+        :rtype: bool
         """
         for link in self.links:
             if link.is_in_collision(env_object):
@@ -333,8 +371,10 @@ class Arm:
 
     def plot(self, ax):
         """Plot our robot into given axes
+
         :param ax: axes of plot
-        :type ax: matplotlib figure
+        :type ax: matplotlib.axes
+
         :rtype: None
         """
         for link in self.links:
