@@ -34,6 +34,8 @@ class Arm:
         else:
             self.active_links = active_links
 
+        # TODO: Make base and tool 4x4 homogeneous transforms
+        #       otherwise we can't specify rotation ever
         if base is None:
             self.base = np.identity(4)
         else:
