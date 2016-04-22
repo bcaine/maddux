@@ -13,12 +13,7 @@ Maddux documentation
 .. toctree::
    :maxdepth: 2
 
-   maddux
-   maddux.robots
-   maddux.objects
-   maddux.utils
-   maddux.examples
-
+   modules
 
 Indices and tables
 ==================
