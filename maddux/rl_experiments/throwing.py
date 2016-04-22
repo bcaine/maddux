@@ -1,3 +1,7 @@
+"""
+Simulation to teach robot how to throw a ball.
+DOES NOT CURRENTLY WORK!
+"""
 import sys
 import os
 sys.path.insert(0, os.path.abspath('.'))
@@ -57,7 +61,7 @@ class ThrowingArm(object):
                 # Undo link update
                 self.robot.update_link_velocity(link, -ACCEL_CHANGE *\
                                                 self.actions[i], TIME)
-            
+
             distance = np.linalg.norm(landing_pos - self.target.position)
             landing_positions.append(distance)
         return np.array(landing_positions)
@@ -86,7 +90,7 @@ class ThrowingArm(object):
         return self.released
 
     def collect_reward(self, action):
-        """Returns reward accumulated since last time this 
+        """Returns reward accumulated since last time this
         function was called.
         """
         # Get previous landing position

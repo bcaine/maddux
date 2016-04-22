@@ -3,17 +3,19 @@ import os
 sys.path.insert(0, os.path.abspath('.'))
 
 import numpy as np
-from random import gauss
-
 
 class Planning(object):
 
     def __init__(self, environment, change_per_iter=0.1, target_accuracy=0.25):
-        """Planning module to take an environment and run RL experiments on
-        :param environment: Environment containing robot, obstacles,
-                            target etc.
-        :param change_per_iter: Change of a joint each action
+        """
+        Planning module to take an environment and run RL experiments on
+        :param environment: Environment containing robot, obstacles, target, etc.
+        :type environment: maddux.Environment
+        :param change_per_iter: Change of a joint config each action in radians
+        :type change_per_iter: integer
         :param target_accuracy: Accuracy needed to declare target hit
+        :type target_accuracy: integer
+        :rtype: None
         """
         self.change_per_iter = change_per_iter
         self.target_accuracy = target_accuracy
@@ -22,6 +24,7 @@ class Planning(object):
         self.robot = environment.robot
         self.env = environment
 
+        # TODO: This is a dumb assumption, make it better
         # Assume target is first dynamic object
         self.target = self.dynamic_objects[0]
 
@@ -35,13 +38,18 @@ class Planning(object):
         self.hit_obstacle = False
 
     def observe(self):
-        """Returns current observation"""
+        """
+        Returns current observation
+        :rtype: 1x4 numpy.array
+        """
         return self.robot.get_current_joint_config()[0:4]
 
     def perform_action(self, action):
-        """Update internal state to reflect the fact that an
-           action was taken
+        """
+        Update internal state to reflect the fact that an action was taken
         :param action: Number of the action performed
+        :type action: integer
+        :rtype: None
         """
         # Update a specific links velocity
         link = action / 2
@@ -52,7 +60,10 @@ class Planning(object):
         self.move_count += 1
 
     def is_over(self):
-        """Check if simulation is over"""
+        """
+        Check if simulation is over
+        :rtype: Boolean
+        """
         if self.hit_obstacle:
             return True
 
@@ -61,8 +72,11 @@ class Planning(object):
         return np.linalg.norm(target - end_effector) < self.target_accuracy
 
     def collect_reward(self, action):
-        """Returns reward accumulated since last time this
-        function was called.
+        """
+        Returns reward accumulated since last time this function was called.
+        :param action: The action preformed
+        :type action: integer
+        :rtype: integer
         """
         # Calculate previous distance to target object (ball)
         old_dist = np.linalg.norm((self.robot.end_effector_position() -
@@ -93,11 +107,20 @@ class Planning(object):
         return reward
 
     def display_actions(self):
-        print "Moved {} times before throwing!".format(self.move_count)
+        """
+        Displays planning properties
+        :rtype: None
+        """
         print "Last reward: {}".format(self.collected_rewards[-1])
 
     def save_path(self, filepath, iteration):
+        """
+        Saves the current robot joint config to a file
+        :param filepath: The directory to save the config to
+        :type filepath: String
+        :param iteration: The current simulation iteration
+        :type iteration: integer
+        :rtpye: None
+        """
         filename = "{}/planning_path_{}".format(filepath, iteration)
         np.save(filename, self.robot.qs)
-
-

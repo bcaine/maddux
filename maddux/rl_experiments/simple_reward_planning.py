@@ -1,9 +1,13 @@
+"""
+Planning done with a much simpler reward.
+Takes a long time to converge as untill the arm finds
+the target it is operating at random.
+"""
 import sys
 import os
 sys.path.insert(0, os.path.abspath('.'))
 
 import numpy as np
-from random import gauss
 from maddux.rl_experiments.planning import Planning
 
 class SimpleRewardPlanning(Planning):
