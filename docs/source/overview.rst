@@ -13,4 +13,4 @@ Maddux was created to have a simple, hackable tool to quickly experiment with te
 Why the name?
 -------------
 
-Maddux is named after `Greg Maddux https://en.wikipedia.org/wiki/Greg_Maddux`, a retired MLB pitcher who is widely viewed as the best control pitcher to ever play. Known for his impecable mechanics, command, composure, and wit, he is everything a robot arm can hope to be. 
+Maddux is named after Greg Maddux, a retired MLB pitcher who is widely viewed as the best control pitcher to ever play. Known for his impecable mechanics, command, composure, and wit, he is everything a robot arm can hope to be. 
