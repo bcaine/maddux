@@ -1,5 +1,31 @@
 import numpy as np
-from maddux.predefined_environments import predefined_environments
+import sys
+import argparse
+from maddux.predefined_environments import environments
+
+
+def main():
+    """Run CLI to get animation arguments"""
+    
+    parser = argparse.ArgumentParser(description="Animate a given saved path")
+    parser.add_argument('-i', '--input', type=str, required=True,
+                        help="A path to an input file")
+    parser.add_argument('-o', '--output', type=str, required=False,
+                        help="A path to an output file")
+    parser.add_argument('-e', '--environment', type=str, required=True,
+                        help="An environment to simulate inside of")
+
+    if len(sys.argv):
+        args = parser.parse_args()
+
+        input_path = args.input
+        output_path = args.output
+        env = args.environment
+        animate_path(env, input_path, output_path)
+
+    else:
+        parser.print_help()
+
 
 def animate_path(environment, input_file, output_file=None):
     """Load a saved path and animate it
@@ -30,3 +56,7 @@ def animate_path(environment, input_file, output_file=None):
         env.animate(save_path=output_file)
     else:
         env.animate()
+
+
+if __name__ == '__main__':
+    main()
