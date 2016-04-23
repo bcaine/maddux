@@ -201,7 +201,8 @@ class Arm:
         """Computes the forward kinematics of the arm using the current joint
         configuration or a given joint configuration
 
-        :param q: (Optional) 1xN vector of joint configuration to compute the FK on
+        :param q: (Optional) 1xN vector of joint configuration to compute 
+                  the FK on
         :type q: numpy.ndarray or None
 
         :param links: (Optional) Specify which links to run fkine on.
@@ -379,3 +380,13 @@ class Arm:
         """
         for link in self.links:
             link.plot(ax)
+
+    def save_path(self, filename):
+        """Save the current path to a file
+        :param filename: Filename to save joint config path
+        :type filename: str
+        """
+        if len(self.qs) == 0:
+            print "No path to save"
+        np.save(filename, self.qs)
+        
