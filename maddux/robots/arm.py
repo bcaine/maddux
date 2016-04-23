@@ -83,17 +83,24 @@ class Arm:
             q[i] = link.theta
         return q
 
-    def update_angles(self, new_angles):
+    def update_angles(self, new_angles, save=False):
         """Updates all the link's angles
 
         :param new_angles: 1xN vector of new link angles
         :type new_angles: numpy.ndarray
+
+        :param save: Flag that determines if the update is cached
+        :param save: bool
 
         :rtype: None
         """
         for link, new_theta in zip(self.links, new_angles):
             link.set_theta(new_theta)
         self.update_link_positions()
+
+        if save:
+            q = np.array([l.theta for l in self.links])
+            self.qs = np.vstack((self.qs, q.copy()))
 
     def update_link_angle(self, link, new_angle, save=False):
         """Updates the given link's angle with the given angle
@@ -104,7 +111,7 @@ class Arm:
         :param new_angle: The link's new angle
         :type new_angle: int
 
-        :paran save: Flag that determines if the update is cached
+        :param save: Flag that determines if the update is cached
         :type save: bool
 
         :rtype: None
@@ -201,7 +208,7 @@ class Arm:
         """Computes the forward kinematics of the arm using the current joint
         configuration or a given joint configuration
 
-        :param q: (Optional) 1xN vector of joint configuration to compute 
+        :param q: (Optional) 1xN vector of joint configuration to compute
                   the FK on
         :type q: numpy.ndarray or None
 
@@ -389,4 +396,3 @@ class Arm:
         if len(self.qs) == 0:
             print "No path to save"
         np.save(filename, self.qs)
-        

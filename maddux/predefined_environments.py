@@ -4,12 +4,12 @@ sys.path.insert(0, os.path.abspath('.'))
 
 from maddux.robots import simple_human_arm, noodle_arm
 from maddux.environment import Environment
-from maddux.objects import Ball, Obstacle
+from maddux.objects import Ball, Obstacle, Target
 import numpy as np
 
 
 def get_easy_environment():
-    """An easy difficulty environment for planning tests with two obstacles, 
+    """An easy difficulty environment for planning tests with two obstacles,
     a ball as a target, and a simple human arm.
     """
     obstacles = [Obstacle([1, 2, 1], [2, 2.5, 1.5]),
@@ -73,7 +73,7 @@ def get_very_hard_environment():
 
 
 def get_noodle_environment():
-    """An absurd environment for our noodle arm to do planning tests. It has 
+    """An absurd environment for our noodle arm to do planning tests. It has
     five obstacles, a ball as a target, and our 10 link noodle arm
     """
     obstacles = [Obstacle([0.0, 2.0, 0.0], [1.5, 2.5, 3.0]),
@@ -92,10 +92,32 @@ def get_noodle_environment():
                        robot=robot)
 
 
+def get_tutorial_environment():
+    """Our environment from our documentation tutorial"""
+    # Create an arm with a specific config and base position
+    q0 = np.array([0.5, 0.2, 0, 0.5, 0, 0, 0])
+    base_pos = np.array([2.0, 2.0, 0.0])
+
+    # And link segments of length 2.0
+    arm = simple_human_arm(2.0, 2.0, q0, base_pos)
+
+    # We then create a ball, target, and obstacle
+    ball = Ball(position=[2.0, 0.0, 2.0], radius=0.15)
+    target = Target(position=[5.0, 8.0, 2.0], radius=0.5)
+    obstacle = Obstacle([4, 4, 0], [5, 5, 2])
+
+    # And use these to create an environment with dimensions 10x10x10
+    return Environment(dimensions=[10, 10, 10],
+                       dynamic_objects=[ball],
+                       static_objects=[target, obstacle],
+                       robot=arm)
+
+
 environments = {
     "easy": get_easy_environment,
     "medium": get_medium_environment,
     "hard": get_hard_environment,
     "very_hard": get_very_hard_environment,
     "noodle": get_noodle_environment,
+    "tutorial": get_tutorial_environment,
 }
