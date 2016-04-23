@@ -11,11 +11,12 @@ TIME = 0.001
 
 class ThrowableObject(DynamicObject):
 
-    def __init__(self, position):
+    def __init__(self, position, target=False):
         """Throwable Object Init"""
         self.attached = True
+        self.target = target
         self.velocity = np.array([0, 0, 0])
-        DynamicObject.__init__(self, position)
+        DynamicObject.__init__(self, position, target)
 
     def throw(self, velocity):
         """Throw an object.

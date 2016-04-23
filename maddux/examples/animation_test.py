@@ -14,7 +14,6 @@ def ball_animation_test():
     env = Environment(dimensions=[10.0, 20.0, 100.0],
                       dynamic_objects=balls, static_objects=[target])
     env.animate(5.0)
-
 def arm_animation_test():
     q0 = np.array([0.5, 0.2, 0, 0.5, 1.5])
     human_arm = simple_human_arm(2.0, 2.0, q0, np.array([2.0, 2.0, 0.0]))
