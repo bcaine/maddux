@@ -1,6 +1,8 @@
 # Maddux
 ### Robot Arm and Simulation Environment
 
+[You can view the comlete documentation here.](http://bencaine.me/maddux/)
+
 Created to use in a project for [Robert Platt's Robotics Course](http://www.ccs.neu.edu/home/rplatt/cs5335_2016/index.html)
 
 #####  Features
@@ -87,7 +89,7 @@ r = Arm(links, q0, '1-link')
 ### Use with Deep Q Learning
 This library was created with the intent of experimenting with reinforcement learning on robot manipulators. [nivwusquorum/tensorflow-deepq](https://github.com/nivwusquorum/tensorflow-deepq) provides an excellent tool to experiment with Deep Q Learning.
 
-[maddux/rl_experiments/](./maddux/rl_experiments/) provides full reinforcement learning classes and arm environments for doing obstacle avoidance and manipulator control using the above Deep Q Learning framework. 
+[maddux/rl_experiments/](./experiments/reinforcement_learning/) provides full reinforcement learning classes and arm environments for doing obstacle avoidance and manipulator control using the above Deep Q Learning framework.
 
 For fun, here's some examples
 
