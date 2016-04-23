@@ -2,7 +2,7 @@
 
 git checkout gh-pages
 git fetch
-git rebase
+git rebase origin/master
 exit
 
 mv docs/source/index.rst docs/source/index.rst.bak
