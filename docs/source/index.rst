@@ -13,6 +13,7 @@ Maddux documentation
 .. toctree::
    :maxdepth: 2
 
+   overview
    maddux
    maddux.robots
    maddux.objects
