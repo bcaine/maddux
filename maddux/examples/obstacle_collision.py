@@ -11,7 +11,7 @@ of our obstacles.
 # Create two obstacles
 obstacles = [Obstacle([1, 4, 1], [4, 5, 1.5]),
              Obstacle([1, 2, 1], [4, 3, 1.5])]
-# And a ball 
+# And a ball
 ball = Ball([2.5, 2.5, 2.0], 0.25)
 
 # Create an arm
@@ -31,10 +31,8 @@ human_arm.ikine(ball.position)
 env.animate(5.0)
 
 print "Ball hit obstacle?",
-print any([obstacle.is_hit_by_sphere(ball.position, ball.radius) \
+print any([obstacle.is_hit_by_sphere(ball.position, ball.radius)
            for obstacle in obstacles])
 
 print "Arm link hit obstacle?",
 print any([human_arm.is_in_collision(obstacle) for obstacle in obstacles])
-
-    

@@ -3,6 +3,10 @@ from maddux.environment import Environment
 from maddux.objects import Ball
 from maddux.robots import simple_human_arm
 
+"""
+Animate the arm moving to touch a ball
+"""
+
 # Declare a human arm
 q0 = np.array([0.5, 0.2, 0, 0.5, 1.5])
 human_arm = simple_human_arm(2.0, 2.0, q0, np.array([2.0, 2.0, 0.0]))

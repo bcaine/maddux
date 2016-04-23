@@ -3,7 +3,7 @@ from maddux.environment import Environment
 from maddux.robots import simple_human_arm
 
 """
-Shows how to plot an arm. 
+Shows how to plot an arm.
 """
 
 # Create an arm at a certain position and joint angle
@@ -13,5 +13,3 @@ human_arm = simple_human_arm(2.0, 1.0, q0, base_pos)
 
 env = Environment(dimensions=[3.0, 3.0, 3.0], robot=human_arm)
 env.plot()
-
-
