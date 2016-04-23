@@ -14,6 +14,7 @@ Maddux documentation
    :maxdepth: 2
 
    overview
+   tutorial
    maddux
    maddux.robots
    maddux.objects
