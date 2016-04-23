@@ -1,9 +1,8 @@
 #!/bin/sh
 
+git branch -D gh-pages
+git push origin --delete gh-pages
 git checkout --orphan gh-pages
-git fetch
-git rebase origin/master
-exit
 
 mv docs/source/index.rst docs/source/index.rst.bak
 
@@ -22,3 +21,4 @@ cp -r docs/build/html/* .
 git add -A
 git commit -m "Updating Github Pages"
 git push origin gh-pages
+git checkout master
