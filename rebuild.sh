@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git checkout gh-pages
+git checkout --orphan gh-pages
 git fetch
 git rebase origin/master
 exit
