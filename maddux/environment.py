@@ -30,7 +30,8 @@ class Environment:
 
         :rtype: None
         """
-        if dimensions is None:
+
+        if dimensions is not None:
             self.dimensions = np.array(dimensions)
         else:
             self.dimensions = np.array([10.0, 10.0, 100.0])
