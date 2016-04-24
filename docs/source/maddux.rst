@@ -1,16 +1,6 @@
 maddux package
 ==============
 
-Subpackages
------------
-
-.. toctree::
-
-    maddux.examples
-    maddux.objects
-    maddux.robots
-    maddux.utils
-
 Submodules
 ----------
 

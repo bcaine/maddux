@@ -5,11 +5,13 @@ git push origin --delete gh-pages
 git checkout --orphan gh-pages
 
 mv docs/source/index.rst docs/source/index.rst.bak
+mv docs/source/maddux.rst docs/source/maddux.rst.bak
 
 rm docs/source/maddux* docs/source/modules*
 sphinx-apidoc -o docs/source/ maddux/
 
 mv docs/source/index.rst.bak docs/source/index.rst
+mv docs/source/maddux.rst.bak docs/source/maddux.rst
 
 cd docs
 make html
