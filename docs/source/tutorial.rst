@@ -1,12 +1,12 @@
 Tutorial
 ========
 
-In this tutorial, we will briefly walk through creating arms, setting up simulation environments, plotting, running animations, saving robot paths, and creating animated videos.
+In this tutorial, we will briefly walk through creating arms, setting up simulation environments, plotting and animating these environments, saving robot movement paths, and creating animated videos.
 
 Creating Arms
 -------------
 
-Arms in maddux consist of a series of Link objects, which are defined by `DH Parameters`_. Each link has a theta (angle), offset, length, and twist parameter. Each link can also have a constrained theta, a max velocity, and a joint size (for visualizations and collisions).
+Arms in Maddux consist of a series of Link objects, which are defined by `DH Parameters`_. Each link has a theta (angle), offset, length, and twist parameter. Each link can also have a constrained theta, a max velocity, and a joint size (for visualizations and collisions).
 
 If you aren't familiar with DH Parameters, I recommend you read up on them first, as they can be a bit confusing. For example, the distance from one joint to another can be defined by either the offset, or the length.
 
@@ -49,7 +49,7 @@ Of note here is that only two links have a offset or length, giving us a two lin
 Setting up and Plotting an Environment
 --------------------------------------
 
-Environments are central to all simulations in Maddux. They allow you to group together sets of dynamic (movable) and static (stationary) objects and a robot into a "room" of sorts that allows for interations of all of these objects.
+Environments are central to all simulations in Maddux. They allow you to group together sets of dynamic (movable) and static (stationary) objects and a robot into a "room" of sorts that allows for interactions of all of these objects.
 
 To define an environment, we will first define a few objects, then we will create a robot (from our predefined robots), and we will add these to the environment.
 
