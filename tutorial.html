@@ -1,0 +1,321 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Tutorial &mdash; Maddux 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Maddux 0.1 documentation" href="index.html"/>
+        <link rel="next" title="maddux package" href="maddux.html"/>
+        <link rel="prev" title="Overview" href="overview.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Maddux
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-arms">Creating Arms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-and-plotting-an-environment">Setting up and Plotting an Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inverse-kinematics-and-animations">Inverse Kinematics and Animations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#saving-paths-and-creating-videos">Saving paths and creating videos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="maddux.html">maddux package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maddux.robots.html">maddux.robots package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maddux.objects.html">maddux.objects package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maddux.examples.html">maddux.examples package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="maddux.utils.html">maddux.utils package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Maddux</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/tutorial.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we will briefly walk through creating arms, setting up simulation environments, plotting and animating these environments, saving robot movement paths, and creating animated videos.</p>
+<div class="section" id="creating-arms">
+<h2>Creating Arms<a class="headerlink" href="#creating-arms" title="Permalink to this headline">¶</a></h2>
+<p>Arms in Maddux consist of a series of Link objects, which are defined by <a class="reference external" href="https://en.wikipedia.org/wiki/Denavit%E2%80%93Hartenberg_parameters">DH Parameters</a>. Each link has a theta (angle), offset, length, and twist parameter. Each link can also have a constrained theta, a max velocity, and a joint size (for visualizations and collisions).</p>
+<p>If you aren&#8217;t familiar with DH Parameters, I recommend you read up on them first, as they can be a bit confusing. For example, the distance from one joint to another can be defined by either the offset, or the length.</p>
+<p>Here is our definition of a &#8220;Simple Human Arm&#8221; which is already defined for you in maddux.robots.predefined_arms.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">link</span> <span class="kn">import</span> <span class="n">Link</span>
+<span class="kn">from</span> <span class="nn">arm</span> <span class="kn">import</span> <span class="n">Arm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">seg1_len</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">seg2_len</span> <span class="o">=</span> <span class="mf">2.0</span>
+
+<span class="c"># Our seven &quot;links&quot;. Only two of these have a length or offset.</span>
+<span class="n">L1</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.571</span><span class="p">)</span>
+<span class="n">L2</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.571</span><span class="p">)</span>
+<span class="n">L3</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">seg1_len</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.571</span><span class="p">)</span>
+<span class="n">L4</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">seg2_len</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.571</span><span class="p">)</span>
+<span class="n">L5</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.571</span><span class="p">)</span>
+<span class="n">L6</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.571</span><span class="p">)</span>
+<span class="n">L7</span> <span class="o">=</span> <span class="n">Link</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c"># Create an array of them</span>
+<span class="n">links</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">L1</span><span class="p">,</span> <span class="n">L2</span><span class="p">,</span> <span class="n">L3</span><span class="p">,</span> <span class="n">L4</span><span class="p">,</span> <span class="n">L5</span><span class="p">,</span> <span class="n">L6</span><span class="p">,</span> <span class="n">L7</span><span class="p">])</span>
+
+<span class="c"># Create an initial joint config for each link.</span>
+<span class="c"># q0[0] is the theta for Link1</span>
+<span class="c"># q0[1] is the theta for Link2</span>
+<span class="c"># and so on.</span>
+<span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c"># Then create an arm with these links, the initial config q0, and a name</span>
+<span class="n">robot</span> <span class="o">=</span> <span class="n">Arm</span><span class="p">(</span><span class="n">links</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="s">&#39;simple_human_arm&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Of note here is that only two links have a offset or length, giving us a two link arm. L7 is not necessary at all, and is simply there to replace a possible end effector.</p>
+</div>
+<div class="section" id="setting-up-and-plotting-an-environment">
+<h2>Setting up and Plotting an Environment<a class="headerlink" href="#setting-up-and-plotting-an-environment" title="Permalink to this headline">¶</a></h2>
+<p>Environments are central to all simulations in Maddux. They allow you to group together sets of dynamic (movable) and static (stationary) objects and a robot into a &#8220;room&#8221; of sorts that allows for interactions of all of these objects.</p>
+<p>To define an environment, we will first define a few objects, then we will create a robot (from our predefined robots), and we will add these to the environment.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">maddux.robots.predefined_robots</span> <span class="kn">import</span> <span class="n">simple_human_arm</span>
+<span class="kn">from</span> <span class="nn">maddux.objects</span> <span class="kn">import</span> <span class="n">Ball</span><span class="p">,</span> <span class="n">Target</span><span class="p">,</span> <span class="n">Obstacle</span>
+<span class="kn">from</span> <span class="nn">maddux.environment</span> <span class="kn">import</span> <span class="n">Environment</span>
+
+<span class="c"># Create an arm with a specific config and base position</span>
+<span class="n">q0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">base_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
+
+<span class="c"># And link segments of length 2.0</span>
+<span class="n">arm</span> <span class="o">=</span> <span class="n">simple_human_arm</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="n">q0</span><span class="p">,</span> <span class="n">base_pos</span><span class="p">)</span>
+
+<span class="c"># We then create a ball, target, and obstacle</span>
+<span class="n">ball</span> <span class="o">=</span> <span class="n">Ball</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="n">Target</span><span class="p">(</span><span class="n">position</span><span class="o">=</span><span class="p">[</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span> <span class="n">radius</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">obstacle</span> <span class="o">=</span> <span class="n">Obstacle</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c"># And use these to create an environment with dimensions 10x10x10</span>
+<span class="n">env</span> <span class="o">=</span> <span class="n">Environment</span><span class="p">(</span><span class="n">dimensions</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+                  <span class="n">dynamic_objects</span><span class="o">=</span><span class="p">[</span><span class="n">ball</span><span class="p">],</span>
+                  <span class="n">static_objects</span><span class="o">=</span><span class="p">[</span><span class="n">obstacle</span><span class="p">,</span> <span class="n">target</span><span class="p">],</span>
+                  <span class="n">robot</span><span class="o">=</span><span class="n">arm</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can then interact with these objects, plot them, animate their interactions, etc.</p>
+<p>If we want to plot this environment, all we have to do is</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">env</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Which would generate an environment that looks like this:</p>
+<img alt="_images/tutorial_1.png" src="_images/tutorial_1.png" />
+</div>
+<div class="section" id="inverse-kinematics-and-animations">
+<h2>Inverse Kinematics and Animations<a class="headerlink" href="#inverse-kinematics-and-animations" title="Permalink to this headline">¶</a></h2>
+<p>Given the above environment, lets say we want to have the arm find a joint configuration that has the end effector of the arm touch the ball. Given the ball location, we can use our iterative inverse kinematics solver built into the Arm class to find a possible joint configuration.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">arm</span><span class="o">.</span><span class="n">ikine</span><span class="p">(</span><span class="n">ball</span><span class="o">.</span><span class="n">position</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Our inverse kinematic solver automatically caches each set of configurations that make up its path into a variable on the arm. With this path saved, we can then animate this process by calling animate for a specified duration.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">env</span><span class="o">.</span><span class="n">animate</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="saving-paths-and-creating-videos">
+<h2>Saving paths and creating videos<a class="headerlink" href="#saving-paths-and-creating-videos" title="Permalink to this headline">¶</a></h2>
+<p>In the above example of inverse kinematics, ikine saved the path it generated into a variable on the arm. After calling some function that modifies the joint configurations (update_angles, update_link_angle, ikine) and having it cache its changes, we can write that path to a file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">arm</span><span class="o">.</span><span class="n">save_path</span><span class="p">(</span><span class="s">&#39;filename_to_save_to&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With the series of joint configurations saved to a file, we can later use this to re-run the animation, or to save the animation as a MP4 video. To do so, we simply call save_path on the arm. We are assuming here that our environment is defined in maddux.predefined_environments.py.</p>
+<p>To simply rerun the animation, we can run</p>
+<div class="highlight-bash"><div class="highlight"><pre>python maddux/utils/animate_path.py --input tutorial_path.npy --environment tutorial
+</pre></div>
+</div>
+<p>If we want to create a video called tutorial.mp4, we would change the above command to this</p>
+<div class="highlight-bash"><div class="highlight"><pre>python maddux/utils/animate_path.py --input tutorial_path.npy --environment tutorial --output tutorial.mp4
+</pre></div>
+</div>
+<p>Which would create a video that I then turned into this GIF.</p>
+<img alt="_images/tutorial.gif" src="_images/tutorial.gif" />
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>This was meant to be a quick introduction to different aspects of the toolkit. There are a whole host of other potentially useful features, like having dynamic objects have velocity and movement, letting an arm hold and move objects with its end effector, giving arms joint velocities, and calculating end effector velocities based on joint velocities. The hope is that this provides a light weight and flexibile toolkit to build on and modify to suit your needs, and lets you get up and running with crazy ideas as quickly as possible.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="maddux.html" class="btn btn-neutral float-right" title="maddux package" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="Overview" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ben Caine &amp; Colin Kohler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>maddux.robots.link &mdash; Maddux 0.1 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="Maddux 0.1 documentation" href="../../../index.html"/>
+        <link rel="up" title="Module code" href="../../index.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> Maddux
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.html">maddux package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.robots.html">maddux.robots package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.objects.html">maddux.objects package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.examples.html">maddux.examples package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../maddux.utils.html">maddux.utils package</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../../index.html">Maddux</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+      
+    <li>maddux.robots.link</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for maddux.robots.link</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">A Link object holds all information related to a robot link such as</span>
+<span class="sd">the DH parameters and position in relation to the world.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">maddux.plot</span> <span class="kn">import</span> <span class="n">plot_sphere</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+
+<div class="viewcode-block" id="Link"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link">[docs]</a><span class="k">class</span> <span class="nc">Link</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="n">twist</span><span class="p">,</span>
+                 <span class="n">q_lim</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">max_velocity</span><span class="o">=</span><span class="mf">30.0</span><span class="p">,</span> <span class="n">link_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                 <span class="n">connector_size</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Link init</span>
+
+<span class="sd">        :param theta: Link angle, variable</span>
+<span class="sd">        :type theta: int</span>
+
+<span class="sd">        :param offset: Link offset, constant</span>
+<span class="sd">        :type offset: int</span>
+
+<span class="sd">        :param length: Link length, constant</span>
+<span class="sd">        :type length: int</span>
+
+<span class="sd">        :param twist: Link twist, constant</span>
+<span class="sd">        :type twist: int</span>
+
+<span class="sd">        :param q_lim: Joint coordinate limits</span>
+<span class="sd">        :type q_lim: numpy.ndarray or None</span>
+
+<span class="sd">        :param max_velocity: Maximum radians the link can rotate per second</span>
+<span class="sd">        :type max_velocity: int</span>
+
+<span class="sd">        :param link_size: The size of the link (used in collision detection</span>
+<span class="sd">                          and plotting)</span>
+<span class="sd">        :type link_size: int</span>
+
+<span class="sd">        :param connector_size: The size of the link connector</span>
+<span class="sd">        :type  connector_size: int</span>
+
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">twist</span> <span class="o">=</span> <span class="n">twist</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">q_lim</span> <span class="o">=</span> <span class="n">q_lim</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_velocity</span> <span class="o">=</span> <span class="n">max_velocity</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">link_size</span> <span class="o">=</span> <span class="n">link_size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connector_size</span> <span class="o">=</span> <span class="n">connector_size</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_theta</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># Link&#39;s current velocity</span>
+
+        <span class="c"># This is updated once we add it to an arm</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="Link.set_theta"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.set_theta">[docs]</a>    <span class="k">def</span> <span class="nf">set_theta</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sets theta to the new theta and computes the new</span>
+<span class="sd">        transformation matrix</span>
+
+<span class="sd">        :param theta: The new theta for the link</span>
+<span class="sd">        :type theta: int</span>
+
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transform_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_transformation_matrix</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Link.update_velocity"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.update_velocity">[docs]</a>    <span class="k">def</span> <span class="nf">update_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accel</span><span class="p">,</span> <span class="n">time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Updates the current velocity of the link when acted upon</span>
+<span class="sd">        by some acceleration over some time</span>
+
+<span class="sd">        :param accel: The acceleration acting upon the link</span>
+<span class="sd">                      (radians per second^2)</span>
+<span class="sd">        :type accel: int</span>
+
+<span class="sd">        :param time: The time the accelration is applied over (seconds)</span>
+<span class="sd">        :type time: int</span>
+
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_velocity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">+</span> <span class="p">(</span><span class="n">accel</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_velocity</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_velocity</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">velocity</span> <span class="o">=</span> <span class="n">new_velocity</span>
+            <span class="n">new_theta</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">+</span> <span class="p">(</span><span class="n">new_velocity</span> <span class="o">*</span> <span class="n">time</span><span class="p">)</span>
+            <span class="n">new_theta</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">atan2</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">new_theta</span><span class="p">),</span>
+                                   <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">new_theta</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_theta</span><span class="p">(</span><span class="n">new_theta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Link.compute_transformation_matrix"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.compute_transformation_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">compute_transformation_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">q</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Transformation matrix from the current theta to the new theta</span>
+
+<span class="sd">        :param q: the new theta</span>
+<span class="sd">        :type q: int</span>
+
+<span class="sd">        :returns: Transformation matrix from current q to provided q</span>
+<span class="sd">        :rtype: 4x4 numpy matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sa</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">twist</span><span class="p">)</span>
+        <span class="n">ca</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">twist</span><span class="p">)</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">ct</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">([[</span><span class="n">ct</span><span class="p">,</span> <span class="o">-</span><span class="n">st</span> <span class="o">*</span> <span class="n">ca</span><span class="p">,</span> <span class="n">st</span> <span class="o">*</span> <span class="n">sa</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">ct</span><span class="p">],</span>
+                       <span class="p">[</span><span class="n">st</span><span class="p">,</span> <span class="n">ct</span> <span class="o">*</span> <span class="n">ca</span><span class="p">,</span> <span class="o">-</span><span class="n">ct</span> <span class="o">*</span> <span class="n">sa</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">*</span> <span class="n">st</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">sa</span><span class="p">,</span> <span class="n">ca</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">],</span>
+                       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+        <span class="k">return</span> <span class="n">T</span></div>
+
+    <span class="c"># TODO: Abstract this to take dynamic objects as well as static ones</span>
+<div class="viewcode-block" id="Link.is_in_collision"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.is_in_collision">[docs]</a>    <span class="k">def</span> <span class="nf">is_in_collision</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">env_object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the arm is in collision with a given static object</span>
+
+<span class="sd">        :param env_object: The object to check for collisions with</span>
+<span class="sd">        :type env_object: maddux.objects.StaticObject</span>
+
+<span class="sd">        :returns: Whether link hits the provided env_object</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">intersects_joint</span> <span class="o">=</span> <span class="n">env_object</span><span class="o">.</span><span class="n">is_hit_by_sphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span><span class="p">,</span>
+                                                       <span class="bp">self</span><span class="o">.</span><span class="n">link_size</span><span class="p">)</span>
+        <span class="c"># If the link sphere is in collision we do not need to</span>
+        <span class="c"># check anything else</span>
+        <span class="k">if</span> <span class="n">intersects_joint</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+
+        <span class="c"># If the link is just a joint we only needed to check sphere,</span>
+        <span class="c"># and since we would have already returned, we know we&#39;re safe</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+        <span class="c"># Otherwise we need to check if the object intersects with</span>
+        <span class="c"># the arm connector, so we vectorize it and call is_hit</span>
+        <span class="n">lamb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span>
+
+        <span class="n">positions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span> <span class="o">+</span> <span class="n">lamb</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">v</span>
+
+        <span class="k">return</span> <span class="n">env_object</span><span class="o">.</span><span class="n">is_hit</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Link.display"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display the link&#39;s properties nicely</span>
+
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span> <span class="s">&#39;Link angle: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Link offset: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Link length: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s">&#39;Link twist: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">twist</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Link.plot"><a class="viewcode-back" href="../../../maddux.robots.html#maddux.robots.link.Link.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plots the link on the given matplotlib figure</span>
+
+<span class="sd">        :param ax: Figure to plot link upon</span>
+<span class="sd">        :type ax: matplotlib.axes</span>
+
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Base and End positions were never defined&quot;</span><span class="p">)</span>
+
+        <span class="n">plot_sphere</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">link_size</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">)</span>
+
+        <span class="c"># If there&#39;s no length associated, we don&#39;t have to draw one</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">ax</span>
+
+        <span class="n">pts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">base_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">end_pos</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">pts</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">pts</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
+                       <span class="n">color</span><span class="o">=</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Ben Caine &amp; Colin Kohler.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'0.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
