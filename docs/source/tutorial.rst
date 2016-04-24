@@ -95,33 +95,30 @@ Which would generate an environment that looks like this:
 Inverse Kinematics and Animations
 ---------------------------------
 
-Given the above environment, lets say we want to have the arm find a joint configuration that has the end effector of the arm touch the ball. 
-
-We can use our iterative inverse kinematics solver built into the Arm class given the ball location.
+Given the above environment, lets say we want to have the arm find a joint configuration that has the end effector of the arm touch the ball. Given the ball location, we can use our iterative inverse kinematics solver built into the Arm class to find a possible joint configuration. 
 
 .. code-block:: python
   
   arm.ikine(ball.position)
   
-Which will automatically save each step in its path into a variable on the arm called **qs**. With this path saved, we can then animate this process by calling animate for a specified duration.
+Our inverse kinematic solver automatically caches each set of configurations that make up its path into a variable on the arm. With this path saved, we can then animate this process by calling animate for a specified duration.
 
 .. code-block:: python
 
   env.animate(3.0)
   
-Which animates the environment for three seconds.
 
 Saving paths and creating videos
 --------------------------------
 
-In the above example of inverse kinematics, ikine saved the path it generated into a variable on the arm. After calling some function that modifies the joint configurations (update_angles, update_link_angle, ikine) and having it cache its changes. We can save that path for animations later, or to recreate the animation and save that as a MP4. To do so, we simply call save_path on the arm.
+In the above example of inverse kinematics, ikine saved the path it generated into a variable on the arm. After calling some function that modifies the joint configurations (update_angles, update_link_angle, ikine) and having it cache its changes, we can write that path to a file.
 
 .. code-block:: python
 
   arm.save_path('filename_to_save_to')
   
   
-Assuming our environment is defined in maddux.predefined_environments.py, we can run our animate_path cli to either rerun this, or generate an MP4. 
+With the series of joint configurations saved to a file, we can later use this to re-run the animation, or to save the animation as a MP4 video. To do so, we simply call save_path on the arm. We are assuming here that our environment is defined in maddux.predefined_environments.py. 
 
 To simply rerun the animation, we can run
 
@@ -137,10 +134,10 @@ If we want to create a video called tutorial.mp4, we would change the above comm
   python maddux/utils/animate_path.py --input tutorial_path.npy --environment tutorial --output tutorial.mp4
 
 
-Which would create a video that I then turned into a GIF.
+Which would create a video that I then turned into this GIF.
 
 .. image:: images/tutorial.gif
 
 Conclusion
 ----------
-This was meant to be a quick introduction to different aspects of the toolkit. There are a whole host of other potentially useful features, like having dynamic objects have velocity and movement, giving arms joint velocities, and calculating end effector velocities based on this, and really anything else you can create with an environment consisting of moving and static objects with a robotic arm. 
+This was meant to be a quick introduction to different aspects of the toolkit. There are a whole host of other potentially useful features, like having dynamic objects have velocity and movement, letting an arm hold and move objects with its end effector, giving arms joint velocities, and calculating end effector velocities based on joint velocities. The hope is that this provides a light weight and flexibile toolkit to build on and modify to suit your needs, and lets you get up and running with crazy ideas as quickly as possible. 
