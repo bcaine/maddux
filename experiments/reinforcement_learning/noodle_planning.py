@@ -35,7 +35,7 @@ def main(desired_iterations, save_path):
 
     # DiscreteDeepQ object
     current_controller = DiscreteDeepQ(sim.observation_size, sim.num_actions, brain,
-                                       optimizer, session, random_action_probability=0.5,
+                                       optimizer, session, random_action_probability=0.2,
                                        discount_rate=0.9, exploration_period=1000,
                                        max_experience=10000, store_every_nth=1,
                                        train_every_nth=1, summary_writer=journalist)
@@ -43,7 +43,7 @@ def main(desired_iterations, save_path):
     # Initialize the session
     session.run(tf.initialize_all_variables())
     session.run(current_controller.target_network_update)
-    journalist.add_graph(session.graph)
+    # journalist.add_graph(session.graph)
 
     # Run the simulation and let the robot learn
     num_simulations = 0
@@ -88,7 +88,7 @@ def main(desired_iterations, save_path):
     # Plot the iterations and reward
     plt.figure(figsize=(12, 8))
     plt.plot(total_rewards, label='Reward')
-    plt.plot(iterations_needed, label='Iterations')
+    # plt.plot(iterations_needed, label='Iterations')
     plt.legend()
     plt.show()
 
