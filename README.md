@@ -1,7 +1,7 @@
 # Maddux
 ### Robot Arm and Simulation Environment
 
-[You can view the comlete documentation here.](http://bencaine.me/maddux/)
+[You can view the complete documentation here.](http://bencaine.me/maddux/)
 
 Created to use in a project for [Robert Platt's Robotics Course](http://www.ccs.neu.edu/home/rplatt/cs5335_2016/index.html)
 
