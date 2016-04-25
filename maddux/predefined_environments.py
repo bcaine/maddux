@@ -56,7 +56,7 @@ def get_hard_environment():
                        robot=robot)
 
 
-def get_very_hard_environment():
+def get_hard_environment_v2():
     """A very hard difficulty environment for planning tests with three
     obstacles, a ball as a target, and a simple human arm.
     """
@@ -117,7 +117,7 @@ environments = {
     "easy": get_easy_environment,
     "medium": get_medium_environment,
     "hard": get_hard_environment,
-    "very_hard": get_very_hard_environment,
+    "hard_v2": get_hard_environment_v2,
     "noodle": get_noodle_environment,
     "tutorial": get_tutorial_environment,
 }
