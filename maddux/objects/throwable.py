@@ -3,7 +3,7 @@ A base throwable object class that encodes traits like gravity,
 velocity, etc.
 """
 import numpy as np
-from dynamic import DynamicObject
+from maddux.objects.dynamic import DynamicObject
 
 GRAVITY = -9.81
 TIME = 0.001
@@ -44,6 +44,6 @@ class ThrowableObject(DynamicObject):
 
     def display(self):
         """Display information about object"""
-        print "Positon: {}".format(self.position)
-        print "Velocity: {}".format(self.velocity)
-        print "Attached: {}".format(self.attached)
+        print("Positon: {}".format(self.position))
+        print("Velocity: {}".format(self.velocity))
+        print("Attached: {}".format(self.attached))

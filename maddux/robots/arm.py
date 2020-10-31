@@ -2,7 +2,7 @@
 A robot arm defined by a sequence of DH links
 """
 import numpy as np
-import utils
+from maddux.robots import utils
 
 
 class Arm:
@@ -252,14 +252,14 @@ class Arm:
         """
         # Check to make sure alpha is between 0 and 1
         if not (0.0 <= alpha <= 1.0):
-            print "Invalid alpha. Defaulting to 0.1"
+            print("Invalid alpha. Defaulting to 0.1")
             alpha = 0.1
 
         q = self.get_current_joint_config()
         self.qs = np.array([q.copy()])
 
         goal = utils.create_homogeneous_transform_from_point(p)
-        for i in xrange(num_iterations):
+        for i in range(num_iterations):
             # Calculate position error of the end effector
             curr = self.fkine(q)
             err = goal - curr
@@ -394,5 +394,5 @@ class Arm:
         :type filename: str
         """
         if len(self.qs) == 0:
-            print "No path to save"
+            print("No path to save")
         np.save(filename, self.qs)

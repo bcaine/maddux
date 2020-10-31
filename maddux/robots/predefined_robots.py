@@ -1,5 +1,5 @@
-from link import Link
-from arm import Arm
+from maddux.robots.link import Link
+from maddux.robots.arm import Arm
 import numpy as np
 
 

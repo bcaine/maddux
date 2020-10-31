@@ -4,3 +4,4 @@
 *.gitignore~
 saved_experiments/
 *.ipynb_checkpoints/
+maddux.egg-info/

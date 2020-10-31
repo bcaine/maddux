@@ -1,3 +1,3 @@
-from ball import Ball
-from target import Target
-from obstacle import Obstacle
+from maddux.objects.ball import Ball
+from maddux.objects.target import Target
+from maddux.objects.obstacle import Obstacle
