@@ -2,7 +2,7 @@
 A ball object to throw.
 """
 import numpy as np
-from throwable import ThrowableObject
+from maddux.objects.throwable import ThrowableObject
 from maddux.plot import plot_sphere
 
 

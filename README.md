@@ -15,6 +15,13 @@ Created to use in a project for [Robert Platt's Robotics Course](http://www.ccs.
 - End Effector Position, Velocity
 
 
+### Installation
+
+```bash
+pip3 install -e .
+```
+
+
 ### Arm Visualization and Animations
 ```python
 import numpy as np

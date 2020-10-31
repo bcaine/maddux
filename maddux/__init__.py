@@ -1,6 +1,6 @@
-import robots
-import objects
-import plot
-import utils
-import examples
-from environment import Environment
+from maddux import robots
+from maddux import objects
+from maddux import plot
+from maddux import utils
+from maddux import examples
+from maddux.environment import Environment

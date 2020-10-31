@@ -145,10 +145,10 @@ class Link:
 
         :rtype: None
         """
-        print 'Link angle: {}'.format(self.theta)
-        print 'Link offset: {}'.format(self.offset)
-        print 'Link length: {}'.format(self.length)
-        print 'Link twist: {}'.format(self.twist)
+        print('Link angle: {}'.format(self.theta))
+        print('Link offset: {}'.format(self.offset))
+        print('Link length: {}'.format(self.length))
+        print('Link twist: {}'.format(self.twist))
 
     def plot(self, ax):
         """Plots the link on the given matplotlib figure

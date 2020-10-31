@@ -1,7 +1,7 @@
 """
 A stationary object that something may collide with.
 """
-from static import StaticObject
+from maddux.objects.static import StaticObject
 import numpy as np
 
 HIT_ERROR = 0.01
@@ -45,8 +45,8 @@ class Target(StaticObject):
         Display target properties
         :rtpye: None
         """
-        print "Position: {}".format(self.position)
-        print "Radius: {}".format(self.radius)
+        print("Position: {}".format(self.position))
+        print("Radius: {}".format(self.radius))
 
     def plot_data(self):
         """

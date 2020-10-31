@@ -3,7 +3,7 @@ A stationary rectangular solid that something may collide with
 """
 import numpy as np
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-from static import StaticObject
+from maddux.objects.static import StaticObject
 
 
 class Obstacle(StaticObject):
@@ -116,10 +116,10 @@ class Obstacle(StaticObject):
 
         :rtype: None
         """
-        print "Center: {}".format(self.center)
-        print "Width: {}".format(self.width)
-        print "Height: {}".format(self.height)
-        print "Depth: {}".format(self.depth)
+        print("Center: {}".format(self.center))
+        print("Width: {}".format(self.width))
+        print("Height: {}".format(self.height))
+        print("Depth: {}".format(self.depth))
 
     def plot(self, ax):
         """Plots the obstacle at its location
